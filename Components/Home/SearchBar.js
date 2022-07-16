@@ -1,11 +1,12 @@
 import { View, Text, TextInput, Pressable } from "react-native";
 import React, { useState } from "react";
 
-export default function SearchBar() {
-  const [Search, setSearch] = useState("");
+export default function SearchBar(props) {
+  const [Search, SetSearch] = useState("");
 
   function onSubmit() {
-    alert(Search);
+    const search = Search.toUpperCase();
+    props.SearchHandler(search);
   }
   return (
     <View
@@ -24,8 +25,9 @@ export default function SearchBar() {
           marginLeft: 10,
           mainWidth: "70%",
           borderRadius: 20,
+          width: "70%",
         }}
-        onChangeText={setSearch}
+        onChangeText={SetSearch}
         value={Search}
       />
       <View style={{ marginRight: 8, flexDirection: "row" }}>

@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 
-export default function HomeHeader() {
+export default function HomeHeader(props) {
   const [ActiveTap, SetActiveTap] = useState("Coffe");
 
   return (
@@ -12,6 +12,7 @@ export default function HomeHeader() {
         TextColor="white"
         ActiveTap={ActiveTap}
         SetActiveTap={SetActiveTap}
+        sectionHandler={props.SectionHandler}
       />
       <Section
         text="Restaurant"
@@ -19,6 +20,7 @@ export default function HomeHeader() {
         TextColor="black"
         ActiveTap={ActiveTap}
         SetActiveTap={SetActiveTap}
+        sectionHandler={props.SectionHandler}
       />
     </View>
   );
@@ -35,6 +37,7 @@ const Section = (props) => {
       }}
       onPress={() => {
         props.SetActiveTap(props.text);
+        props.sectionHandler(props.text);
       }}
     >
       <Text
