@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-export default function BottpmTap() {
+import Ionicons from "react-native-vector-icons/Ionicons";
+export default function BottpmTap({ navigation, ...props }) {
   return (
     <View
       style={{
@@ -11,9 +11,21 @@ export default function BottpmTap() {
         justifyContent: "space-between",
       }}
     >
-      <Icon name="home" title="Home" />
-      <Icon name="heart" title="Favorite" />
-      <Icon name="user" title="Account" />
+      <Icon
+        name={props.ActiveHome == true ? "home" : "home-outline"}
+        title="Home"
+        navigation={navigation}
+      />
+      <Icon
+        name={props.ActiveFavorite == true ? "heart" : "heart-outline"}
+        title="Favorite"
+        navigation={navigation}
+      />
+      <Icon
+        name={props.ActiveAccount == true ? "person" : "person-outline"}
+        title="Account"
+        navigation={navigation}
+      />
     </View>
   );
 }
@@ -22,13 +34,21 @@ const Icon = (props) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        alert(props.title);
+        if (props.title == "Account") {
+          props.navigation.navigate("Account");
+        }
+        if (props.title == "Home") {
+          props.navigation.navigate("Home");
+        }
+        if (props.title == "Favorite") {
+          props.navigation.navigate("Favorite");
+        }
       }}
     >
       <View>
-        <FontAwesome5
+        <Ionicons
           name={props.name}
-          size={25}
+          size={20}
           style={{ marginTop: 3, alignSelf: "center" }}
         />
         <Text>{props.title}</Text>

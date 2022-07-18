@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-export default function ComponentInfo(props) {
+export default function ComponentInfo({ navigation, ...props }) {
   return (
     <View
       style={{
@@ -20,7 +20,10 @@ export default function ComponentInfo(props) {
     >
       <TouchableOpacity
         onPress={() => {
-          alert("you clieck :" + props.name);
+          navigation.navigate("RestaurantDetails", {
+            RestaurantName: props.name,
+            RestaurantLogo: props.uri,
+          });
         }}
       >
         <ComponentImage uri={props.uri} />

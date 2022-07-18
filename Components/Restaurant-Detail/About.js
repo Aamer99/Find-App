@@ -1,14 +1,18 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ScrollView, Pressable } from "react-native";
 import React from "react";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { Divider } from "react-native-elements";
 
-export default function About() {
+export default function About(props) {
   return (
-    <View>
-      <Img uri="http://cdn.eso.org/images/screen/eso1907a.jpg" />
-      <Title title="Aamer Essa" />
-      <Description description="AAAAAAAAAa" />
-      <Location location="Googel maps " />
-    </View>
+    <ScrollView>
+      <Img uri={props.route.params.RestaurantLogo} />
+      <Title title={props.route.params.RestaurantName} />
+      <Divider width={2} style={{ marginVertical: 20 }} />
+      <Description description={props.description} />
+      <Menu ImageURL={props.MenuURL} />
+      <Location latitude={props.latitude} longitude={props.longitude} />
+    </ScrollView>
   );
 }
 
@@ -19,12 +23,70 @@ const Img = (props) => {
 };
 
 const Title = (props) => {
-  return <Text>{props.title}</Text>;
+  return (
+    <Text
+      style={{
+        fontSize: 29,
+        fontWeight: "600",
+        marginTop: 10,
+        marginHorizontal: 20,
+      }}
+    >
+      {props.title}
+    </Text>
+  );
 };
 const Description = (props) => {
-  return <Text>{props.description}</Text>;
+  return (
+    <Text
+      style={{
+        fontSize: 20,
+        fontWeight: "400",
+        marginHorizontal: 30,
+        marginTop: 20,
+      }}
+    >
+      {props.description}
+    </Text>
+  );
+};
+
+const Menu = (props) => {
+  return (
+    <View>
+      <Image
+        source={{ uri: props.ImageURL }}
+        style={{
+          width: 400,
+          height: 400,
+          resizeMode: "contain",
+          marginBottom: 10,
+          marginTop: 10,
+        }}
+      />
+    </View>
+  );
 };
 
 const Location = (props) => {
-  return <Text>{props.location}</Text>;
+  // mapy this way is wrong check it (if sothing is wrong remove this and move it into out the component )
+  const initialPosition = {
+    latitude: props.latitude,
+    longitude: props.longitude,
+  };
+  return (
+    <View>
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        style={{
+          width: 300,
+          height: 300,
+        }}
+        initialRegion={initialPosition}
+        zoomEnabled={false}
+      >
+        <Marker coordinate={initialPosition} />
+      </MapView>
+    </View>
+  );
 };
