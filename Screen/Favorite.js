@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button, Divider } from "react-native-elements";
 import BottpmTap from "../Components/Home/BottpmTap";
 export default function Favorite({ navigation }) {
-  const [Token, setToken] = useState(false);
+  const [Token, setToken] = useState(true);
   return (
     <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
       {!Token && (

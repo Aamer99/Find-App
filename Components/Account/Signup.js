@@ -4,11 +4,11 @@ import { Button, Icon, Input } from "react-native-elements";
 
 export default function Signup({ navigation }) {
   const [name, setName] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassowrd, setConfirmPasswowrd] = useState("");
-  const [displedBtn, setDispaeldBtn] = useState(displedBtn + 1);
+
   return (
     <View
       style={{
@@ -40,12 +40,7 @@ export default function Signup({ navigation }) {
           value={name}
           onChangeText={setName}
         />
-        <Input
-          placeholder="Phonenumber"
-          leftIcon={{ type: "feather", name: "smartphone", size: 20 }}
-          value={phonenumber}
-          onChangeText={setPhonenumber}
-        />
+
         <Input
           placeholder="Email"
           leftIcon={{ type: "feather", name: "mail", size: 20 }}
