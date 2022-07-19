@@ -11,7 +11,9 @@ export default function Acoount({ navigation }) {
   const [showEditAccount, SetshowEditAccount] = useState(false);
   const [ShowPassowrd, SetshowPassowrd] = useState(true);
   const [iconName, setIconNAme] = useState("eye-off");
-  const [ImageProfile, setImage] = useState(null);
+  const [ImageProfile, setImage] = useState(
+    "https://www.diethelmtravel.com/wp-content/uploads/2016/04/bill-gates-wealthiest-person.jpg"
+  );
   const handelChoiseImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -22,7 +24,6 @@ export default function Acoount({ navigation }) {
 
     if (!result.cancelled) {
       setImage(result.uri);
-      alert(result.uri);
     }
   };
   function showPassowrd() {

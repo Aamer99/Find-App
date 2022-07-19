@@ -11,6 +11,7 @@ import Acoount from "./Screen/Acoount";
 import Favorite from "./Screen/Favorite";
 import Login from "./Components/Account/Login";
 import Signup from "./Components/Account/Signup";
+import LandingPage from "./Screen/landingPage";
 
 export default function RootNavigation() {
   const Stack = createStackNavigator();
@@ -19,13 +20,17 @@ export default function RootNavigation() {
   };
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={screenOptions}>
+      <Stack.Navigator
+        initialRouteName="LandingPage"
+        screenOptions={screenOptions}
+      >
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="RestaurantDetails" component={RestaurantDetail} />
         <Stack.Screen name="Account" component={Acoount} />
         <Stack.Screen name="Favorite" component={Favorite} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Singup" component={Signup} />
+        <Stack.Screen name="LandingPage" component={LandingPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
