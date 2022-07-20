@@ -26,7 +26,11 @@ export default function ComponentInfo({ navigation, ...props }) {
           });
         }}
       >
-        <ComponentImage uri={props.uri} />
+        <ComponentImage
+          uri={props.uri}
+          heartIconColor={props.heartIconColor}
+          heartIconName={props.heartIconName}
+        />
         <ComponentShortInfo name={props.name} />
       </TouchableOpacity>
     </View>
@@ -44,7 +48,11 @@ const ComponentImage = (props) => {
       />
 
       <TouchableOpacity style={{ top: 20, right: 20, position: "absolute" }}>
-        <MaterialCommunityIcons name="heart-outline" size={25} color="black" />
+        <MaterialCommunityIcons
+          name={props.heartIconName}
+          size={25}
+          color={props.heartIconColor}
+        />
       </TouchableOpacity>
     </>
   );

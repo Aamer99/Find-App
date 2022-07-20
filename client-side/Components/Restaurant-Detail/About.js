@@ -69,7 +69,7 @@ const Menu = (props) => {
 };
 
 const Location = (props) => {
-  // mapy this way is wrong check it (if sothing is wrong remove this and move it into out the component )
+  //  this way is wrong check it (if sothing is wrong remove this and move it into out the component )
   const initialPosition = {
     latitude: props.latitude,
     longitude: props.longitude,

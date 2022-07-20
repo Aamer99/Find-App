@@ -24,16 +24,22 @@ export default function Home({ navigation }) {
               uri="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/131451090/original/fb546458e8dd77ff0c6ee43abed68c8c8a94fdf7/do-a-creative-restaurant-logo.jpg"
               name={Search}
               navigation={navigation}
+              heartIconName={"cards-heart-outline"}
+              heartIconColor={"black"}
             />
             <ComponentInfo
               uri="https://s3-eu-west-1.amazonaws.com/forasna/uploads/logos/thumb_clogo_2017-08-16-20-32-01_WHBFR4f1bOxtlAflQ0eoKgXX.jpg"
               name={section}
               navigation={navigation}
+              heartIconName={"cards-heart-outline"}
+              heartIconColor={"black"}
             />
             <ComponentInfo
               uri="https://s3-eu-west-1.amazonaws.com/forasna/uploads/logos/thumb_clogo_2017-08-16-20-32-01_WHBFR4f1bOxtlAflQ0eoKgXX.jpg"
               name={section}
               navigation={navigation}
+              heartIconName={"cards-heart-outline"}
+              heartIconColor={"black"}
             />
           </>
         )}
@@ -43,11 +49,15 @@ export default function Home({ navigation }) {
               uri="https://i.pinimg.com/736x/c7/84/67/c78467db9ff497393cb548a48f02d451.jpg"
               name={Search}
               navigation={navigation}
+              heartIconName={"cards-heart-outline"}
+              heartIconColor={"black"}
             />
             <ComponentInfo
               uri="https://images.deliveryhero.io/image/talabat/restaurants/Hardees_Logo_V_TM_-__636675128493827664.jpg?width=300"
               name={section}
               navigation={navigation}
+              heartIconName={"cards-heart-outline"}
+              heartIconColor={"black"}
             />
           </>
         )}

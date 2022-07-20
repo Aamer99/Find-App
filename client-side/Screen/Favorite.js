@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView, Pressable } from "react-native";
 import React, { useState } from "react";
 import { Button, Divider } from "react-native-elements";
 import BottpmTap from "../Components/Home/BottpmTap";
+import ComponentInfo from "../Components/Home/ComponentInfo";
 export default function Favorite({ navigation }) {
   const [Token, setToken] = useState(true);
   return (
@@ -20,7 +21,25 @@ export default function Favorite({ navigation }) {
           />
         </View>
       )}
+      {Token && (
+        <View>
+          <ComponentInfo
+            uri="https://i.pinimg.com/736x/c7/84/67/c78467db9ff497393cb548a48f02d451.jpg"
+            name={"Search"}
+            navigation={navigation}
+            heartIconName={"cards-heart"}
+            heartIconColor="red"
+          />
 
+          <ComponentInfo
+            uri="https://i.pinimg.com/736x/c7/84/67/c78467db9ff497393cb548a48f02d451.jpg"
+            name={"Search"}
+            navigation={navigation}
+            heartIconName={"cards-heart"}
+            heartIconColor="red"
+          />
+        </View>
+      )}
       <Divider width={1} style={{ flex: 1, justifyContent: "flex-end" }} />
       <BottpmTap
         ActiveHome={false}

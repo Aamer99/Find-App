@@ -4,7 +4,7 @@ import Logo from "../assets/Find-logos/logos_black.png";
 export default function LandingPage({ navigation }) {
   setTimeout(() => {
     navigation.navigate("Home");
-  }, 10000);
+  }, 2600);
   return (
     <View
       style={{
@@ -27,7 +27,7 @@ const FadeInView = (props) => {
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 12000,
+      duration: 2500,
     }).start();
   }, [fadeAnim]);
 
