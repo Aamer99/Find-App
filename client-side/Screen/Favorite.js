@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView, Pressable } from "react-native";
 import React, { useState } from "react";
 import { Button, Divider } from "react-native-elements";
-import BottpmTap from "../Components/Home/BottpmTap";
+
 import ComponentInfo from "../Components/Home/ComponentInfo";
 export default function Favorite({ navigation }) {
   const [Token, setToken] = useState(true);
@@ -40,13 +40,6 @@ export default function Favorite({ navigation }) {
           />
         </View>
       )}
-      <Divider width={1} style={{ flex: 1, justifyContent: "flex-end" }} />
-      <BottpmTap
-        ActiveHome={false}
-        ActiveFavorite={true}
-        ActiveAccount={false}
-        navigation={navigation}
-      />
     </SafeAreaView>
   );
 }

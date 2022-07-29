@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import Logo from "../assets/Find-logos/logos_black.png";
 export default function LandingPage({ navigation }) {
   setTimeout(() => {
-    navigation.navigate("Home");
+    navigation.navigate("Login");
   }, 2600);
   return (
     <View

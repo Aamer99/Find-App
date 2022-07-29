@@ -1,18 +1,11 @@
 import { View, Text, SafeAreaView, Pressable } from "react-native";
 import React, { useState } from "react";
-import {
-  Avatar,
-  Button,
-  Divider,
-  Icon,
-  Input,
-  Dialog,
-} from "react-native-elements";
-import BottpmTap from "../Components/Home/BottpmTap";
-import Login from "../Components/Account/Login";
+import { Avatar, Button, Icon, Input, Dialog } from "react-native-elements";
+
+import Login from "../Components/Login";
 import * as ImagePicker from "expo-image-picker";
 export default function Acoount({ navigation }) {
-  const [Token, setToken] = useState(false);
+  const [Token, setToken] = useState(true);
   // this fill from the database
   const [Name, setName] = useState("Aamer Essa");
   const [Email, setEmail] = useState("aamer.es12@gmail.com");
@@ -72,13 +65,6 @@ export default function Acoount({ navigation }) {
           setConfirmPassword={setConfirmPassword}
         />
       )}
-      <Divider width={1} style={{ flex: 1, justifyContent: "flex-end" }} />
-      <BottpmTap
-        ActiveHome={false}
-        ActiveFavorite={false}
-        ActiveAccount={true}
-        navigation={navigation}
-      />
     </SafeAreaView>
   );
 }
@@ -160,12 +146,7 @@ const AccountBar = (props) => {
           Edit Profile
         </Text>
       </Pressable>
-      <Pressable style={{ margin: 20 }}>
-        <Icon type="feather" name="map-pin" size={20} color="white" />
-        <Text style={{ marginTop: 5, fontSize: 15, color: "white" }}>
-          Add Location
-        </Text>
-      </Pressable>
+
       <Pressable style={{ margin: 20 }}>
         <Icon type="feather" name="log-out" size={20} color="white" />
         <Text style={{ marginTop: 5, fontSize: 15, color: "white" }}>
