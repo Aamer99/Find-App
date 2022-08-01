@@ -3,36 +3,37 @@ GET http://localhost:4000/user
 ###
 GET http://localhost:4000/user/1121223
 ###
-POST http://192.168.1.21:4000/user/login
+POST http://172.20.10.6:4000/user/login
 Content-Type: application/json 
 
 {
-   "email":"eyad.om@gmail.com",
-   "password":"eyad123"
+   "email":"nawal@gmail.com",
+   "password":"na123"
 }
 
 ### 
 
-POST http://192.168.1.21:4000/user/verifyToken 
+POST http://172.20.10.6:4000/user/verifyToken 
 Content-Type: application/json 
 
 {
-   "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjpbeyJpZCI6MzAyMzY5OSwibmFtZSI6Im9zYW1hIG9tYXIgIiwiZW1haWwiOiJvc2FtYS5vbUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRmR3lZaXV1ZGhUeEF4dS80NllJWFouYmVnQXE4WVlyYWM5RzdKeUNaUjRicmd2R3gxbVVXUyIsImNpdHkiOiJNRUQiLCJpbWFnZVByb2ZpbGUiOiJzc3Nzc3MiLCJwcm9maWxlTGFuZ3VhZ2UiOiJkZGRkZGRkZCJ9XSwiaWF0IjoxNjU5MzI3NDk1LCJleHAiOjE2NTkzMjc1NTV9.AdURWvCIZGi6DqoHPUEWfYz2DkDejDDf52ZZkyYWwxU"
+   "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjpbeyJpZCI6MjU3MjEzNCwibmFtZSI6Ik5hd2FsIGhhbWVkICIsImVtYWlsIjoibmF3YWxAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkQ2QzVkE5Z2ZoT21hazBUODIxb25zZXkwZG9VbGhZeWtNbHFPUFZIV2cxZVd4Rnp1VW1aNmUiLCJjaXR5IjoiTWFkaW5hIiwiaW1hZ2VQcm9maWxlIjpudWxsLCJwcm9maWxlTGFuZ3VhZ2UiOm51bGx9XSwiaWF0IjoxNjU5Mzg5NjM3LCJleHAiOjE2NTkzODk4MTd9.QzRodVm6Pi9S5wLLUZmOfqOY37fZIaVVQFkZWcPNV9A"
 }
 
 ### 
-POST http://192.168.1.21:4000/user/signup
+POST http://192.168.0.156:4000/user/signup
 Content-Type: application/json
 
  {
-    "name":"eyad omar ",
-    "email":"eyad.om@gmail.com",
-    "password":"eyad123",
+    "name":"dani ",
+    "email":"dani.es@gmail.com",
+    "password":"dani123",
     "city":"MED",
     "imageProfile":"ssssss",
     "profileLanguage":"dddddddd"
  }
 
  
-
+### 
+GET http://localhost:4000/coffe 
  

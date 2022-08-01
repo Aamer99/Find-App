@@ -23,6 +23,9 @@ db.connect((err) => {
 const userRouter = require("./routes/User/User");
 app.use("/user", userRouter);
 
+const coffeRouter = require("./routes/coffe/coffe");
+app.use("/coffe", coffeRouter);
+
 app.listen("4000", () => {
   console.log("server is running");
 });

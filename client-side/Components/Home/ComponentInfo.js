@@ -8,14 +8,16 @@ export default function ComponentInfo({ navigation, ...props }) {
       style={{
         // width: 300,
         // borderRadius: 15,
-        backgroundColor: "white",
+        backgroundColor: "gray",
         // justifyContent: "center",
         // alignSelf: "center",
-        marginTop: 15,
+        margin: 10,
         // shadowColor: "black",
         // shadowOpacity: 10,
         // shadowRadius: 10,
-        padding: 20,
+        // padding: 30,
+        borderRadius: 35,
+        height: 200,
       }}
     >
       <TouchableOpacity
@@ -44,7 +46,13 @@ const ComponentImage = (props) => {
         source={{
           uri: props.uri,
         }}
-        style={{ width: "100%", height: 180, resizeMode: "contain" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          resizeMode: "cover",
+          borderRadius: 35,
+          opacity: 0.7,
+        }}
       />
 
       <TouchableOpacity style={{ top: 20, right: 20, position: "absolute" }}>
@@ -60,7 +68,9 @@ const ComponentImage = (props) => {
 
 const ComponentShortInfo = (props) => {
   return (
-    <View style={{ marginTop: 5 }}>
+    <View
+      style={{ marginTop: 5, position: "absolute", bottom: "15%", left: "5%" }}
+    >
       <Text style={{ fontSize: 15, fontWeight: "bold" }}>{props.name}</Text>
     </View>
   );
