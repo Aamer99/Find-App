@@ -11,6 +11,7 @@ import { Button, Input } from "react-native-elements";
 import Logo from "../assets/Find-logos/logos_black.png";
 import RNPickerSelect from "react-native-picker-select";
 import Feather from "react-native-vector-icons/Feather";
+import axios from "axios";
 export default function Signup({ navigation }) {
   const [name, setName] = useState("");
 
@@ -18,9 +19,37 @@ export default function Signup({ navigation }) {
   const [password, setPassword] = useState("");
   const [confirmPassowrd, setConfirmPasswowrd] = useState("");
   const [cities, setCities] = useState([{ label: "Madina", value: "Madina" }]);
-
+  const [invalidPassword, setInvalidPassword] = useState(false);
   const selectPlaceholder = { label: "City", value: null, color: "#9EA0A4" };
   const [city, setCity] = useState("");
+  async function onSubmit() {
+    try {
+      const userInfo = {
+        name: name,
+        email: email.toLowerCase(),
+        city: city,
+        password: password,
+      };
+
+      if (password != confirmPassowrd) {
+        setInvalidPassword(true);
+      } else {
+        setInvalidPassword(false);
+        const Register = await axios.post(
+          "http://192.168.0.156:4000/user/signup",
+          userInfo
+        );
+        if (Register.status == 200) {
+          alert("AAA");
+          navigation.navigate("Login");
+        } else {
+          alert("err");
+        }
+      }
+    } catch (err) {
+      alert(err);
+    }
+  }
 
   return (
     <SafeAreaView>
@@ -85,11 +114,13 @@ export default function Signup({ navigation }) {
             secureTextEntry={true}
             value={confirmPassowrd}
             onChangeText={setConfirmPasswowrd}
+            errorMessage={invalidPassword ? "password not match" : ""}
           />
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <Button
               buttonStyle={{ borderRadius: 20, width: 150 }}
               title="Register"
+              onPress={onSubmit}
             />
           </View>
         </View>

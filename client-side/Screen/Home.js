@@ -5,7 +5,7 @@ import {
   ScrollView,
   AsyncStorage,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HomeHeader from "../Components/Home/Home-Header";
 import SearchBar from "../Components/Home/SearchBar";
 import ComponentInfo from "../Components/Home/ComponentInfo";
@@ -13,21 +13,59 @@ import { Divider } from "react-native-elements";
 import BottpmTap from "../Components/TapBar";
 import axios from "axios";
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [Search, setSearch] = useState("");
   const [section, setSection] = useState("Coffe");
-  async function checkToken() {
-    try {
-      const token = await AsyncStorage.getItem("token");
-      const tokeninfo = {
-        token: token,
-      };
-      alert(token);
-    } catch (err) {
-      alert(err.messages);
-    }
-  }
-  checkToken();
+  const [Token, setToken] = useState(null);
+
+  // async function checkToken() {
+  //   try {
+  //     const token = await AsyncStorage.getItem("token");
+  //     const tokeninfo = {
+  //       token: token,
+  //     };
+
+  //     alert(token);
+  //     const checkToken = await axios.post(
+  //       "http://192.168.0.156:4000/user/verifyToken",
+  //       tokeninfo
+  //     );
+  //     alert(checkToken.status);
+  //   } catch (err) {
+  //     alert("this message " + err.messages);
+  //   }
+  // }
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        alert(token);
+        setToken(token);
+      } catch (err) {
+        alert("err");
+      }
+    };
+    const checkToken = async () => {
+      try {
+        const tokeInfo = {
+          token: Token,
+        };
+        alert("Token from checkToken is " + tokeInfo.token);
+        const auth = await axios.post(
+          "http://192.168.0.156:4000/user/verifyToken",
+          tokeInfo
+        );
+        if (auth) {
+          alert(work);
+        }
+      } catch (error) {
+        alert(new Error(error));
+      }
+    };
+    getToken();
+    checkToken();
+  });
+
   return (
     <SafeAreaView style={{ backgroundColor: "#eee", flex: 1, top: 30 }}>
       <View style={{ backgroundColor: "white", padding: 15 }}>

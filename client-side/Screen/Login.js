@@ -16,17 +16,18 @@ export default function Login({ navigation }) {
   async function onSubmit() {
     try {
       const loginInfo = {
-        email: email,
+        email: email.toLowerCase(),
         password: password,
       };
 
       const login = await axios.post(
-        "http://192.168.1.21:4000/user/login",
+        "http://192.168.0.156:4000/user/login",
         loginInfo
       );
       if (login) {
         await AsyncStorage.setItem("token", JSON.stringify(login.data));
         navigation.navigate("Tap");
+        console.log(login.data);
       } else {
         setValidEmailorPassword(true);
       }
