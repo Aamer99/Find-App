@@ -3,8 +3,8 @@ import BottpmTap from "./Components/TapBar";
 import LandingPage from "./Screen/landingPage";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Login from "./Components/Login";
-import Signup from "./Components/Signup";
+import Login from "./Screen/Login";
+import Signup from "./Screen/Signup";
 
 export default function App() {
   const Stack = createStackNavigator();

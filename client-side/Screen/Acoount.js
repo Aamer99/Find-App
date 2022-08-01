@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, Pressable } from "react-native";
 import React, { useState } from "react";
 import { Avatar, Button, Icon, Input, Dialog } from "react-native-elements";
 
-import Login from "../Components/Login";
+import Login from "../Screen/Login";
 import * as ImagePicker from "expo-image-picker";
 export default function Acoount({ navigation }) {
   const [Token, setToken] = useState(true);

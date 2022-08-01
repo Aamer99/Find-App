@@ -1,15 +1,33 @@
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  AsyncStorage,
+} from "react-native";
 import React, { useState } from "react";
 import HomeHeader from "../Components/Home/Home-Header";
 import SearchBar from "../Components/Home/SearchBar";
 import ComponentInfo from "../Components/Home/ComponentInfo";
 import { Divider } from "react-native-elements";
 import BottpmTap from "../Components/TapBar";
+import axios from "axios";
 
 export default function Home() {
   const [Search, setSearch] = useState("");
   const [section, setSection] = useState("Coffe");
-  alert("home");
+  async function checkToken() {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      const tokeninfo = {
+        token: token,
+      };
+      alert(token);
+    } catch (err) {
+      alert(err.messages);
+    }
+  }
+  checkToken();
   return (
     <SafeAreaView style={{ backgroundColor: "#eee", flex: 1, top: 30 }}>
       <View style={{ backgroundColor: "white", padding: 15 }}>

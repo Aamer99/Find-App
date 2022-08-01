@@ -1,28 +1,52 @@
-import { View, Text, Pressable, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  SafeAreaView,
+  AsyncStorage,
+} from "react-native";
 import React, { useState } from "react";
 import { Input, Button, Dialog, Icon, Image } from "react-native-elements";
+import axios from "axios";
 import Logo from "../assets/Find-logos/logos_black.png";
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  function onSubmit() {
-    alert("your email is:" + email + "|| your Password is: " + password);
-    setTimeout(() => {
-      navigation.navigate("Tap");
-    });
+  const [validEmailorPassword, setValidEmailorPassword] = useState(false);
+  async function onSubmit() {
+    try {
+      const loginInfo = {
+        email: email,
+        password: password,
+      };
+
+      const login = await axios.post(
+        "http://192.168.1.21:4000/user/login",
+        loginInfo
+      );
+      if (login) {
+        await AsyncStorage.setItem("token", JSON.stringify(login.data));
+        navigation.navigate("Tap");
+      } else {
+        setValidEmailorPassword(true);
+      }
+    } catch (error) {
+      setValidEmailorPassword(true);
+    }
+
+    // setTimeout(() => {
+    //   navigation.navigate("Tap");
+    // });
   }
   return (
     <SafeAreaView>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <Image source={Logo} style={{ height: 200, width: 200 }} />
-      </View>
-
       <View
         style={{
           backgroundColor: "rgba(255,255,255,1.5)",
           borderRadius: 20,
           width: "90%",
           alignSelf: "center",
+          top: "50%",
         }}
       >
         <Text
@@ -49,6 +73,13 @@ export default function Login({ navigation }) {
             leftIcon={{ type: "feather", name: "lock", size: 20 }}
             value={password}
             onChangeText={setPassword}
+            errorMessage={validEmailorPassword ? "Valid email or password" : ""}
+            errorStyle={{
+              color: "red",
+              margin: 10,
+              fontSize: 10,
+              fontWeight: "600",
+            }}
           />
           <View style={{ justifyContent: "center", flexDirection: "row" }}>
             <Button

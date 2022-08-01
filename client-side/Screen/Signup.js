@@ -1,25 +1,36 @@
-import { View, Text, Pressable, SafeAreaView, Image } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  SafeAreaView,
+  Image,
+  StyleSheet,
+} from "react-native";
 import React, { useState } from "react";
 import { Button, Input } from "react-native-elements";
 import Logo from "../assets/Find-logos/logos_black.png";
+import RNPickerSelect from "react-native-picker-select";
+import Feather from "react-native-vector-icons/Feather";
 export default function Signup({ navigation }) {
   const [name, setName] = useState("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassowrd, setConfirmPasswowrd] = useState("");
+  const [cities, setCities] = useState([{ label: "Madina", value: "Madina" }]);
+
+  const selectPlaceholder = { label: "City", value: null, color: "#9EA0A4" };
+  const [city, setCity] = useState("");
 
   return (
     <SafeAreaView>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <Image source={Logo} style={{ height: 200, width: 200 }} />
-      </View>
       <View
         style={{
           backgroundColor: "rgba(255,255,255,1.5)",
           borderRadius: 20,
           width: "90%",
           alignSelf: "center",
+          top: "25%",
         }}
       >
         <Text
@@ -49,6 +60,18 @@ export default function Signup({ navigation }) {
             value={email}
             onChangeText={setEmail}
           />
+
+          <RNPickerSelect
+            onValueChange={setCity}
+            items={cities}
+            value={city}
+            style={pickerSelectStyles}
+            placeholder={selectPlaceholder}
+            Icon={() => {
+              return <Feather name="map-pin" size={22} />;
+            }}
+          />
+
           <Input
             placeholder="Password"
             secureTextEntry={true}
@@ -91,3 +114,21 @@ export default function Signup({ navigation }) {
     </SafeAreaView>
   );
 }
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+
+    color: "black",
+    paddingLeft: 40,
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
+    margin: 5,
+  },
+  iconContainer: {
+    top: 10,
+    left: 10,
+  },
+});
