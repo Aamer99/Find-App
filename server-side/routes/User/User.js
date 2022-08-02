@@ -1,23 +1,26 @@
 const router = require("express").Router();
-const DB = require("./DB");
+
 const bcrypt = require("bcrypt");
 const db = require("./DB");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
+//get all users
 router.get("/", async (req, res) => {
   try {
-    let resualt = await DB.getAll();
+    let resualt = await db.getAll();
     res.status(200).json(resualt);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
+//get one user by id
 router.get("/:id", async (req, res) => {
   try {
     const userID = req.params.id;
-    let resualt = await DB.getOneByID(userID);
+    let resualt = await db.getOneByID(userID);
     res.status(200).json(resualt);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -25,7 +28,6 @@ router.get("/:id", async (req, res) => {
 });
 
 //signup
-
 router.post("/signup", async (req, res) => {
   try {
     const id = Math.floor(Math.random() * 100000 * 120);
@@ -58,7 +60,6 @@ router.post("/signup", async (req, res) => {
 });
 
 //login
-
 router.post("/login", async (req, res) => {
   try {
     const email = req.body.email;
@@ -84,6 +85,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//verify token
 router.post("/verifyToken", async (req, res) => {
   try {
     const token = req.body.token;
@@ -99,6 +101,72 @@ router.post("/verifyToken", async (req, res) => {
       }
     );
   } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+//get one user by email
+router.get("/getOneByEmail/:id", async (req, res) => {
+  try {
+    const useremail = req.params.id;
+    const resualt = await db.getOneByEmail(useremail);
+    res.status(200).json(resualt);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+router.post("/authUser/:id", async (req, res) => {
+  try {
+    const OTP = Math.floor(Math.random() * 1000 * 10);
+    const userEmail = req.params.id;
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "find02find@gmail.com",
+        pass: "anbbrghidzgddsdb",
+      },
+    });
+    const mailOptions = {
+      from: "find02find@gmail.com",
+      to: userEmail,
+      subject: "OTP message ",
+      text: "the OTP message to edit your account is " + OTP,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        res.status(200).json(OTP);
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ message: res.message });
+  }
+});
+
+router.post("/updateProfile/:id", async (req, res) => {
+  try {
+    const userID = req.params.id;
+    const userInfo = {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      city: req.body.city,
+      imageProfile: req.body.imageProfile,
+      profileLanguage: req.body.profileLanguage,
+    };
+    const update = await db.updateProfile([
+      userInfo.name,
+      userInfo.email,
+      userInfo.password,
+      userInfo.city,
+      userInfo.imageProfile,
+      userInfo.profileLanguage,
+      userID,
+    ]);
+    res.status(200).json(update);
+  } catch (error) {
     res.status(400).json({ message: err.message });
   }
 });

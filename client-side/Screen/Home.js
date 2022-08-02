@@ -14,11 +14,9 @@ import BottpmTap from "../Components/TapBar";
 import axios from "axios";
 import Coffe from "../Components/Home/coffe";
 import Restaurant from "../Components/Home/Restaurant";
-
 export default function Home({ navigation }) {
   const [Search, setSearch] = useState("");
   const [section, setSection] = useState("Coffe");
-  const [Token, setToken] = useState(null);
 
   // async function checkToken() {
   //   try {
@@ -38,20 +36,35 @@ export default function Home({ navigation }) {
   //   }
   // }
 
-  const getToken = async () => {
-    try {
-      const token = await AsyncStorage.getItem("token");
-      setToken(token);
-    } catch (err) {
-      alert("err");
-    }
-  };
-  const checkToken = () => {
-    alert("hi");
-  };
   useEffect(() => {
-    getToken();
-    checkToken();
+    // const auth = async () => {
+    //   try {
+    //     const token = AsyncStorage.getItem("toekn");
+    //     const tokenInfo = {
+    //       token: token,
+    //     };
+    //     const response = await axios.post(
+    //       "http://192.168.1.21:4000/user/verifyToken",
+    //       tokenInfo
+    //     );
+
+    //     if (response.status === 400) {
+    //       navigation.navigate("Login");
+    //     }
+    //   } catch (err) {
+    //     alert(err);
+    //   }
+    // };
+    const auth = () => {
+      // if (!(user && user.accessToken)) {
+      //   navigation.navigate("Login");
+      // }
+      const token = AsyncStorage.getItem("token");
+
+      alert(token);
+    };
+
+    auth();
   });
 
   return (

@@ -22,10 +22,11 @@ export default function ComponentInfo({ navigation, ...props }) {
     >
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("RestaurantDetails", {
-            RestaurantName: props.name,
-            RestaurantLogo: props.uri,
-          });
+          navigation.navigate(
+            "RestaurantDetails"
+            // RestaurantName: props.name,
+            // RestaurantLogo: props.uri,
+          );
         }}
       >
         <ComponentImage

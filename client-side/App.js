@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import Login from "./Screen/Login";
 import Signup from "./Screen/Signup";
+import RestaurantDetail from "./Screen/RestaurantDetail";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -21,6 +22,10 @@ export default function App() {
         <Stack.Screen name="Tap" component={BottpmTap} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Singup" component={Signup} />
+        {/* <Stack.Screen
+          name="RestaurantDetails"
+          component={<RestaurantDetail />}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

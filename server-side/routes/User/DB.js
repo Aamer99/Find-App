@@ -68,20 +68,35 @@ db.register = (user) => {
   });
 };
 
-// db.login = (loginInfo) => {
-//   console.log(loginInfo);
-//   return new Promise((resolve, reject) => {
-//     connect.query(
-//       "SELECT  email FROM users WHERE email =?",
-//       loginInfo,
-//       (err, resualt) => {
-//         if (err) {
-//           return reject(err);
-//         }
+db.getOneByEmail = (email) => {
+  return new Promise((resolve, reject) => {
+    connect.query(
+      "SELECT * FROM users WHERE email= ?",
+      email,
+      (err, resualt) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(resualt);
+      }
+    );
+  });
+};
 
-//         return resolve(resualt);
-//       }
-//     );
-//   });
-// };
+//update one user
+
+db.updateProfile = (user) => {
+  return new Promise((resolve, reject) => {
+    connect.query(
+      "UPDATE users SET name=? , email=? , password=?, city=?,imageProfile=?, profileLanguage=? WHERE id=?",
+      user,
+      (err, resualt) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve("successful");
+      }
+    );
+  });
+};
 module.exports = db;
