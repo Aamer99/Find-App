@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
 import ComponentInfo from "./ComponentInfo";
 import axios from "axios";
+import { Icon } from "react-native-elements";
+import Entypo from "react-native-vector-icons/Entypo";
 export default function Coffe({ navigation, ...props }) {
   const [data, setData] = useState([]);
   const [activeLodaing, setActiveLodaing] = useState(true);
@@ -9,7 +11,7 @@ export default function Coffe({ navigation, ...props }) {
     // get data from database
     const getData = async () => {
       try {
-        const response = await axios.get("http://172.20.10.6:4000/coffe");
+        const response = await axios.get("http://192.168.8.10:4000/coffe");
         if (response.status === 200) {
           setData(response.data);
           setActiveLodaing(false);
@@ -27,17 +29,54 @@ export default function Coffe({ navigation, ...props }) {
 
   return (
     <View>
-      {data.map((item) => {
-        return (
-          <ComponentInfo
-            uri={item.coffeLogo}
-            name={item.name}
-            navigation={navigation}
-            heartIconName={"cards-heart-outline"}
-            heartIconColor={"black"}
-          />
-        );
-      })}
+      {!props.showSearch && (
+        <>
+          {data.map((item) => {
+            return (
+              <ComponentInfo
+                uri={item.coffeLogo}
+                name={item.name}
+                navigation={navigation}
+                heartIconName={"cards-heart-outline"}
+                heartIconColor={"black"}
+              />
+            );
+          })}
+        </>
+      )}
+
+      {props.showSearch && (
+        <>
+          {props.Search.length === 0 && (
+            <>
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "50%",
+                }}
+              >
+                <Entypo name="emoji-sad" size={50} color="gray" />
+                <Text style={{ margin: 10, color: "gray" }}>
+                  Sorry we can't find what you search for it
+                </Text>
+              </View>
+            </>
+          )}
+          {props.Search.map((item) => {
+            return (
+              <ComponentInfo
+                uri={item.coffeLogo}
+                name={item.name}
+                navigation={navigation}
+                heartIconName={"cards-heart-outline"}
+                heartIconColor={"black"}
+              />
+            );
+          })}
+        </>
+      )}
+
       {activeLodaing && (
         <>
           <ActivityIndicator

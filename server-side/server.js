@@ -26,6 +26,9 @@ app.use("/user", userRouter);
 const coffeRouter = require("./routes/coffe/coffe");
 app.use("/coffe", coffeRouter);
 
+const restaurantRouter = require("./routes/Restaurant/Restaurant");
+app.use("/restaurant", restaurantRouter);
+
 app.listen("4000", () => {
   console.log("server is running");
 });

@@ -199,4 +199,15 @@ router.post("/updateProfile/:id", async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
+router.post("/addFavoritResturent/:id", async (req, res) => {
+  try {
+    const userID = req.params.id;
+    const place = "aamer";
+    const add = await db.addFavoritPlace([place, userID]);
+    res.status(200).json(add);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 module.exports = router;

@@ -1,10 +1,10 @@
 const router = require("express").Router();
-const db = require("./DB");
+const db = require("./db");
 
 router.get("/", async (req, res) => {
   try {
-    let resualt = await db.getAll();
-    res.status(200).json(resualt);
+    const restaurants = await db.getAll();
+    res.status(200).json(restaurants);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -12,12 +12,11 @@ router.get("/", async (req, res) => {
 
 router.get("/search/:id", async (req, res) => {
   try {
-    const searchTerm = req.params.id;
-    const search = await db.search(searchTerm);
+    const searchTearm = req.params.id;
+    const search = await db.search(searchTearm);
     res.status(200).json(search);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
-
 module.exports = router;

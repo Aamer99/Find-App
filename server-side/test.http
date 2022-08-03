@@ -3,12 +3,12 @@ GET http://localhost:4000/user
 ###
 GET http://localhost:4000/user/1121223
 ###
-POST http://192.168.0.150:4000/user/login
+POST http://172.20.10.6:4000/user/login
 Content-Type: application/json 
 
 {
-   "email":"aamer.com",
-   "password":"123"
+   "email":"aamer.es20@gmail.com",
+   "password":"aaa"
 }
 
 ### 
@@ -34,14 +34,14 @@ Content-Type: application/json
  }
 
 ####
-POST http://192.168.1.21:4000/user/updateProfile/2572134
+POST http://172.20.10.6:4000/user/updateProfile/8892406
 Content-Type: application/json
 
 {
- "name":"ddd ",
-    "email":"oamr.es@gmail.com",
-    "password":"dddd",
-    "city":"MED",
+ "name":"aamer essa ",
+    "email":"aamer.es20@gmail.com",
+    "password":"$2b$10$26bw9TZAG0QxfkaRc.cfVef4rSS3/8C4PES9E5eL.DFWva0BdzAam",
+    "city":"Madina",
     "imageProfile":"https://img.alayam.com/upload/imagebrowser/files/INAF_20220712195039485.jpg?maxheight=1200",
     "profileLanguage":"English"  
 }
@@ -60,3 +60,24 @@ GET http://192.168.1.21:4000/user/getOneByEmail/aamer.es20@gmail.com
 ###
 
 POST http://localhost:4000/user/authUser/aamer.es12@gmail.com
+
+
+####
+GET http://172.20.10.6:4000/coffe/search/kifa
+
+####
+
+GET http://192.168.8.10:4000/restaurant
+
+####
+
+GET http://192.168.8.10:4000/restaurant/search/kfc
+
+####
+
+POST http://192.168.8.10:4000/user/addFavoritResturent/7986680
+
+Content-Type: application/json
+{
+   "placeName":["aaaaaa","aaaaa",["aaaaaa"]]
+}

@@ -12,24 +12,24 @@ let db = {};
 
 db.getAll = () => {
   return new Promise((resolve, reject) => {
-    connect.query("SELECT * FROM coffes", (err, resualt) => {
+    connect.query("SELECT * FROM restaurant ", (err, res) => {
       if (err) {
-        throw reject(err);
-      } else {
-        return resolve(resualt);
+        return reject(err);
       }
+      return resolve(res);
     });
   });
 };
 
 db.search = (name) => {
   return new Promise((resolve, reject) => {
-    connect.query("SELECT * FROM coffes WHERE name=?", name, (err, resualt) => {
+    connect.query("SELECT * FROM restaurant WHERE name=?", name, (err, res) => {
       if (err) {
         return reject(err);
       }
-      return resolve(resualt);
+      return resolve(res);
     });
   });
 };
+
 module.exports = db;

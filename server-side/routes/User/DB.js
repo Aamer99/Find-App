@@ -110,4 +110,20 @@ db.updateProfile = (user) => {
     );
   });
 };
+
+db.addFavoritPlace = (data) => {
+  return new Promise((resolve, reject) => {
+    console.log(data);
+    connect.query(
+      "UPDATE users SET FavoriteRestaurant=? WHERE id=?",
+      data,
+      (err, res) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve("added successfuly!!");
+      }
+    );
+  });
+};
 module.exports = db;

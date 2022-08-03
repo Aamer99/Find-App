@@ -13,6 +13,9 @@ export default function HomeHeader(props) {
         ActiveTap={ActiveTap}
         SetActiveTap={SetActiveTap}
         sectionHandler={props.SectionHandler}
+        setenableBtnSearch={props.setenableBtnSearch}
+        setShowSearchResualt={props.setShowSearchResualt}
+        SetSearch={props.SetSearch}
       />
       <Section
         text="Restaurant"
@@ -21,6 +24,9 @@ export default function HomeHeader(props) {
         ActiveTap={ActiveTap}
         SetActiveTap={SetActiveTap}
         sectionHandler={props.SectionHandler}
+        setenableBtnSearch={props.setenableBtnSearch}
+        setShowSearchResualt={props.setShowSearchResualt}
+        SetSearch={props.SetSearch}
       />
     </View>
   );
@@ -38,6 +44,9 @@ const Section = (props) => {
       onPress={() => {
         props.SetActiveTap(props.text);
         props.sectionHandler(props.text);
+        props.setenableBtnSearch(true);
+        props.setShowSearchResualt(false);
+        props.SetSearch("");
       }}
     >
       <Text

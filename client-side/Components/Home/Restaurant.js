@@ -1,25 +1,88 @@
-import React from "react";
-import { Text } from "react-native";
-import { View } from "react-native";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import Entypo from "react-native-vector-icons/Entypo";
+import { View, Text, ActivityIndicator } from "react-native";
 import ComponentInfo from "./ComponentInfo";
 
 export default function Restaurant(props) {
+  const [data, setData] = useState([]);
+  const [activeLodaing, setActiveLodaing] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get("http://192.168.8.10:4000/restaurant");
+        if (response.status === 200) {
+          setData(response.data);
+          setActiveLodaing(false);
+        } else {
+          alert("error in response");
+        }
+      } catch (error) {
+        alert(error);
+      }
+    };
+    getData();
+  });
   return (
     <View>
-      <ComponentInfo
-        uri="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Burger_King_1969_logo.svg/640px-Burger_King_1969_logo.svg.png"
-        name={"burger king"}
-        // navigation={navigation}
-        heartIconName={"cards-heart-outline"}
-        heartIconColor={"black"}
-      />
-      <ComponentInfo
-        uri="https://i.pinimg.com/736x/c7/84/67/c78467db9ff497393cb548a48f02d451.jpg"
-        name={"McDonald's"}
-        // navigation={navigation}
-        heartIconName={"cards-heart-outline"}
-        heartIconColor={"black"}
-      />
+      {!props.showSearch && (
+        <>
+          {data.map((item) => {
+            return (
+              <ComponentInfo
+                uri={item.restaurantLogo}
+                name={item.name}
+                // navigation={navigation}
+                heartIconName={"cards-heart-outline"}
+                heartIconColor={"black"}
+              />
+            );
+          })}
+        </>
+      )}
+
+      {props.showSearch && (
+        <>
+          {props.Search.length === 0 && (
+            <>
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "50%",
+                }}
+              >
+                <Entypo name="emoji-sad" size={50} color="gray" />
+                <Text style={{ margin: 10, color: "gray" }}>
+                  Sorry we can't find what you search for it
+                </Text>
+              </View>
+            </>
+          )}
+          {props.Search.map((item) => {
+            return (
+              <ComponentInfo
+                uri={item.restaurantLogo}
+                name={item.name}
+                //navigation={navigation}
+                heartIconName={"cards-heart-outline"}
+                heartIconColor={"black"}
+              />
+            );
+          })}
+        </>
+      )}
+
+      {activeLodaing && (
+        <>
+          <ActivityIndicator
+            size="large"
+            style={{ marginTop: "50%" }}
+            color="black"
+          />
+        </>
+      )}
     </View>
   );
 }

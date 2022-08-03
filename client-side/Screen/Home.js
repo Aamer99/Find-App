@@ -15,9 +15,11 @@ import axios from "axios";
 import Coffe from "../Components/Home/coffe";
 import Restaurant from "../Components/Home/Restaurant";
 export default function Home({ navigation }) {
-  const [Search, setSearch] = useState("");
+  const [Search, setSearch] = useState([]);
   const [section, setSection] = useState("Coffe");
-
+  const [showSearchResualt, setShowSearchResualt] = useState(false);
+  const [enableBtnSearch, setenableBtnSearch] = useState(true);
+  const [searchTerm, SetSearchTerm] = useState("");
   // async function checkToken() {
   //   try {
   //     const token = await AsyncStorage.getItem("token");
@@ -60,8 +62,6 @@ export default function Home({ navigation }) {
       //   navigation.navigate("Login");
       // }
       const token = AsyncStorage.getItem("token");
-
-      alert(token);
     };
 
     auth();
@@ -70,12 +70,29 @@ export default function Home({ navigation }) {
   return (
     <SafeAreaView style={{ backgroundColor: "#eee", flex: 1, top: 30 }}>
       <View style={{ backgroundColor: "white", padding: 15 }}>
-        <HomeHeader SectionHandler={setSection} />
-        <SearchBar SearchHandler={setSearch} />
+        <HomeHeader
+          SectionHandler={setSection}
+          setenableBtnSearch={setenableBtnSearch}
+          setShowSearchResualt={setShowSearchResualt}
+          SetSearch={SetSearchTerm}
+        />
+        <SearchBar
+          SearchHandler={setSearch}
+          section={section}
+          setShowSearchResualt={setShowSearchResualt}
+          setenableBtnSearch={setenableBtnSearch}
+          enableBtnSearch={enableBtnSearch}
+          Search={searchTerm}
+          SetSearch={SetSearchTerm}
+        />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {section == "Coffe" && <Coffe Search={Search} />}
-        {section == "Restaurant" && <Restaurant Search={Search} />}
+        {section == "Coffe" && (
+          <Coffe Search={Search} showSearch={showSearchResualt} />
+        )}
+        {section == "Restaurant" && (
+          <Restaurant Search={Search} showSearch={showSearchResualt} />
+        )}
       </ScrollView>
     </SafeAreaView>
   );
