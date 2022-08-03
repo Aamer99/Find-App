@@ -6,7 +6,9 @@ import EditAccount from "../Components/Account/EditAccount";
 import AccountVerification from "../Components/Account/AccountVerification";
 import FunctionalityBar from "../Components/Account/AccountFunctionalityBar";
 import AccountInfo from "../Components/Account/AccountInfo";
-export default function Acoount({ navigation }) {
+export default function Acoount({ route, navigation }) {
+  const userEmail = route.params.userEmail;
+
   const [data, setData] = useState([]);
   const [OTP, setOTP] = useState(null);
 
@@ -16,7 +18,7 @@ export default function Acoount({ navigation }) {
   const sendOTPmessage = async () => {
     try {
       const respons = await axios.post(
-        "http://172.20.10.6:4000/user/authUser/aamer.es12@gmail.com"
+        `http://172.20.10.6:4000/user/authUser/${userEmail}`
       );
       if (respons.status === 200) {
         setOTP(respons.data);
@@ -29,7 +31,9 @@ export default function Acoount({ navigation }) {
   useEffect(() => {
     const getData = async () => {
       try {
-        const respons = await axios.get("http://172.20.10.6:4000/user/112122");
+        const respons = await axios.get(
+          `http://172.20.10.6:4000/user/getOneByEmail/${userEmail}`
+        );
         if (respons.status === 200) {
           setData(respons.data[0]);
         } else {

@@ -12,7 +12,9 @@ const Tap = createMaterialBottomTabNavigator();
 
 // const Drawer = createDrawerNavigator();
 
-export default function TapBar() {
+export default function TapBar({ route, navigation }) {
+  const email = route.params.userEmail;
+
   return (
     <Tap.Navigator
       screenOptions={{ tabBarLabel: false }}
@@ -101,6 +103,7 @@ export default function TapBar() {
       <Tap.Screen
         name="Account"
         component={Acoount}
+        initialParams={{ userEmail: email }}
         options={{
           tabBarIcon: ({ focused }) => (
             <View

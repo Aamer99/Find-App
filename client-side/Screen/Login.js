@@ -26,7 +26,7 @@ export default function Login({ navigation }) {
       );
       if (login) {
         await AsyncStorage.setItem("token", JSON.stringify(login.data));
-        navigation.navigate("Tap");
+        navigation.navigate("Tap", { userEmail: email });
         console.log(login.data);
       } else {
         setValidEmailorPassword(true);

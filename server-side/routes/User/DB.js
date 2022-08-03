@@ -83,6 +83,17 @@ db.getOneByEmail = (email) => {
   });
 };
 
+db.getPassword = (id) => {
+  return new Promise((resolve, reject) => {
+    connect.query("SELECT password FROM users WHERE id=?", id, (err, res) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(res[0].password);
+    });
+  });
+};
+
 //update one user
 
 db.updateProfile = (user) => {

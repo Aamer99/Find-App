@@ -148,25 +148,54 @@ router.post("/authUser/:id", async (req, res) => {
 router.post("/updateProfile/:id", async (req, res) => {
   try {
     const userID = req.params.id;
-    const userInfo = {
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      city: req.body.city,
-      imageProfile: req.body.imageProfile,
-      profileLanguage: req.body.profileLanguage,
-    };
-    const update = await db.updateProfile([
-      userInfo.name,
-      userInfo.email,
-      userInfo.password,
-      userInfo.city,
-      userInfo.imageProfile,
-      userInfo.profileLanguage,
-      userID,
-    ]);
-    res.status(200).json(update);
-  } catch (error) {
+    const newPassword = req.body.password;
+    const oldPassword = await db.getPassword(userID);
+    const passwordNotChanged = await bcrypt.compare(newPassword, oldPassword);
+
+    if (passwordNotChanged) {
+      const securePasssword = newPassword;
+
+      const userInfo = {
+        name: req.body.name,
+        email: req.body.email,
+        password: securePasssword,
+        city: req.body.city,
+        imageProfile: req.body.imageProfile,
+        profileLanguage: req.body.profileLanguage,
+      };
+      const update = await db.updateProfile([
+        userInfo.name,
+        userInfo.email,
+        userInfo.password,
+        userInfo.city,
+        userInfo.imageProfile,
+        userInfo.profileLanguage,
+        userID,
+      ]);
+      res.status(200).json(update);
+    } else {
+      const saltPassword = await bcrypt.genSalt(10);
+      const securePasssword = await bcrypt.hash(newPassword, saltPassword);
+      const userInfo = {
+        name: req.body.name,
+        email: req.body.email,
+        password: securePasssword,
+        city: req.body.city,
+        imageProfile: req.body.imageProfile,
+        profileLanguage: req.body.profileLanguage,
+      };
+      const update = await db.updateProfile([
+        userInfo.name,
+        userInfo.email,
+        userInfo.password,
+        userInfo.city,
+        userInfo.imageProfile,
+        userInfo.profileLanguage,
+        userID,
+      ]);
+      res.status(200).json(update);
+    }
+  } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });

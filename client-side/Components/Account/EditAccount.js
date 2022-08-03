@@ -7,26 +7,50 @@ export default function EditAccount(props) {
 
   const [password, setPassword] = useState("");
   const [confirmPassowrd, setConfirmPassword] = useState("");
-
+  const [passwordNotMatch, setErorrPassword] = useState(false);
   const editAccount = async () => {
     try {
-      const userInfo = {
-        name: name,
-        email: props.data.email,
-        password: password,
-        city: props.data.city,
-        imageProfile: props.data.imageProfile, //props.imageProfile --> from AccountInfo component + the id sholud come from home screen
-        profileLanguage: props.data.profileLanguage,
-      };
+      if (password == "" && confirmPassowrd == "") {
+        setPassword(props.data.password);
+        const userInfo = {
+          name: name,
+          email: props.data.email,
+          password: password,
+          city: props.data.city,
+          imageProfile: props.data.imageProfile, //props.imageProfile --> from AccountInfo component + the id sholud come from home screen
+          profileLanguage: props.data.profileLanguage,
+        };
 
-      const update = await axios.post(
-        `http://172.20.10.6:4000/user/updateProfile/${props.data.id}`,
-        userInfo
-      );
-      if (update.status === 200) {
-        alert("work");
+        const update = await axios.post(
+          `http://172.20.10.6:4000/user/updateProfile/${props.data.id}`,
+          userInfo
+        );
+        if (update.status === 200) {
+          alert("work");
+        } else {
+          alert("not work ");
+        }
+      } else if (password != confirmPassowrd) {
+        setErorrPassword(true);
       } else {
-        alert("not work ");
+        const userInfo = {
+          name: name,
+          email: props.data.email,
+          password: password,
+          city: props.data.city,
+          imageProfile: props.data.imageProfile, //props.imageProfile --> from AccountInfo component + the id sholud come from home screen
+          profileLanguage: props.data.profileLanguage,
+        };
+
+        const update = await axios.post(
+          `http://172.20.10.6:4000/user/updateProfile/${props.data.id}`,
+          userInfo
+        );
+        if (update.status === 200) {
+          alert("work");
+        } else {
+          alert("not work ");
+        }
       }
     } catch (err) {
       alert("err in all function ");
@@ -45,18 +69,19 @@ export default function EditAccount(props) {
         leftIcon={{ type: "feather", name: "mail", size: 20 }}
       />
       <Input
-        placeholder={props.data.password}
+        placeholder={"Password"}
         value={password}
         secureTextEntry={true}
         leftIcon={{ type: "feather", name: "lock", size: 20 }}
         onChangeText={setPassword}
       />
       <Input
-        placeholder={props.data.password}
+        placeholder={"Confirm Password"}
         secureTextEntry={true}
         leftIcon={{ type: "feather", name: "lock", size: 20 }}
         value={confirmPassowrd}
         onChangeText={setConfirmPassword}
+        errorMessage={passwordNotMatch ? "password not match" : ""}
       />
       <Button
         icon={{ type: "feather", name: "edit", size: 20, color: "white" }}
