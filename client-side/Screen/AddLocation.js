@@ -1,5 +1,6 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import AddPlaceForm from "../Components/Add-Place/addPlaceForm";
 
 export default function AddLoaction() {
   return (
@@ -10,9 +11,12 @@ export default function AddLoaction() {
         top: 30,
         alignItems: "center",
         justifyContent: "center",
+        margin: 20,
       }}
     >
-      <Text>Add loaction Screen</Text>
+      <ScrollView>
+        <AddPlaceForm />
+      </ScrollView>
     </View>
   );
 }

@@ -3,8 +3,7 @@ import { Input, Button } from "react-native-elements";
 import { View } from "react-native";
 import axios from "axios";
 export default function EditAccount(props) {
-  const [name, setName] = useState("");
-
+  const [name, setName] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassowrd, setConfirmPassword] = useState("");
   const [passwordNotMatch, setErorrPassword] = useState(false);
@@ -12,6 +11,11 @@ export default function EditAccount(props) {
     try {
       if (password == "" && confirmPassowrd == "") {
         setPassword(props.data.password);
+        if (name == null) {
+          alert("aaaa");
+          setName(props.data.name);
+        }
+
         const userInfo = {
           name: name,
           email: props.data.email,
@@ -22,7 +26,7 @@ export default function EditAccount(props) {
         };
 
         const update = await axios.post(
-          `http://172.20.10.6:4000/user/updateProfile/${props.data.id}`,
+          `http://192.168.8.10:4000/user/updateProfile/${props.data.id}`,
           userInfo
         );
         if (update.status === 200) {
@@ -32,6 +36,10 @@ export default function EditAccount(props) {
         }
       } else if (password != confirmPassowrd) {
         setErorrPassword(true);
+        if (name == null) {
+          alert("Aaaa");
+          setName(props.data.name);
+        }
       } else {
         const userInfo = {
           name: name,
@@ -43,7 +51,7 @@ export default function EditAccount(props) {
         };
 
         const update = await axios.post(
-          `http://172.20.10.6:4000/user/updateProfile/${props.data.id}`,
+          `http://192.168.8.10:4000/user/updateProfile/${props.data.id}`,
           userInfo
         );
         if (update.status === 200) {
@@ -61,7 +69,6 @@ export default function EditAccount(props) {
       <Input
         placeholder={props.data.name}
         leftIcon={{ type: "feather", name: "user", size: 20 }}
-        value={name}
         onChangeText={setName}
       />
       <Input

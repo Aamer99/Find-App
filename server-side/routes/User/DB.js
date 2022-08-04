@@ -115,13 +115,28 @@ db.addFavoritPlace = (data) => {
   return new Promise((resolve, reject) => {
     console.log(data);
     connect.query(
-      "UPDATE users SET FavoriteRestaurant=? WHERE id=?",
+      "update users set FavoriteRestaurant = JSON_MERGE_PATCH(`data`, '{'key2': 'I am ID2', 'key3':'I am ID3'}') where id =?",
       data,
       (err, res) => {
         if (err) {
           return reject(err);
         }
         return resolve("added successfuly!!");
+      }
+    );
+  });
+};
+
+db.getFavoriteList = (id) => {
+  return new Promise((resolve, reject) => {
+    connect.query(
+      "SELECT FavoriteRestaurant FROM users WHERE id=? ",
+      id,
+      (err, res) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(res[0].FavoriteRestaurant);
       }
     );
   });
