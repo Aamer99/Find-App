@@ -114,31 +114,28 @@ db.updateProfile = (user) => {
 db.addFavoritPlace = (data) => {
   return new Promise((resolve, reject) => {
     console.log(data);
+    connect.query("INSERT INTO favorit VALUES (?,?)", data, (err, res) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve("added successfuly!!");
+    });
+  });
+};
+
+db.getFavoritPlaces = (userID) => {
+  return new Promise((resolve, reject) => {
     connect.query(
-      "update users set FavoriteRestaurant = JSON_MERGE_PATCH(`data`, '{'key2': 'I am ID2', 'key3':'I am ID3'}') where id =?",
-      data,
+      "SELECT placeID FROM favorit WHERE userID=?",
+      userID,
       (err, res) => {
         if (err) {
           return reject(err);
         }
-        return resolve("added successfuly!!");
+        return resolve(res);
       }
     );
   });
 };
 
-db.getFavoriteList = (id) => {
-  return new Promise((resolve, reject) => {
-    connect.query(
-      "SELECT FavoriteRestaurant FROM users WHERE id=? ",
-      id,
-      (err, res) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(res[0].FavoriteRestaurant);
-      }
-    );
-  });
-};
 module.exports = db;

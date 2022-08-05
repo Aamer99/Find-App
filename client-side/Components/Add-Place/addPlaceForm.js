@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView, Linking } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { CheckBox } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
@@ -27,10 +27,9 @@ export default function AddPlaceForm(props) {
   };
 
   return (
-    <View style={{ width: "100%" }}>
+    <View style={{ width: "80%" }}>
       <View
         style={{
-          width: "98%",
           padding: 20,
           borderColor: "black",
           borderRadius: 35,
@@ -60,11 +59,17 @@ export default function AddPlaceForm(props) {
         <MapView
           provider={PROVIDER_GOOGLE}
           style={{
-            width: 300,
-            height: 300,
+            width: 400,
+            height: 200,
+            borderRadius: 35,
+            borderWidth: 1,
           }}
           initialRegion={initialPosition}
           zoomEnabled={false}
+          onPress={() => {
+            //deroction to google maps
+            Linking.openURL("GoogleMaps://app?saddr=21.330326,39.881064");
+          }}
         >
           <Marker coordinate={initialPosition} />
         </MapView>

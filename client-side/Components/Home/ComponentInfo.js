@@ -1,8 +1,29 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import axios from "axios";
 export default function ComponentInfo({ navigation, ...props }) {
+  const [isFavoritPlace, setFavoritPlace] = useState(false);
+  const addToFavorit = async () => {
+    try {
+      const place = {
+        placeID: props.id,
+      };
+      const addFavoritPlace = await axios.post(
+        `http://172.20.10.6:4000/user/addFavoritResturent/7986680`,
+        place
+      );
+      if (addFavoritPlace.status === 200) {
+        setFavoritPlace(true);
+        alert("work");
+      } else {
+        alert("propblem in axios add place function");
+      }
+    } catch (err) {
+      alert("error in add favorit place function");
+    }
+  };
   return (
     <View
       style={{
@@ -31,8 +52,9 @@ export default function ComponentInfo({ navigation, ...props }) {
       >
         <ComponentImage
           uri={props.uri}
-          heartIconColor={props.heartIconColor}
-          heartIconName={props.heartIconName}
+          heartIconColor={isFavoritPlace ? "heart" : props.heartIconColor}
+          heartIconName={isFavoritPlace ? "red" : props.heartIconName}
+          addToFavorit={addToFavorit}
         />
         <ComponentShortInfo name={props.name} />
       </TouchableOpacity>
@@ -56,7 +78,10 @@ const ComponentImage = (props) => {
         }}
       />
 
-      <TouchableOpacity style={{ top: 20, right: 20, position: "absolute" }}>
+      <TouchableOpacity
+        style={{ top: 20, right: 20, position: "absolute" }}
+        onPress={props.addToFavorit}
+      >
         <MaterialCommunityIcons
           name={props.heartIconName}
           size={25}

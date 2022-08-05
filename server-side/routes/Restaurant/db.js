@@ -20,7 +20,16 @@ db.getAll = () => {
     });
   });
 };
-
+db.getOne = (data) => {
+  return new Promise((resolve, reject) => {
+    connect.query("SELECT * FROM restaurant WHERE id=? ", data, (err, res) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(res);
+    });
+  });
+};
 db.search = (name) => {
   return new Promise((resolve, reject) => {
     connect.query("SELECT * FROM restaurant WHERE name=?", name, (err, res) => {

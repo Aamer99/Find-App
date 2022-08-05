@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const db = require("./db");
 
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const restaurants = await db.getAll();
+    const userID = req.params.id;
+    const restaurants = await db.getOne(userID);
     res.status(200).json(restaurants);
   } catch (error) {
     res.status(400).json({ message: error.message });
