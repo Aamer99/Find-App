@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const db = require("./DB");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const DB = require("../Restaurant/db");
 require("dotenv").config();
 
 //get all users
@@ -202,20 +203,29 @@ router.post("/updateProfile/:id", async (req, res) => {
 router.post("/addFavoritResturent/:id", async (req, res) => {
   try {
     const userID = req.params.id;
-    const newPlaceID = req.body.placeID;
-    const FavoriteRestaurantList = await db.getFavoriteList(userID);
-    const ss = FavoriteRestaurantList.replace("[", " ");
-    // const myArray = FavoriteRestaurantList.split(",");
+    const PlplaceIDaceID = req.body.placeID;
+    const FavoritePlace = await db.addFavoritPlace([userID, PlplaceIDaceID]);
 
-    // myArray.push(newPlaceID);
-    console.log(FavoriteRestaurantList);
-
-    // const place = req.body.favoritPlaceID;
-    // console.log(place);
-    // const add = await db.addFavoritPlace(userID);
-    res.status(200).json(FavoriteRestaurantList);
+    res.status(200).json(FavoritePlace);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+});
+
+router.get("/favoritPlaces/:id", async (req, res) => {
+  try {
+    const userID = req.params.id;
+    const favoritPlaces = await db.getFavoritPlaces(userID);
+    const PlacesList = [];
+    const favoritPlacesList = favoritPlaces.map((item) => {
+      console.log(item.placeID);
+      const getPlace = DB.getOne(item.placeID);
+      console.log(getPlace);
+      return PlacesList.push(getPlace);
+    });
+    res.status(200).json(PlacesList);
+  } catch (error) {
+    res.status(400).json({ message: err.message });
   }
 });
 module.exports = router;
