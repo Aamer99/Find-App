@@ -21,7 +21,11 @@ export default function Login({ navigation }) {
       };
 
       const login = await axios.post(
+<<<<<<< HEAD
+        "http://192.168.1.22:4000/user/login",
+=======
         "http://172.20.10.6:4000/user/login",
+>>>>>>> c5849d55d9509f2ff2008f6508a92f05515cc0c1
         loginInfo
       );
       if (login) {
