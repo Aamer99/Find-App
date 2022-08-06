@@ -21,7 +21,7 @@ export default function Login({ navigation }) {
       };
 
       const login = await axios.post(
-        "http://192.168.8.10:4000/user/login",
+        "http://192.168.1.22:4000/user/login",
         loginInfo
       );
       if (login) {
