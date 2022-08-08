@@ -11,7 +11,7 @@ export default function SearchBar(props) {
       props.setenableBtnSearch(false);
       if (props.section == "Coffe") {
         const search = await axios.get(
-          `http://192.168.8.10:4000/coffe/search/${searchTerm}`
+          `http://192.168.8.102:4000/coffe/search/${searchTerm}`
         );
         if (search.status === 200) {
           props.setShowSearchResualt(true);
@@ -21,7 +21,7 @@ export default function SearchBar(props) {
         }
       } else if (props.section == "Restaurant") {
         const search = await axios.get(
-          `http://192.168.8.10:4000/restaurant/search/${searchTerm}`
+          `http://192.168.8.102:4000/restaurant/search/${searchTerm}`
         );
         if (search.status === 200) {
           props.setShowSearchResualt(true);

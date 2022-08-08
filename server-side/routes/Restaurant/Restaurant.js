@@ -33,20 +33,22 @@ router.get("/", async (req, res) => {
 router.get("/favoritplaces/:id", async (req, res) => {
   try {
     const userID = req.params.id;
-    const placesIDList = await db.getFavoritPlaces(userID);
-
-    const FavoritPlaces = placesIDList.map((item) => {
-      console.log(item.placeID);
-      const data = async () => {
-        const dd = await db.getOne(item.placeID);
-
-        console.log(dd);
-        return dd;
-      };
-      console.log(data());
-      return data();
+    const placesIDList = await db.getFavoritPlaces(userID); // ALL favorit PlaceID
+    const lis = [];
+    const FavoritPlaces = placesIDList.map(async (item) => {
+      // console.log(item.placeID);
+      // const data = async () => {
+      //   const placeInfo = await db.getOne("112100");
+      //   console.log(placeInfo[0]);
+      //   placeList.push(placeInfo);
+      // };
+      const placeInfo = await db.getOne(item.placeID);
+      //console.log(placeInfo[0]);
+      lis.push(placeInfo);
+      return lis;
     });
-
+    console.log("AA");
+    console.log(lis.length);
     res.status(200).json(FavoritPlaces);
   } catch (error) {
     res.status(400).json({ message: error.message });

@@ -36,7 +36,7 @@ export default function Signup({ navigation }) {
       } else {
         setInvalidPassword(false);
         const Register = await axios.post(
-          "http://192.168.1.21:4000/user/signup",
+          "http://192.168.8.102:4000/user/signup",
           userInfo
         );
         if (Register.status == 200) {

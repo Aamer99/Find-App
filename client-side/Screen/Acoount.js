@@ -18,7 +18,7 @@ export default function Acoount({ route, navigation }) {
   const sendOTPmessage = async () => {
     try {
       const respons = await axios.post(
-        `http://192.168.1.21:4000/user/authUser/${userEmail}`
+        `http://192.168.8.102:4000/user/authUser/${userEmail}`
       );
       if (respons.status === 200) {
         setOTP(respons.data);
@@ -32,7 +32,7 @@ export default function Acoount({ route, navigation }) {
     const getData = async () => {
       try {
         const respons = await axios.get(
-          `http://192.168.1.21:4000/user/getOneByEmail/${userEmail}`
+          `http://192.168.8.102:4000/user/getOneByEmail/${userEmail}`
         );
         if (respons.status === 200) {
           setData(respons.data[0]);

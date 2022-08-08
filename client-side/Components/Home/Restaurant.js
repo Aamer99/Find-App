@@ -11,7 +11,9 @@ export default function Restaurant({ navigation, ...props }) {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get("http://192.168.1.21:4000/restaurant");
+        const response = await axios.get(
+          "http://192.168.8.102:4000/restaurant"
+        );
         if (response.status === 200) {
           setData(response.data);
           setActiveLodaing(false);

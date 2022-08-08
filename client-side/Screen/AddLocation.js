@@ -5,17 +5,17 @@ import AddPlaceForm from "../Components/Add-Place/addPlaceForm";
 export default function AddLoaction() {
   return (
     <View
-      style={{
-        backgroundColor: "#eee",
-        flex: 1,
-        top: 30,
-        // alignItems: "center",
-        // justifyContent: "center",
-      }}
+    // style={{
+    //   backgroundColor: "#eee",
+    //   flex: 1,
+    //   top: 30,
+    //   // alignItems: "center",
+    //   // justifyContent: "center",
+    // }}
     >
-      <ScrollView>
-        <AddPlaceForm />
-      </ScrollView>
+      {/* <ScrollView> */}
+      <AddPlaceForm />
+      {/* </ScrollView> */}
     </View>
   );
 }
