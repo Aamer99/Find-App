@@ -3,7 +3,7 @@ GET http://localhost:4000/user
 ###
 GET http://localhost:4000/user/112122
 ###
-POST http://192.168.8.10:4000/user/login
+POST http://192.168.8.102:4000/user/login
 Content-Type: application/json 
 
 {
@@ -21,12 +21,12 @@ Content-Type: application/json
 }
 
 ### 
-POST http://192.168.0.156:4000/user/signup
+POST http://192.168.8.102:4000/user/signup
 Content-Type: application/json
 
  {
     "name":"dani ",
-    "email":"dani.es@gmail.com",
+    "email":"dani.es3@gmail.com",
     "password":"dani123",
     "city":"MED",
     "imageProfile":"ssssss",
@@ -67,7 +67,7 @@ GET http://172.20.10.6:4000/coffe/search/kifa
 
 ####
 
-GET http://192.168.1.21:4000/restaurant/112122
+GET http://192.168.1.21:4000/restaurant/90890650
 
 ####
 
@@ -84,4 +84,24 @@ Content-Type: application/json
 
 #### 
 
-GET http://localhost:4000/restaurant/favoritplaces/112122
+GET http://localhost:4000/restaurant/favoritplaces/7986680
+
+
+#### 
+
+POST http://172.20.10.6:4000/place/addPlace 
+Content-Type: application/json
+
+{
+      "name":"KFC",
+      "logo":"https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/KFC_Logo.svg/640px-KFC_Logo.svg.png",
+      "mnue": "https://www.restaurantmenuprice.com/wp-content/uploads/2022/04/kfc_menu_042522_01_buckets_01.jpg",
+      "city": "Madina",
+      "type":"Restaurant",
+      "PlaceLocation":"[ 24.470901,39.612236]"
+      
+}
+
+####
+
+GET http://localhost:4000/place/All 

@@ -13,12 +13,14 @@ import * as ImagePicker from "expo-image-picker";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import RNPickerSelect from "react-native-picker-select";
 import Feather from "react-native-vector-icons/Feather";
-export default function AddPlaceForm(props) {
+import axios from "axios";
+export default function AddPlaceForm({ navigation }) {
   const [placeName, setPlaceName] = useState("");
   const [checked, setChecked] = useState(false);
   const [image, setImage] = useState("");
   const [cities, setCities] = useState([{ label: "Madina", value: "Madina" }]);
   const [city, setCity] = useState("");
+  const [placeType, setPlaceType] = useState("");
   const selectPlaceholder = { label: "City", value: null, color: "#9EA0A4" };
   const [showMarker, setShowMaker] = useState(false);
   const [placeCoordinate, setPlaceCoordinate] = useState({
@@ -26,6 +28,16 @@ export default function AddPlaceForm(props) {
     longitude: 0,
   });
 
+  const checkType = (i) => {
+    const type = i + 1;
+    if (type == 1) {
+      setChecked(type);
+      setPlaceType("Resturent");
+    } else if (type == 2) {
+      setChecked(type);
+      setPlaceType("Coffe");
+    }
+  };
   const handelChoiseImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -47,6 +59,35 @@ export default function AddPlaceForm(props) {
     };
     setPlaceCoordinate(location);
     setShowMaker(true);
+  }
+
+  async function addPlace() {
+    try {
+      const placeInfo = {
+        name: placeName,
+        logo: "https://e7.pngegg.com/pngimages/396/139/png-clipart-hamburger-the-burger-king-logo-restaurant-french-fries-text-trademark.png",
+        mnue: "https://cheatdaydesign.com/wp-content/uploads/2021/08/Burger-King-Nutrition-Chicken-Fish-2.jpg.webp",
+        city: city,
+        type: placeType,
+        PlaceLocation: JSON.stringify(placeCoordinate),
+      };
+
+      const respons = await axios.post(
+        "http://172.20.10.6:4000/place/addPlace",
+        placeInfo
+      );
+      if (respons.status == 200) {
+        navigation.navigate("Home");
+        setCity(null);
+        setPlaceName("");
+        setPlaceCoordinate({ latitude: 0, longitude: 0 });
+        setChecked(0);
+      } else {
+        alert("not work");
+      }
+    } catch (err) {
+      alert("error in all function add place " + err);
+    }
   }
   return (
     <ScrollView>
@@ -88,7 +129,7 @@ export default function AddPlaceForm(props) {
           }}
         >
           <Input placeholder="Place Name " onChangeText={setPlaceName} />
-          <Text>Place Type</Text>
+          {/* <Text>Place Type</Text> */}
           {["resturent", "coffe"].map((l, i) => (
             <CheckBox
               key={i}
@@ -97,7 +138,7 @@ export default function AddPlaceForm(props) {
               checkedIcon="dot-circle-o"
               uncheckedIcon="circle-o"
               checked={checked === i + 1}
-              onPress={() => setChecked(i + 1)}
+              onPress={() => checkType(i)}
             />
           ))}
           <RNPickerSelect
@@ -175,6 +216,7 @@ export default function AddPlaceForm(props) {
               borderRadius: 30,
               marginTop: 20,
             }}
+            onPress={addPlace}
           />
         </View>
       </View>

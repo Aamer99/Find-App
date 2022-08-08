@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import AddPlaceForm from "../Components/Add-Place/addPlaceForm";
 
-export default function AddLoaction() {
+export default function AddLoaction({ navigation }) {
   return (
     <View
     // style={{
@@ -14,7 +14,7 @@ export default function AddLoaction() {
     // }}
     >
       {/* <ScrollView> */}
-      <AddPlaceForm />
+      <AddPlaceForm navigation={navigation} />
       {/* </ScrollView> */}
     </View>
   );
