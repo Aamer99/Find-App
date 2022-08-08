@@ -9,9 +9,8 @@ export default function AddLoaction() {
         backgroundColor: "#eee",
         flex: 1,
         top: 30,
-        alignItems: "center",
-        justifyContent: "center",
-        margin: 20,
+        // alignItems: "center",
+        // justifyContent: "center",
       }}
     >
       <ScrollView>

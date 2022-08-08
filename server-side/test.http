@@ -67,7 +67,7 @@ GET http://172.20.10.6:4000/coffe/search/kifa
 
 ####
 
-GET http://172.20.10.6:4000/restaurant/112122
+GET http://192.168.1.21:4000/restaurant/112122
 
 ####
 
@@ -84,4 +84,4 @@ Content-Type: application/json
 
 #### 
 
-GET http://localhost:4000/user/favoritPlaces/112122
+GET http://localhost:4000/restaurant/favoritplaces/112122

@@ -88,10 +88,18 @@ export default function Home({ navigation }) {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         {section == "Coffe" && (
-          <Coffe Search={Search} showSearch={showSearchResualt} />
+          <Coffe
+            Search={Search}
+            showSearch={showSearchResualt}
+            navigation={navigation}
+          />
         )}
         {section == "Restaurant" && (
-          <Restaurant Search={Search} showSearch={showSearchResualt} />
+          <Restaurant
+            Search={Search}
+            showSearch={showSearchResualt}
+            navigation={navigation}
+          />
         )}
       </ScrollView>
     </SafeAreaView>

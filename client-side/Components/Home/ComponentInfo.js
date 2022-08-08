@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import axios from "axios";
 export default function ComponentInfo({ navigation, ...props }) {
   const [isFavoritPlace, setFavoritPlace] = useState(false);
@@ -11,12 +11,11 @@ export default function ComponentInfo({ navigation, ...props }) {
         placeID: props.id,
       };
       const addFavoritPlace = await axios.post(
-        `http://172.20.10.6:4000/user/addFavoritResturent/7986680`,
+        `http://192.168.1.21:4000/user/addFavoritResturent/7986680`,
         place
       );
       if (addFavoritPlace.status === 200) {
         setFavoritPlace(true);
-        alert("work");
       } else {
         alert("propblem in axios add place function");
       }
@@ -43,17 +42,16 @@ export default function ComponentInfo({ navigation, ...props }) {
     >
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate(
-            "RestaurantDetails"
-            // RestaurantName: props.name,
-            // RestaurantLogo: props.uri,
-          );
+          navigation.navigate("RestaurantDetails", {
+            RestaurantName: props.name,
+            RestaurantLogo: props.uri,
+          });
         }}
       >
         <ComponentImage
           uri={props.uri}
-          heartIconColor={isFavoritPlace ? "heart" : props.heartIconColor}
-          heartIconName={isFavoritPlace ? "red" : props.heartIconName}
+          IconName={isFavoritPlace ? "heart" : "hearto"}
+          IconColor={isFavoritPlace ? "red" : "black"}
           addToFavorit={addToFavorit}
         />
         <ComponentShortInfo name={props.name} />
@@ -82,11 +80,7 @@ const ComponentImage = (props) => {
         style={{ top: 20, right: 20, position: "absolute" }}
         onPress={props.addToFavorit}
       >
-        <MaterialCommunityIcons
-          name={props.heartIconName}
-          size={25}
-          color={props.heartIconColor}
-        />
+        <AntDesign name={props.IconName} size={25} color={props.IconColor} />
       </TouchableOpacity>
     </>
   );

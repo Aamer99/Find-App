@@ -11,7 +11,7 @@ export default function Coffe({ navigation, ...props }) {
     // get data from database
     const getData = async () => {
       try {
-        const response = await axios.get("http://172.20.10.6:4000/coffe");
+        const response = await axios.get("http://192.168.1.21:4000/coffe");
         if (response.status === 200) {
           setData(response.data);
           setActiveLodaing(false);

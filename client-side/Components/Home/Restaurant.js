@@ -4,14 +4,14 @@ import Entypo from "react-native-vector-icons/Entypo";
 import { View, Text, ActivityIndicator } from "react-native";
 import ComponentInfo from "./ComponentInfo";
 
-export default function Restaurant(props) {
+export default function Restaurant({ navigation, ...props }) {
   const [data, setData] = useState([]);
   const [activeLodaing, setActiveLodaing] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get("http://192.168.8.10:4000/restaurant");
+        const response = await axios.get("http://192.168.1.21:4000/restaurant");
         if (response.status === 200) {
           setData(response.data);
           setActiveLodaing(false);
@@ -33,9 +33,10 @@ export default function Restaurant(props) {
               <ComponentInfo
                 uri={item.restaurantLogo}
                 name={item.name}
-                // navigation={navigation}
+                navigation={navigation}
                 heartIconName={"cards-heart-outline"}
                 heartIconColor={"black"}
+                id={item.id}
               />
             );
           })}

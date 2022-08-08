@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, Linking } from "react-native";
+import { View, Text, ScrollView, Linking, Dimensions } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { CheckBox } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 export default function AddPlaceForm(props) {
   const [placeName, setPlaceName] = useState("");
   const [checked, setChecked] = useState(false);
   const [image, setImage] = useState("");
-  const initialPosition = {
-    latitude: "24.5246542",
-    longitude: "39.5691841",
-  };
+
+  const [showMarker, setShowMaker] = useState(false);
+  const [placeCoordinate, setPlaceCoordinate] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
 
   const handelChoiseImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -25,7 +28,16 @@ export default function AddPlaceForm(props) {
       setImage(result.uri);
     }
   };
+  function coordinate(e) {
+    const coordinate = e.nativeEvent.coordinate;
 
+    const location = {
+      latitude: coordinate.latitude,
+      longitude: coordinate.longitude,
+    };
+    setPlaceCoordinate(location);
+    setShowMaker(true);
+  }
   return (
     <View style={{ width: "80%" }}>
       <View
@@ -34,7 +46,8 @@ export default function AddPlaceForm(props) {
           borderColor: "black",
           borderRadius: 35,
           borderWidth: 2,
-          marginBottom: 20,
+          width: 300,
+          margin: 30,
         }}
       >
         <Input placeholder="Place Name " onChangeText={setPlaceName} />
@@ -55,24 +68,53 @@ export default function AddPlaceForm(props) {
         <Text>Add Logo</Text>
         <Button title="Add Logo" onPress={handelChoiseImage} />
       </View>
-      <View>
+      <View
+        style={{
+          width: "90%",
+          padding: 20,
+        }}
+      >
         <MapView
           provider={PROVIDER_GOOGLE}
           style={{
-            width: 400,
-            height: 200,
+            width: 320,
+            height: 600,
             borderRadius: 35,
             borderWidth: 1,
+            borderColor: "black",
           }}
-          initialRegion={initialPosition}
-          zoomEnabled={false}
-          onPress={() => {
-            //deroction to google maps
-            Linking.openURL("GoogleMaps://app?saddr=21.330326,39.881064");
+          initialRegion={{
+            latitude: 24.470901,
+            longitude: 39.612236,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
           }}
+          zoomEnabled={true}
+          onPress={(e) => coordinate(e)}
         >
-          <Marker coordinate={initialPosition} />
+          {showMarker && (
+            <>
+              <Marker coordinate={placeCoordinate} />
+            </>
+          )}
         </MapView>
+      </View>
+      <View
+        style={{
+          marginBottom: 200,
+          marginTop: 30,
+          padding: 20,
+          width: 300,
+          margin: 40,
+        }}
+      >
+        <Button
+          title="add"
+          buttonStyle={{
+            width: "90%",
+            height: "40%",
+          }}
+        />
       </View>
     </View>
   );
