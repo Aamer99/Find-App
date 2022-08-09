@@ -6,11 +6,11 @@ import { Divider } from "react-native-elements";
 export default function About(props) {
   return (
     <ScrollView>
-      <Img uri={props.route.params.RestaurantLogo} />
-      <Title title={props.route.params.RestaurantName} />
+      <Img uri={props.route.params.PlaceLogo} />
+      <Title title={props.route.params.PlaceName} />
       <Divider width={2} style={{ marginVertical: 20 }} />
       <Description description={props.description} />
-      <Menu ImageURL={props.MenuURL} />
+      <Menu ImageURL={props.route.params.PlaceMnue} />
       <Location latitude={props.latitude} longitude={props.longitude} />
     </ScrollView>
   );

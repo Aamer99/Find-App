@@ -11,17 +11,25 @@ export default function Restaurant({ navigation, ...props }) {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get(
-          "http://192.168.8.102:4000/restaurant"
-        );
+        const tt = {
+          city: "Madina",
+          type: "Restaurant",
+        };
+        const response = await axios.get("http://192.168.0.151:4000/place", {
+          data: { city: "Madina", type: "Restaurant" },
+        });
+
         if (response.status === 200) {
           setData(response.data);
+
+          if (data.length === 0) {
+          }
           setActiveLodaing(false);
         } else {
           alert("error in response");
         }
       } catch (error) {
-        alert(error);
+        throw error;
       }
     };
     getData();
@@ -33,12 +41,13 @@ export default function Restaurant({ navigation, ...props }) {
           {data.map((item) => {
             return (
               <ComponentInfo
-                uri={item.restaurantLogo}
+                logo={item.logo}
                 name={item.name}
                 navigation={navigation}
                 heartIconName={"cards-heart-outline"}
                 heartIconColor={"black"}
                 id={item.id}
+                mnue={item.mnue}
               />
             );
           })}

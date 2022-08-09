@@ -1,12 +1,13 @@
 const router = require("express").Router();
 const db = require("./DB");
 
-router.get("/All", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const places = await db.getAll();
-    res.status(200).json(places);
+    const { type, city } = req.body;
+    const places = await db.getPlaces([type, city]);
+    return res.status(200).json(places);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 });
 
@@ -35,4 +36,5 @@ router.post("/addPlace", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
 module.exports = router;

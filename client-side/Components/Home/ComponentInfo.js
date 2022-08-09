@@ -43,13 +43,14 @@ export default function ComponentInfo({ navigation, ...props }) {
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("RestaurantDetails", {
-            RestaurantName: props.name,
-            RestaurantLogo: props.uri,
+            PlaceName: props.name,
+            PlaceLogo: props.logo,
+            PlaceMnue: props.mnue,
           });
         }}
       >
         <ComponentImage
-          uri={props.uri}
+          logo={props.logo}
           IconName={isFavoritPlace ? "heart" : "hearto"}
           IconColor={isFavoritPlace ? "red" : "black"}
           addToFavorit={addToFavorit}
@@ -65,7 +66,7 @@ const ComponentImage = (props) => {
     <>
       <Image
         source={{
-          uri: props.uri,
+          uri: props.logo,
         }}
         style={{
           width: "100%",

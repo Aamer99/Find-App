@@ -36,4 +36,20 @@ db.addPlace = (placeInfo) => {
     );
   });
 };
+
+db.getPlaces = (data) => {
+  return new Promise((resolve, reject) => {
+    connect.query(
+      "SELECT * FROM place WHERE type=? AND city=?",
+      data,
+      (err, res) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(res);
+      }
+    );
+  });
+};
+
 module.exports = db;
