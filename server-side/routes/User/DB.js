@@ -138,4 +138,18 @@ db.getFavoritPlaces = (userID) => {
   });
 };
 
+db.GetCity = (userEmail) => {
+  return new Promise((resolve, reject) => {
+    connect.query(
+      "SELECT city FROM users WHERE email=? ",
+      userEmail,
+      (err, res) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(res[0]);
+      }
+    );
+  });
+};
 module.exports = db;

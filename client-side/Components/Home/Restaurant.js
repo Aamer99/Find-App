@@ -11,22 +11,15 @@ export default function Restaurant({ navigation, ...props }) {
   useEffect(() => {
     const getData = async () => {
       try {
-        const tt = {
-          city: "Madina",
+        const response = await axios.post("http://192.168.1.21:4000/place", {
+          city: props.userCity,
           type: "Restaurant",
-        };
-        const response = await axios.get("http://192.168.0.151:4000/place", {
-          data: { city: "Madina", type: "Restaurant" },
         });
-
         if (response.status === 200) {
           setData(response.data);
-
-          if (data.length === 0) {
-          }
           setActiveLodaing(false);
         } else {
-          alert("error in response");
+          alert("err and " + response.status);
         }
       } catch (error) {
         throw error;
@@ -75,11 +68,13 @@ export default function Restaurant({ navigation, ...props }) {
           {props.Search.map((item) => {
             return (
               <ComponentInfo
-                uri={item.restaurantLogo}
+                logo={item.logo}
                 name={item.name}
-                //navigation={navigation}
+                navigation={navigation}
                 heartIconName={"cards-heart-outline"}
                 heartIconColor={"black"}
+                id={item.id}
+                mnue={item.mnue}
               />
             );
           })}

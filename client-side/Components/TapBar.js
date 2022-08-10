@@ -14,6 +14,7 @@ const Tap = createMaterialBottomTabNavigator();
 
 export default function TapBar({ route, navigation }) {
   const email = route.params.userEmail;
+  const userCity = route.params.userCity;
 
   return (
     <Tap.Navigator
@@ -37,6 +38,7 @@ export default function TapBar({ route, navigation }) {
       <Tap.Screen
         name="Home"
         component={Home}
+        initialParams={{ userCity: userCity }}
         options={{
           tabBarIcon: ({ focused }) => (
             <View

@@ -21,12 +21,19 @@ export default function Login({ navigation }) {
       };
 
       const login = await axios.post(
-        "http://192.168.0.151:4000/user/login",
+        "http://192.168.1.21:4000/user/login",
         loginInfo
       );
       if (login) {
         await AsyncStorage.setItem("token", JSON.stringify(login.data));
-        navigation.navigate("Tap", { userEmail: email });
+        const userCity = await axios.get(
+          `http://192.168.1.21:4000/user/getCity/${email}`
+        );
+
+        navigation.navigate("Tap", {
+          userEmail: email,
+          userCity: userCity.data,
+        });
         console.log(login.data);
       } else {
         setValidEmailorPassword(true);

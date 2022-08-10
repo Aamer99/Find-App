@@ -11,7 +11,8 @@ export default function SearchBar(props) {
       props.setenableBtnSearch(false);
       if (props.section == "Coffe") {
         const search = await axios.get(
-          `http://192.168.8.102:4000/coffe/search/${searchTerm}`
+          `http://192.168.1.21:4000/place/search/${searchTerm}`,
+          { userCity: props.userCity, placeType: "Coffe" }
         );
         if (search.status === 200) {
           props.setShowSearchResualt(true);
@@ -20,8 +21,9 @@ export default function SearchBar(props) {
           alert("erro hi ");
         }
       } else if (props.section == "Restaurant") {
-        const search = await axios.get(
-          `http://192.168.8.102:4000/restaurant/search/${searchTerm}`
+        const search = await axios.post(
+          `http://192.168.1.21:4000/place/search/${searchTerm}`,
+          { userCity: props.userCity, placeType: "Restaurant" }
         );
         if (search.status === 200) {
           props.setShowSearchResualt(true);

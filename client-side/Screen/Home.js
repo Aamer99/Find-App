@@ -14,12 +14,13 @@ import BottpmTap from "../Components/TapBar";
 import axios from "axios";
 import Coffe from "../Components/Home/coffe";
 import Restaurant from "../Components/Home/Restaurant";
-export default function Home({ navigation }) {
+export default function Home({ route, navigation }) {
   const [Search, setSearch] = useState([]);
   const [section, setSection] = useState("Coffe");
   const [showSearchResualt, setShowSearchResualt] = useState(false);
   const [enableBtnSearch, setenableBtnSearch] = useState(true);
   const [searchTerm, SetSearchTerm] = useState("");
+  const userCity = route.params.userCity;
   // async function checkToken() {
   //   try {
   //     const token = await AsyncStorage.getItem("token");
@@ -84,6 +85,7 @@ export default function Home({ navigation }) {
           enableBtnSearch={enableBtnSearch}
           Search={searchTerm}
           SetSearch={SetSearchTerm}
+          userCity={userCity}
         />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -92,6 +94,7 @@ export default function Home({ navigation }) {
             Search={Search}
             showSearch={showSearchResualt}
             navigation={navigation}
+            userCity={userCity}
           />
         )}
         {section == "Restaurant" && (
@@ -99,6 +102,7 @@ export default function Home({ navigation }) {
             Search={Search}
             showSearch={showSearchResualt}
             navigation={navigation}
+            userCity={userCity}
           />
         )}
       </ScrollView>

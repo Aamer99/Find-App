@@ -104,10 +104,21 @@ Content-Type: application/json
 
 ####
 
-GET http://192.168.0.151:4000/place
+GET http://192.168.1.21:4000/place
 Content-Type: application/json
 
 {
          "city": "Madina",
           "type": "Restaurant"
+}
+###
+GET http://localhost:4000/user/getCity/aamer.es12@gmail.com
+
+####
+POST http://192.168.1.21:4000/place/search/g
+Content-Type: application/json 
+
+{
+         "userCity": "Madina",
+          "placeType": "Restaurant"
 }

@@ -7,11 +7,15 @@ import Entypo from "react-native-vector-icons/Entypo";
 export default function Coffe({ navigation, ...props }) {
   const [data, setData] = useState([]);
   const [activeLodaing, setActiveLodaing] = useState(true);
+
   useEffect(() => {
     // get data from database
     const getData = async () => {
       try {
-        const response = await axios.get("http://192.168.0.151:4000/coffe");
+        const response = await axios.post("http://192.168.1.21:4000/place", {
+          city: props.userCity,
+          type: "Coffe",
+        });
         if (response.status === 200) {
           setData(response.data);
           setActiveLodaing(false);

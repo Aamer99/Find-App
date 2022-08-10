@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const db = require("./DB");
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const { type, city } = req.body;
+    const type = req.body.type;
+    const city = req.body.city;
     const places = await db.getPlaces([type, city]);
     return res.status(200).json(places);
   } catch (error) {
@@ -32,6 +33,24 @@ router.post("/addPlace", async (req, res) => {
       placeInfo.PlaceLocation,
     ]);
     res.status(200).json(newPlace);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.post("/search/:id", async (req, res) => {
+  try {
+    const searchTerm = req.params.id;
+    const userCity = req.body.userCity;
+    const placeType = req.body.placeType;
+
+    const places = await db.getPlaces([placeType, userCity]);
+    const searchResult = places.filter((item) => {
+      if (item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+        return item;
+      }
+    });
+    res.status(200).json(searchResult);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

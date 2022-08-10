@@ -1,4 +1,11 @@
-import { View, Text, Image, ScrollView, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  Pressable,
+  Linking,
+} from "react-native";
 import React from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Divider } from "react-native-elements";
@@ -84,6 +91,9 @@ const Location = (props) => {
         }}
         initialRegion={initialPosition}
         zoomEnabled={false}
+        onPress={() =>
+          Linking.openURL("googlemaps://app?&daddr=21.376647,39.903188")
+        }
       >
         <Marker coordinate={initialPosition} />
       </MapView>

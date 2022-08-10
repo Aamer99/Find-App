@@ -228,4 +228,15 @@ router.get("/favoritPlaces/:id", async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
+router.get("/getCity/:id", async (req, res) => {
+  try {
+    const userEmail = req.params.id;
+    const city = await db.GetCity(userEmail);
+    res.status(200).json(city.city);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 module.exports = router;
