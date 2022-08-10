@@ -11,7 +11,7 @@ export default function Restaurant({ navigation, ...props }) {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.post("http://192.168.1.21:4000/place", {
+        const response = await axios.post("http://172.20.10.6:4000/place", {
           city: props.userCity,
           type: "Restaurant",
         });
@@ -41,6 +41,7 @@ export default function Restaurant({ navigation, ...props }) {
                 heartIconColor={"black"}
                 id={item.id}
                 mnue={item.mnue}
+                location={item.location}
               />
             );
           })}
@@ -75,6 +76,7 @@ export default function Restaurant({ navigation, ...props }) {
                 heartIconColor={"black"}
                 id={item.id}
                 mnue={item.mnue}
+                location={item.location}
               />
             );
           })}

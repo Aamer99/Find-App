@@ -23,16 +23,17 @@ export default function AddPlaceForm({ navigation }) {
   const [placeType, setPlaceType] = useState("");
   const selectPlaceholder = { label: "City", value: null, color: "#9EA0A4" };
   const [showMarker, setShowMaker] = useState(false);
-  const [placeCoordinate, setPlaceCoordinate] = useState({
+  const [CoordinateMarker, setCoordinateMarkier] = useState({
     latitude: 0,
     longitude: 0,
   });
+  const [placeCoordinate, setPlaceCoordinate] = useState(null);
 
   const checkType = (i) => {
     const type = i + 1;
     if (type == 1) {
       setChecked(type);
-      setPlaceType("Resturent");
+      setPlaceType("Restaurant");
     } else if (type == 2) {
       setChecked(type);
       setPlaceType("Coffe");
@@ -52,12 +53,13 @@ export default function AddPlaceForm({ navigation }) {
   };
   function coordinate(e) {
     const coordinate = e.nativeEvent.coordinate;
-
-    const location = {
+    const CoordinateMarker = {
       latitude: coordinate.latitude,
       longitude: coordinate.longitude,
     };
+    const location = coordinate.latitude + "," + coordinate.longitude;
     setPlaceCoordinate(location);
+    setCoordinateMarkier(CoordinateMarker);
     setShowMaker(true);
   }
 
@@ -65,11 +67,11 @@ export default function AddPlaceForm({ navigation }) {
     try {
       const placeInfo = {
         name: placeName,
-        logo: "https://e7.pngegg.com/pngimages/396/139/png-clipart-hamburger-the-burger-king-logo-restaurant-french-fries-text-trademark.png",
-        mnue: "https://cheatdaydesign.com/wp-content/uploads/2021/08/Burger-King-Nutrition-Chicken-Fish-2.jpg.webp",
+        logo: "https://cache.dominos.com/olo/6_91_5/assets/build/images/promo/dominos_social_logo.jpg",
+        mnue: "https://pbs.twimg.com/media/Cp4yRhDWIAEnEEw.jpg",
         city: city,
         type: placeType,
-        PlaceLocation: JSON.stringify(placeCoordinate),
+        PlaceLocation: placeCoordinate,
       };
 
       const respons = await axios.post(
@@ -80,7 +82,8 @@ export default function AddPlaceForm({ navigation }) {
         navigation.navigate("Home");
         setCity(null);
         setPlaceName("");
-        setPlaceCoordinate({ latitude: 0, longitude: 0 });
+        setCoordinateMarkier({ latitude: 0, longitude: 0 });
+        setPlaceCoordinate(null);
         setChecked(0);
       } else {
         alert("not work");
@@ -112,7 +115,7 @@ export default function AddPlaceForm({ navigation }) {
         >
           {showMarker && (
             <>
-              <Marker coordinate={placeCoordinate} />
+              <Marker coordinate={CoordinateMarker} />
             </>
           )}
         </MapView>

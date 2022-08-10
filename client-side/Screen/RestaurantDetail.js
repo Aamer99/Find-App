@@ -8,9 +8,7 @@ export default function RestaurantDetail({ route, navigation }) {
     <View>
       <About
         description={route.params.PlaceName}
-        latitude="24.466555"
-        longitude="39.591470"
-        MenuURL="https://www.adobe.com/express/create/media_1393188a9227b5933bce13dddac375418fee10507.jpeg?width=400&format=jpeg&optimize=medium"
+        // MenuURL="https://www.adobe.com/express/create/media_1393188a9227b5933bce13dddac375418fee10507.jpeg?width=400&format=jpeg&optimize=medium"
         route={route}
       />
     </View>

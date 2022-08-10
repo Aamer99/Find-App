@@ -23,6 +23,7 @@ export default function ComponentInfo({ navigation, ...props }) {
       alert("error in add favorit place function");
     }
   };
+
   return (
     <View
       style={{
@@ -46,6 +47,7 @@ export default function ComponentInfo({ navigation, ...props }) {
             PlaceName: props.name,
             PlaceLogo: props.logo,
             PlaceMnue: props.mnue,
+            PlaceLocation: props.location,
           });
         }}
       >
