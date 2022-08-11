@@ -44,6 +44,7 @@ export default function Coffe({ navigation, ...props }) {
                 heartIconName={"cards-heart-outline"}
                 heartIconColor={"black"}
                 id={item.id}
+                FavoritPlace={false}
               />
             );
           })}
@@ -74,8 +75,7 @@ export default function Coffe({ navigation, ...props }) {
                 uri={item.coffeLogo}
                 name={item.name}
                 navigation={navigation}
-                heartIconName={"cards-heart-outline"}
-                heartIconColor={"black"}
+                FavoritPlace={false}
               />
             );
           })}

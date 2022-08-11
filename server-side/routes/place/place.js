@@ -56,4 +56,22 @@ router.post("/search/:id", async (req, res) => {
   }
 });
 
+router.get("/favoritPlaces/:id", async (req, res) => {
+  try {
+    const userID = req.params.id;
+    console.log(userID);
+    const favoritPlacesID = await db.getFavoritPlaces(userID);
+    const places = await db.getAll();
+    console.log(places[0]);
+    const favoritPlaces = favoritPlacesID.map((item, index) => {
+      if (item.placeID == places[index].id) {
+        console.log("hi");
+        return places[index];
+      }
+    });
+    res.status(200).json(favoritPlaces);
+  } catch (error) {
+    res.status(400).json({ message: err.message });
+  }
+});
 module.exports = router;

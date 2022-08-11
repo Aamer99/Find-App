@@ -4,14 +4,14 @@ import React, { useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import axios from "axios";
 export default function ComponentInfo({ navigation, ...props }) {
-  const [isFavoritPlace, setFavoritPlace] = useState(false);
+  const [isFavoritPlace, setFavoritPlace] = useState(props.FavoritPlace);
   const addToFavorit = async () => {
     try {
       const place = {
         placeID: props.id,
       };
       const addFavoritPlace = await axios.post(
-        `http://192.168.8.102:4000/user/addFavoritResturent/7986680`,
+        `http://192.168.1.21:4000/user/addFavoritResturent/${props.id}`,
         place
       );
       if (addFavoritPlace.status === 200) {
@@ -76,6 +76,7 @@ const ComponentImage = (props) => {
           resizeMode: "cover",
           borderRadius: 35,
           opacity: 0.7,
+          backgroundColor: "white",
         }}
       />
 

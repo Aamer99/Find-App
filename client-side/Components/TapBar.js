@@ -62,6 +62,7 @@ export default function TapBar({ route, navigation }) {
       <Tap.Screen
         name="Favorite"
         component={Favorite}
+        initialParams={{ userEmail: email }}
         options={{
           tabBarIcon: ({ focused }) => (
             <View

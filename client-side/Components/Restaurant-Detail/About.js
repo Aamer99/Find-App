@@ -12,26 +12,16 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Divider } from "react-native-elements";
 
 export default function About(props) {
-  // const [CoordinateMarker, setCoordinateMarkier] = useState(null);
-  // const [initialRegion, setInitialRegion] = useState(null);
-  // const SetCoordinateMarkier = () => {
-  //   const OldCoordinate = props.route.params.PlaceLocation;
-  //   const CoordinateMarker = OldCoordinate.split(",");
-  //   const newCoordinateMarker = {
-  //     latitude: CoordinateMarker[0],
-  //     longitude: CoordinateMarker[1],
-  //   };
-
-  //   setCoordinateMarkier(newCoordinateMarker);
-  //   setInitialRegion(initialRegion);
-  // };
-
-  // SetCoordinateMarkier();
+  const Coordinat = props.route.params.PlaceLocation.split(",");
   const initialRegion = {
-    latitude: 24.470901,
-    longitude: 39.612236,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitude: Coordinat[0],
+    longitude: Coordinat[1],
+    latitudeDelta: 0.008, //height
+    longitudeDelta: 0.01, // width
+  };
+  const CoordinateMarker = {
+    latitude: Coordinat[0],
+    longitude: Coordinat[1],
   };
   return (
     <ScrollView>
@@ -52,6 +42,7 @@ export default function About(props) {
         <Location
           initialRegion={initialRegion}
           Location={props.route.params.PlaceLocation}
+          CoordinateMarker={CoordinateMarker}
         />
       </View>
     </ScrollView>
@@ -60,7 +51,10 @@ export default function About(props) {
 
 const Img = (props) => {
   return (
-    <Image source={{ uri: props.uri }} style={{ width: "100%", height: 200 }} />
+    <Image
+      source={{ uri: props.uri }}
+      style={{ width: "100%", height: 200, backgroundColor: "white" }}
+    />
   );
 };
 
@@ -112,10 +106,7 @@ const Menu = (props) => {
 
 const Location = (props) => {
   //  this way is wrong check it (if sothing is wrong remove this and move it into out the component )
-  const initialPosition = {
-    latitude: props.latitude,
-    longitude: props.longitude,
-  };
+
   return (
     <View
       style={{ justifyContent: "center", alignItems: "center", margin: 20 }}
@@ -137,7 +128,7 @@ const Location = (props) => {
           Linking.openURL(`googlemaps://app?&daddr=${props.Location}`)
         }
       >
-        <Marker coordinate={initialPosition} />
+        <Marker coordinate={props.CoordinateMarker} />
       </MapView>
     </View>
   );

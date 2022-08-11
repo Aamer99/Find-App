@@ -215,15 +215,16 @@ router.post("/addFavoritResturent/:id", async (req, res) => {
 router.get("/favoritPlaces/:id", async (req, res) => {
   try {
     const userID = req.params.id;
+    console.log(userID);
     const favoritPlaces = await db.getFavoritPlaces(userID);
-    const PlacesList = [];
-    const favoritPlacesList = favoritPlaces.map((item) => {
-      console.log(item.placeID);
-      const getPlace = DB.getOne(item.placeID);
-      console.log(getPlace);
-      return PlacesList.push(getPlace);
-    });
-    res.status(200).json(PlacesList);
+    // const PlacesList = [];
+    // const favoritPlacesList = favoritPlaces.map((item) => {
+    //   console.log(item.placeID);
+    //   const getPlace = DB.getOne(item.placeID);
+    //   console.log(getPlace);
+    //   return PlacesList.push(getPlace);
+    // });
+    res.status(200).json(favoritPlaces);
   } catch (error) {
     res.status(400).json({ message: err.message });
   }

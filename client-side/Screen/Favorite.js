@@ -1,45 +1,47 @@
 import { View, Text, SafeAreaView, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Divider } from "react-native-elements";
 
 import ComponentInfo from "../Components/Home/ComponentInfo";
+import axios from "axios";
 export default function Favorite({ navigation }) {
-  const [Token, setToken] = useState(true);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(
+          "http://192.168.1.21:4000/place/favoritplaces/7986680"
+        );
+        if (response.status === 200) {
+          setData(response.data);
+        } else {
+          alert("err in respons get favorit place");
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
+    getData();
+  }, []);
   return (
     <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
-      {!Token && (
-        <View style={{ marginTop: "50%", width: "80%", alignSelf: "center" }}>
-          <Text style={{ fontSize: 20, fontWeight: "600", marginBottom: 20 }}>
-            Please you should login first{" "}
-          </Text>
-          <Button
-            title="login"
-            buttonStyle={{ backgroundColor: "#198754" }}
-            onPress={() => {
-              navigation.navigate("Login");
-            }}
-          />
-        </View>
-      )}
-      {Token && (
-        <View>
-          <ComponentInfo
-            uri="https://i.pinimg.com/736x/c7/84/67/c78467db9ff497393cb548a48f02d451.jpg"
-            name={"Search"}
-            navigation={navigation}
-            heartIconName={"cards-heart"}
-            heartIconColor="red"
-          />
-
-          <ComponentInfo
-            uri="https://i.pinimg.com/736x/c7/84/67/c78467db9ff497393cb548a48f02d451.jpg"
-            name={"Search"}
-            navigation={navigation}
-            heartIconName={"cards-heart"}
-            heartIconColor="red"
-          />
-        </View>
-      )}
+      <View>
+        {data.map((item) => {
+          return (
+            <ComponentInfo
+              logo={item.logo}
+              name={item.name}
+              navigation={navigation}
+              heartIconName={"cards-heart-outline"}
+              heartIconColor={"black"}
+              id={item.id}
+              mnue={item.mnue}
+              location={item.location}
+              FavoritPlace={true}
+            />
+          );
+        })}
+      </View>
     </SafeAreaView>
   );
 }

@@ -52,4 +52,18 @@ db.getPlaces = (data) => {
   });
 };
 
+db.getFavoritPlaces = (userID) => {
+  return new Promise((resolve, reject) => {
+    connect.query(
+      "SELECT placeID FROM favorit WHERE userID=?",
+      userID,
+      (err, res) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(res);
+      }
+    );
+  });
+};
 module.exports = db;
