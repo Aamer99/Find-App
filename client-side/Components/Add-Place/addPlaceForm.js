@@ -75,7 +75,7 @@ export default function AddPlaceForm({ navigation }) {
       };
 
       const respons = await axios.post(
-        "http://172.20.10.6:4000/place/addPlace",
+        "http://192.168.1.21:4000/place/addPlace",
         placeInfo
       );
       if (respons.status == 200) {

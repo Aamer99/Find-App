@@ -11,7 +11,7 @@ export default function ComponentInfo({ navigation, ...props }) {
         placeID: props.id,
       };
       const addFavoritPlace = await axios.post(
-        `http://192.168.1.21:4000/user/addFavoritResturent/${props.id}`,
+        `http://192.168.1.21:4000/user/addFavoritResturent/7986680`,
         place
       );
       if (addFavoritPlace.status === 200) {

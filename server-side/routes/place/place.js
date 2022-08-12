@@ -74,4 +74,14 @@ router.get("/favoritPlaces/:id", async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
+router.get("/favoritPlacesID/:id", async (req, res) => {
+  try {
+    const userID = req.params.id;
+    const favoritPlacesID = await db.getFavoritPlaces(userID);
+    res.status(200).json(favoritPlacesID);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 module.exports = router;

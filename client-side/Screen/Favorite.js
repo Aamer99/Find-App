@@ -27,6 +27,8 @@ export default function Favorite({ navigation }) {
     <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
       <View>
         {data.map((item) => {
+          alert(item.name);
+          alert(item.logo);
           return (
             <ComponentInfo
               logo={item.logo}

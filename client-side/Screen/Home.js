@@ -14,6 +14,7 @@ import BottpmTap from "../Components/TapBar";
 import axios from "axios";
 import Coffe from "../Components/Home/coffe";
 import Restaurant from "../Components/Home/Restaurant";
+import Categorise from "../Components/Home/Categorise";
 export default function Home({ route, navigation }) {
   const [Search, setSearch] = useState([]);
   const [section, setSection] = useState("Coffe");
@@ -88,6 +89,7 @@ export default function Home({ route, navigation }) {
           userCity={userCity}
         />
       </View>
+      {section == "Restaurant" && <Categorise />}
       <ScrollView showsVerticalScrollIndicator={false}>
         {section == "Coffe" && (
           <Coffe
