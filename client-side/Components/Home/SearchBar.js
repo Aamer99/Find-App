@@ -76,6 +76,7 @@ export default function SearchBar(props) {
               margin: 10,
             }}
             onPress={onSubmit}
+            disabled={props.Search == "" ? true : false}
           >
             <Text style={{ margin: 5, textAlign: "center" }}>Search</Text>
           </Pressable>

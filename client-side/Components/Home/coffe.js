@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
-import ComponentInfo from "./ComponentInfo";
 import axios from "axios";
-import { Icon } from "react-native-elements";
 import Entypo from "react-native-vector-icons/Entypo";
+import PlaceContainer from "./PlaceContiner";
 export default function Coffe({ navigation, ...props }) {
   const [data, setData] = useState([]);
   const [activeLodaing, setActiveLodaing] = useState(true);
@@ -29,26 +28,12 @@ export default function Coffe({ navigation, ...props }) {
     ///
 
     getData();
-  }, []);
+  });
 
   return (
     <View>
       {!props.showSearch && (
-        <>
-          {data.map((item) => {
-            return (
-              <ComponentInfo
-                uri={item.coffeLogo}
-                name={item.name}
-                navigation={navigation}
-                heartIconName={"cards-heart-outline"}
-                heartIconColor={"black"}
-                id={item.id}
-                FavoritPlace={false}
-              />
-            );
-          })}
-        </>
+        <PlaceContainer places={data} navigation={navigation} />
       )}
 
       {props.showSearch && (
@@ -69,16 +54,9 @@ export default function Coffe({ navigation, ...props }) {
               </View>
             </>
           )}
-          {props.Search.map((item) => {
-            return (
-              <ComponentInfo
-                uri={item.coffeLogo}
-                name={item.name}
-                navigation={navigation}
-                FavoritPlace={false}
-              />
-            );
-          })}
+          {props.Search.length != 0 && (
+            <PlaceContainer places={props.Search} navigation={navigation} />
+          )}
         </>
       )}
 

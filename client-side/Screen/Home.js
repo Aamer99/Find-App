@@ -17,11 +17,13 @@ import Restaurant from "../Components/Home/Restaurant";
 import Categorise from "../Components/Home/Categorise";
 export default function Home({ route, navigation }) {
   const [Search, setSearch] = useState([]);
+  const [categorise, setCaegorise] = useState([]);
   const [section, setSection] = useState("Coffe");
   const [showSearchResualt, setShowSearchResualt] = useState(false);
   const [enableBtnSearch, setenableBtnSearch] = useState(true);
   const [searchTerm, SetSearchTerm] = useState("");
   const userCity = route.params.userCity;
+  const [data, setData] = useState([]);
   // async function checkToken() {
   //   try {
   //     const token = await AsyncStorage.getItem("token");
@@ -89,7 +91,9 @@ export default function Home({ route, navigation }) {
           userCity={userCity}
         />
       </View>
-      {section == "Restaurant" && <Categorise />}
+      {section == "Restaurant" && (
+        <Categorise setCaegorise={setCaegorise} setData={setData} />
+      )}
       <ScrollView showsVerticalScrollIndicator={false}>
         {section == "Coffe" && (
           <Coffe
@@ -105,6 +109,8 @@ export default function Home({ route, navigation }) {
             showSearch={showSearchResualt}
             navigation={navigation}
             userCity={userCity}
+            data={data}
+            setData={setData}
           />
         )}
       </ScrollView>

@@ -66,4 +66,19 @@ db.getFavoritPlaces = (userID) => {
     );
   });
 };
+
+db.Categorise = (data) => {
+  return new Promise((resolve, reject) => {
+    connect.query(
+      "SELECT * FROM place WHERE JSON_EXTRACT(Categorise, '$.Categorise') =?",
+      data,
+      (err, res) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(res);
+      }
+    );
+  });
+};
 module.exports = db;

@@ -45,6 +45,7 @@ export default function Acoount({ route, navigation }) {
     };
     getData();
   });
+
   return (
     <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
       {/*  top of account screen  */}
