@@ -30,11 +30,11 @@ export default function Restaurant({ navigation, ...props }) {
 
   return (
     <View>
-      {!props.showSearch && (
+      {!props.showSearch && !props.showByCategorise && (
         <PlaceContainer places={props.data} navigation={navigation} />
       )}
 
-      {props.showSearch && (
+      {props.showSearch && !props.showByCategorise && (
         <>
           {props.Search.length === 0 && (
             <View
@@ -54,6 +54,10 @@ export default function Restaurant({ navigation, ...props }) {
             <PlaceContainer places={props.Search} navigation={navigation} />
           )}
         </>
+      )}
+
+      {props.showByCategorise && (
+        <PlaceContainer places={props.categorise} navigation={navigation} />
       )}
 
       {activeLodaing && (

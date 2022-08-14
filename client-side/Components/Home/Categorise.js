@@ -16,7 +16,8 @@ export default function Categorise(props) {
         `http://192.168.1.21:4000/place/Categorise/${categoriseName}`
       );
       if (response.status == 200) {
-        props.setData(response.data);
+        props.setCaegorise(response.data);
+        props.setShowByCategorise(true);
       }
     } catch (error) {
       alert(error + "Catgorise component ");
@@ -36,9 +37,10 @@ export default function Categorise(props) {
   return (
     <View
       style={{
-        backgroundColor: "white",
+        backgroundColor: "#fff",
         borderRadius: 12,
-        borderWidth: 0.3,
+        borderWidth: 0.1,
+        marginTop: 5,
       }}
     >
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>

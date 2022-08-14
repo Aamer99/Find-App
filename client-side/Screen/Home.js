@@ -18,8 +18,10 @@ import Categorise from "../Components/Home/Categorise";
 export default function Home({ route, navigation }) {
   const [Search, setSearch] = useState([]);
   const [categorise, setCaegorise] = useState([]);
+  const [showByCategorise, setShowByCategorise] = useState(false);
   const [section, setSection] = useState("Coffe");
   const [showSearchResualt, setShowSearchResualt] = useState(false);
+
   const [enableBtnSearch, setenableBtnSearch] = useState(true);
   const [searchTerm, SetSearchTerm] = useState("");
   const userCity = route.params.userCity;
@@ -92,7 +94,10 @@ export default function Home({ route, navigation }) {
         />
       </View>
       {section == "Restaurant" && (
-        <Categorise setCaegorise={setCaegorise} setData={setData} />
+        <Categorise
+          setCaegorise={setCaegorise}
+          setShowByCategorise={setShowByCategorise}
+        />
       )}
       <ScrollView showsVerticalScrollIndicator={false}>
         {section == "Coffe" && (
@@ -111,6 +116,8 @@ export default function Home({ route, navigation }) {
             userCity={userCity}
             data={data}
             setData={setData}
+            categorise={categorise}
+            showByCategorise={showByCategorise}
           />
         )}
       </ScrollView>
