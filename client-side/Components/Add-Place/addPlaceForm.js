@@ -1,42 +1,35 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  Linking,
-  Dimensions,
-  StyleSheet,
-} from "react-native";
+import React, { memo, useState } from "react";
+import { View, StyleSheet, ImagePickerIOS } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { CheckBox } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+
 import RNPickerSelect from "react-native-picker-select";
 import Feather from "react-native-vector-icons/Feather";
 import axios from "axios";
-export default function AddPlaceForm({ navigation }) {
+import AddCategorise from "./AddCategorise";
+function AddPlaceForm({ navigation }) {
   const [placeName, setPlaceName] = useState("");
   const [checked, setChecked] = useState(false);
+  const [checkedCategories, setCheckedCategories] = useState(true);
   const [image, setImage] = useState("");
   const [cities, setCities] = useState([{ label: "Madina", value: "Madina" }]);
   const [city, setCity] = useState("");
   const [placeType, setPlaceType] = useState("");
   const selectPlaceholder = { label: "City", value: null, color: "#9EA0A4" };
-  const [showMarker, setShowMaker] = useState(false);
-  const [CoordinateMarker, setCoordinateMarkier] = useState({
-    latitude: 0,
-    longitude: 0,
-  });
-  const [placeCoordinate, setPlaceCoordinate] = useState(null);
-
+  const [showCategories, setShowCategories] = useState(false);
+  const [showAddCategorise, setShowAddCategorise] = useState(false);
+  const selectedCategories = [];
   const checkType = (i) => {
     const type = i + 1;
     if (type == 1) {
       setChecked(type);
       setPlaceType("Restaurant");
+      setShowCategories(true);
     } else if (type == 2) {
       setChecked(type);
       setPlaceType("Coffe");
+      setShowCategories(false);
     }
   };
   const handelChoiseImage = async () => {
@@ -49,19 +42,9 @@ export default function AddPlaceForm({ navigation }) {
 
     if (!result.cancelled) {
       setImage(result.uri);
+      alert(JSON.stringify(result.uri));
     }
   };
-  function coordinate(e) {
-    const coordinate = e.nativeEvent.coordinate;
-    const CoordinateMarker = {
-      latitude: coordinate.latitude,
-      longitude: coordinate.longitude,
-    };
-    const location = coordinate.latitude + "," + coordinate.longitude;
-    setPlaceCoordinate(location);
-    setCoordinateMarkier(CoordinateMarker);
-    setShowMaker(true);
-  }
 
   async function addPlace() {
     try {
@@ -93,186 +76,121 @@ export default function AddPlaceForm({ navigation }) {
     }
   }
   return (
-    <ScrollView>
-      <View style={{ marginBottom: 70 }}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          style={{
-            width: Dimensions.get("window").width,
-            height: 500,
-            // borderRadius: 35,
-            // borderWidth: 1,
-            // borderColor: "black",
-          }}
-          initialRegion={{
-            latitude: 24.470901,
-            longitude: 39.612236,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          zoomEnabled={true}
-          onPress={(e) => coordinate(e)}
-        >
-          {showMarker && (
-            <>
-              <Marker coordinate={CoordinateMarker} />
-            </>
-          )}
-        </MapView>
-        <View
-          style={{
-            // borderColor: "black",
-            borderRadius: 35,
-            borderWidth: 0.5,
-            width: "100%",
-            marginTop: -90,
-            backgroundColor: "white",
-            padding: 30,
-            backgroundColor: "#eee",
-          }}
-        >
-          <Input placeholder="Place Name " onChangeText={setPlaceName} />
-          {/* <Text>Place Type</Text> */}
-          {["resturent", "coffe"].map((l, i) => (
-            <CheckBox
-              key={i}
-              title={l}
-              containerStyle={{ borderWidth: 0, backgroundColor: "#eee" }}
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
-              checked={checked === i + 1}
-              onPress={() => checkType(i)}
-            />
-          ))}
-          <RNPickerSelect
-            onValueChange={setCity}
-            items={cities}
-            value={city}
-            style={pickerSelectStyles}
-            placeholder={selectPlaceholder}
-            Icon={() => {
-              return <Feather name="map-pin" size={22} />;
-            }}
-          />
-          {/* 
-          <Text>Add Mnue </Text> */}
-          {/* <Button title="Add Mune" onPress={handelChoiseImage} /> */}
-          <Button
-            title="Add Mnue"
-            icon={{
-              name: "add-a-photo",
-              type: "MaterialIcons",
-              size: 15,
-              color: "white",
-            }}
-            iconContainerStyle={{ marginRight: 10 }}
-            titleStyle={{ fontWeight: "700" }}
-            buttonStyle={{
-              backgroundColor: "gray",
-              borderColor: "transparent",
-              borderWidth: 0,
-              borderRadius: 30,
-            }}
-            containerStyle={{
-              width: 200,
-              marginHorizontal: 60,
-              marginVertical: 10,
-            }}
-          />
+    <View
+      style={{
+        borderRadius: 35,
+        borderWidth: 0.5,
+        width: "100%",
+        marginTop: -90,
+        backgroundColor: "white",
+        padding: 30,
+        backgroundColor: "#eee",
+      }}
+    >
+      <Input placeholder="Place Name " onChangeText={setPlaceName} />
 
-          {/* <Text>Add Logo</Text>
-          <Button title="Add Logo" onPress={handelChoiseImage} /> */}
-          <Button
-            title="Add Logo"
-            icon={{
-              name: "add-a-photo",
-              type: "MaterialIcons",
-              size: 15,
-              color: "white",
-            }}
-            iconContainerStyle={{ marginRight: 10 }}
-            titleStyle={{ fontWeight: "700" }}
-            buttonStyle={{
-              backgroundColor: "gray",
-              borderColor: "transparent",
-              borderWidth: 0,
-              borderRadius: 30,
-            }}
-            containerStyle={{
-              width: 200,
-              marginHorizontal: 60,
-              marginVertical: 10,
-            }}
-          />
-          <Button
-            title="add"
-            // buttonStyle={{
-            //   width: "90%",
-            //   height: 50,
-            //   marginTop: 30,
-            //   marginBottom: 30,
-            // }}
-            buttonStyle={{
-              backgroundColor: "green",
-              borderWidth: 2,
-              borderColor: "white",
-              borderRadius: 30,
-              marginTop: 20,
-            }}
-            onPress={addPlace}
-          />
-        </View>
-      </View>
-
-      <View
-        style={{
-          width: "90%",
-          padding: 20,
-        }}
-      >
-        {/* <MapView
-          provider={PROVIDER_GOOGLE}
-          style={{
-            width: 320,
-            height: 600,
-            borderRadius: 35,
-            borderWidth: 1,
-            borderColor: "black",
-          }}
-          initialRegion={{
-            latitude: 24.470901,
-            longitude: 39.612236,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          zoomEnabled={true}
-          onPress={(e) => coordinate(e)}
-        >
-          {showMarker && (
-            <>
-              <Marker coordinate={placeCoordinate} />
-            </>
-          )}
-        </MapView> */}
-      </View>
-      {/* <View
-        style={{
-          marginBottom: 200,
-          marginTop: 30,
-          padding: 20,
-          width: 300,
-          margin: 40,
-        }}
-      >
+      {["Resturent", "Coffe"].map((l, i) => (
+        <CheckBox
+          key={i}
+          title={l}
+          containerStyle={{ borderWidth: 0, backgroundColor: "#eee" }}
+          checkedIcon="dot-circle-o"
+          uncheckedIcon="circle-o"
+          checked={checked === i + 1}
+          onPress={() => checkType(i)}
+        />
+      ))}
+      {showCategories && (
         <Button
-          title="add"
-          buttonStyle={{
-            width: "90%",
-            height: "40%",
+          title="Select Categoris"
+          onPress={() => {
+            setShowAddCategorise(true);
           }}
         />
-      </View> */}
-    </ScrollView>
+      )}
+      <AddCategorise
+        Visible={showAddCategorise}
+        selectedCategories={selectedCategories}
+        setShowAddCategorise={setShowAddCategorise}
+      />
+      <RNPickerSelect
+        onValueChange={setCity}
+        items={cities}
+        value={city}
+        style={pickerSelectStyles}
+        placeholder={selectPlaceholder}
+        Icon={() => {
+          return <Feather name="map-pin" size={22} />;
+        }}
+      />
+
+      <Button
+        title="Add Mnue"
+        icon={{
+          name: "add-a-photo",
+          type: "MaterialIcons",
+          size: 15,
+          color: "white",
+        }}
+        iconContainerStyle={{ marginRight: 10 }}
+        titleStyle={{ fontWeight: "700" }}
+        buttonStyle={{
+          backgroundColor: "gray",
+          borderColor: "transparent",
+          borderWidth: 0,
+          borderRadius: 30,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 60,
+          marginVertical: 10,
+        }}
+        onPress={handelChoiseImage}
+      />
+
+      {/* <Text>Add Logo</Text>
+          <Button title="Add Logo" onPress={handelChoiseImage} /> */}
+      <Button
+        title="Add Logo"
+        icon={{
+          name: "add-a-photo",
+          type: "MaterialIcons",
+          size: 15,
+          color: "white",
+        }}
+        iconContainerStyle={{ marginRight: 10 }}
+        titleStyle={{ fontWeight: "700" }}
+        buttonStyle={{
+          backgroundColor: "gray",
+          borderColor: "transparent",
+          borderWidth: 0,
+          borderRadius: 30,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 60,
+          marginVertical: 10,
+        }}
+      />
+      <Button
+        title="add"
+        // buttonStyle={{
+        //   width: "90%",
+        //   height: 50,
+        //   marginTop: 30,
+        //   marginBottom: 30,
+        // }}
+        buttonStyle={{
+          backgroundColor: "green",
+          borderWidth: 2,
+          borderColor: "white",
+          borderRadius: 30,
+          marginTop: 20,
+        }}
+        onPress={addPlace}
+      />
+    </View>
+    // </View>
   );
 }
 
@@ -294,3 +212,5 @@ const pickerSelectStyles = StyleSheet.create({
     left: 15,
   },
 });
+
+export default memo(AddPlaceForm);

@@ -11,7 +11,7 @@ export default function Restaurant({ navigation, ...props }) {
   useEffect(() => {
     const getData = async () => {
       try {
-        const places = await axios.post("http://192.168.1.21:4000/place", {
+        const places = await axios.post("http://192.168.1.22:4000/place", {
           city: props.userCity,
           type: "Restaurant",
         });

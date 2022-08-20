@@ -3,12 +3,12 @@ GET http://localhost:4000/user
 ###
 GET http://localhost:4000/user/112122
 ###
-POST http://192.168.8.102:4000/user/login
+POST http://192.168.1.22:4000/user/login
 Content-Type: application/json 
 
 {
-   "email":"aamer.com",
-   "password":"1234"
+   "email":"aamer.es20@gmail.com",
+   "password":"123"
 }
 
 ### 
@@ -34,12 +34,12 @@ Content-Type: application/json
  }
 
 ####
-POST http://172.20.10.6:4000/user/updateProfile/7986680
+POST http://192.168.1.22:4000/user/updateProfile/677649
 Content-Type: application/json
 
 {
  "name":"aamer alhelaly ",
-    "email":"aamer.es12@gmail.com",
+    "email":"aamer.es20@gmail.com",
     "password":"123",
     "city":"Madina",
     "imageProfile":"https://img.alayam.com/upload/imagebrowser/files/INAF_20220712195039485.jpg?maxheight=1200",
@@ -89,7 +89,7 @@ GET http://localhost:4000/restaurant/favoritplaces/7986680
 
 #### 
 
-POST http://172.20.10.6:4000/place/addPlace 
+POST http://192.168.1.22:4000/place/addPlace 
 Content-Type: application/json
 
 {
@@ -98,13 +98,14 @@ Content-Type: application/json
       "mnue": "https://www.restaurantmenuprice.com/wp-content/uploads/2022/04/kfc_menu_042522_01_buckets_01.jpg",
       "city": "Madina",
       "type":"Restaurant",
-      "PlaceLocation":"[ 24.470901,39.612236]"
+      "PlaceLocation":"24.470901,39.612236",
+      "image":"https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/KFC_Logo.svg/640px-KFC_Logo.svg.png"
       
 }
 
 ####
 
-GET http://192.168.1.21:4000/place
+POST  http://192.168.1.22:4000/place
 Content-Type: application/json
 
 {

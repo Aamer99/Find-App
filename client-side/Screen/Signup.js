@@ -12,6 +12,9 @@ import Logo from "../assets/Find-logos/logos_black.png";
 import RNPickerSelect from "react-native-picker-select";
 import Feather from "react-native-vector-icons/Feather";
 import axios from "axios";
+import { Avatar } from "@rneui/themed";
+import * as ImagePicker from "expo-image-picker";
+
 export default function Signup({ navigation }) {
   const [name, setName] = useState("");
 
@@ -22,6 +25,7 @@ export default function Signup({ navigation }) {
   const [invalidPassword, setInvalidPassword] = useState(false);
   const selectPlaceholder = { label: "City", value: null, color: "#9EA0A4" };
   const [city, setCity] = useState("");
+  const [imageProfile, setImageProfile] = useState("");
   async function onSubmit() {
     try {
       const userInfo = {
@@ -29,6 +33,7 @@ export default function Signup({ navigation }) {
         email: email.toLowerCase(),
         city: city,
         password: password,
+        imageProfile: imageProfile,
       };
 
       if (password != confirmPassowrd) {
@@ -36,7 +41,7 @@ export default function Signup({ navigation }) {
       } else {
         setInvalidPassword(false);
         const Register = await axios.post(
-          "http://192.168.1.21:4000/user/signup",
+          "http://192.168.1.22:4000/user/signup",
           userInfo
         );
         if (Register.status == 200) {
@@ -50,6 +55,33 @@ export default function Signup({ navigation }) {
       alert(err);
     }
   }
+  const handelChoiseImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      const data = new FormData();
+
+      data.append("Image", {
+        uri: result.uri,
+        type: result.type,
+        name:
+          result.fileName || result.uri.substr(result.uri.lastIndexOf("/") + 1),
+      });
+      const upload = await axios.post(
+        "http://192.168.1.22:4000/user/uploadImagProfile",
+        data
+      );
+      if (upload.status === 200) {
+        alert("work");
+        setImageProfile(result);
+      }
+    }
+  };
 
   return (
     <SafeAreaView>
@@ -59,7 +91,7 @@ export default function Signup({ navigation }) {
           borderRadius: 20,
           width: "90%",
           alignSelf: "center",
-          top: "25%",
+          top: "15%",
         }}
       >
         <Text
@@ -74,6 +106,16 @@ export default function Signup({ navigation }) {
         >
           Signup
         </Text>
+        <View style={{ alignItems: "center", margin: 10 }}>
+          <Avatar
+            size={80}
+            rounded
+            icon={{ name: "user", type: "font-awesome" }}
+            onPress={handelChoiseImage}
+            containerStyle={{ backgroundColor: "#6733b9" }}
+            source={{ uri: imageProfile.uri }}
+          />
+        </View>
 
         <View style={{ width: "80%", marginHorizontal: 40 }}>
           <Input

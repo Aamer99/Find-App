@@ -1,6 +1,18 @@
 const router = require("express").Router();
 const db = require("./DB");
+const multer = require("multer");
+const path = require("path");
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "../../Images");
+  },
+  filename: (req, file, cb) => {
+    console.log(file);
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
 
+const upload = multer({ storage: storage });
 router.post("/", async (req, res) => {
   try {
     const type = req.body.type;
@@ -12,7 +24,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/addPlace", async (req, res) => {
+router.post("/addPlace", upload.single("image"), async (req, res) => {
   try {
     const id = Math.floor(Math.random() * 1000) * 1000 + 100;
     const placeInfo = {

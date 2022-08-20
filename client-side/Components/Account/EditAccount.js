@@ -26,7 +26,7 @@ export default function EditAccount(props) {
         };
 
         const update = await axios.post(
-          `http://192.168.1.21:4000/user/updateProfile/${props.data.id}`,
+          `http://192.168.1.22:4000/user/updateProfile/${props.data.id}`,
           userInfo
         );
         if (update.status === 200) {
