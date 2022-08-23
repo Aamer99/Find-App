@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Pressable } from "react-native";
+import { View, SafeAreaView, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
@@ -6,15 +6,18 @@ import EditAccount from "../Components/Account/EditAccount";
 import AccountVerification from "../Components/Account/AccountVerification";
 import FunctionalityBar from "../Components/Account/AccountFunctionalityBar";
 import AccountInfo from "../Components/Account/AccountInfo";
+import base64 from "react-native-base64";
 export default function Acoount({ route, navigation }) {
   const userEmail = route.params.userEmail;
-
+  const [ImageProfile, setImageProfile] = useState("");
   const [data, setData] = useState([]);
   const [OTP, setOTP] = useState(null);
 
   const [showEditAccount, SetshowEditAccount] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
-
+  const convertFromBase64 = (file) => {
+    setImageProfile(base64.decode(file));
+  };
   const sendOTPmessage = async () => {
     try {
       const respons = await axios.post(
@@ -36,6 +39,9 @@ export default function Acoount({ route, navigation }) {
         );
         if (respons.status === 200) {
           setData(respons.data[0]);
+          if (data.imageProfile != null) {
+            convertFromBase64(data.imageProfile);
+          }
         } else {
           throw new Error("valid to get data");
         }
@@ -59,7 +65,7 @@ export default function Acoount({ route, navigation }) {
         <AccountInfo
           email={data.email}
           name={data.name}
-          ImageProfile={data.imageProfile} //data.imageprofile
+          ImageProfile={ImageProfile} //data.imageprofile
           enableEditAvatar={showEditAccount}
         />
         <FunctionalityBar

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import { View, Pressable, Text, AsyncStorage } from "react-native";
 import { Icon } from "react-native-elements";
-export default function FunctionalityBar({ navigation, ...props }) {
+function FunctionalityBar({ navigation, ...props }) {
   const logout = () => {
     AsyncStorage.removeItem("token", (err) => {
       if (err) {
@@ -44,3 +44,5 @@ export default function FunctionalityBar({ navigation, ...props }) {
     </View>
   );
 }
+
+export default memo(FunctionalityBar);

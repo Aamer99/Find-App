@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { memo } from "react";
 import { View, Text } from "react-native";
 import { Avatar } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 
-export default function AccountInfo(props) {
-  const [ImageProfile, setImage] = useState(props.ImageProfile);
+function AccountInfo(props) {
   const handelChoiseImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -17,6 +16,7 @@ export default function AccountInfo(props) {
       setImage(result.uri);
     }
   };
+
   return (
     <View
       style={{
@@ -53,15 +53,11 @@ export default function AccountInfo(props) {
         </Text>
       </View>
       <Avatar
-        size={90}
+        size={80}
         rounded
-        source={{
-          uri: ImageProfile,
-        }}
-        avatarStyle={{
-          paddingBottom: 20,
-          alignSelf: "center",
-        }}
+        source={{ uri: props.ImageProfile }}
+        icon={{ name: "user", type: "font-awesome" }}
+        containerStyle={{ backgroundColor: "#6733b9" }}
       >
         {props.enableEditAvatar && (
           <Avatar.Accessory size={20} onPress={handelChoiseImage} />
@@ -70,3 +66,4 @@ export default function AccountInfo(props) {
     </View>
   );
 }
+export default memo(AccountInfo);

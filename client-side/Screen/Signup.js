@@ -1,21 +1,14 @@
-import {
-  View,
-  Text,
-  Pressable,
-  SafeAreaView,
-  Image,
-  StyleSheet,
-} from "react-native";
-import React, { useState } from "react";
+import { View, Text, Pressable, SafeAreaView, StyleSheet } from "react-native";
+import React, { memo, useState } from "react";
 import { Button, Input } from "react-native-elements";
-import Logo from "../assets/Find-logos/logos_black.png";
+
 import RNPickerSelect from "react-native-picker-select";
 import Feather from "react-native-vector-icons/Feather";
 import axios from "axios";
 import { Avatar } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
-
-export default function Signup({ navigation }) {
+import base64 from "react-native-base64";
+function Signup({ navigation }) {
   const [name, setName] = useState("");
 
   const [email, setEmail] = useState("");
@@ -26,30 +19,32 @@ export default function Signup({ navigation }) {
   const selectPlaceholder = { label: "City", value: null, color: "#9EA0A4" };
   const [city, setCity] = useState("");
   const [imageProfile, setImageProfile] = useState("");
+  const [selectedImage, SetSlectedImage] = useState("");
   async function onSubmit() {
     try {
-      const userInfo = {
-        name: name,
-        email: email.toLowerCase(),
-        city: city,
-        password: password,
-        imageProfile: imageProfile,
-      };
-
       if (password != confirmPassowrd) {
         setInvalidPassword(true);
       } else {
         setInvalidPassword(false);
+
+        const userInfo = {
+          name: name,
+          email: email.toLowerCase(),
+          city: city,
+          password: password,
+          imageProfile: imageProfile,
+        };
+
         const Register = await axios.post(
           "http://192.168.1.22:4000/user/signup",
           userInfo
         );
         if (Register.status == 200) {
-          alert("AAA");
           navigation.navigate("Login");
-        } else {
-          alert("err");
-        }
+        } else
+          (eer) => {
+            alert(eer);
+          };
       }
     } catch (err) {
       alert(err);
@@ -64,23 +59,14 @@ export default function Signup({ navigation }) {
     });
 
     if (!result.cancelled) {
-      const data = new FormData();
-
-      data.append("Image", {
-        uri: result.uri,
-        type: result.type,
-        name:
-          result.fileName || result.uri.substr(result.uri.lastIndexOf("/") + 1),
-      });
-      const upload = await axios.post(
-        "http://192.168.1.22:4000/user/uploadImagProfile",
-        data
-      );
-      if (upload.status === 200) {
-        alert("work");
-        setImageProfile(result);
-      }
+      const Base64Image = convertBase64(result.uri);
+      setImageProfile(Base64Image);
+      SetSlectedImage(result.uri);
     }
+  };
+
+  const convertBase64 = (file) => {
+    return base64.encode(file);
   };
 
   return (
@@ -113,7 +99,7 @@ export default function Signup({ navigation }) {
             icon={{ name: "user", type: "font-awesome" }}
             onPress={handelChoiseImage}
             containerStyle={{ backgroundColor: "#6733b9" }}
-            source={{ uri: imageProfile.uri }}
+            source={{ uri: selectedImage }}
           />
         </View>
 
@@ -205,3 +191,5 @@ const pickerSelectStyles = StyleSheet.create({
     left: 10,
   },
 });
+
+export default memo(Signup);

@@ -5,7 +5,7 @@ const db = require("./DB");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const DB = require("../Restaurant/db");
-const fs = require("fs");
+
 require("dotenv").config();
 const multer = require("multer");
 const path = require("path");
@@ -21,9 +21,9 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.post("/uploadImagProfile", upload.single("Image"), async (req, res) => {
+router.post("/uploadProfileImage", upload.single("Image"), async (req, res) => {
   try {
-    res.status(200).json("work");
+    res.status(200).json(res.req.file.filename);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -51,13 +51,11 @@ router.get("/:id", async (req, res) => {
 });
 
 //signup
-router.post("/signup", upload.single("imageProfile"), async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
     const id = Math.floor(Math.random() * 100000 * 120);
     const saltPassword = await bcrypt.genSalt(10);
     const securePasssword = await bcrypt.hash(req.body.password, saltPassword);
-    const ImageUri = await upload(img.buffer);
-    console.log(ImageUri);
 
     const userInfo = {
       id: id,

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Dialog, Input, Button } from "react-native-elements";
 import { View, Text } from "react-native";
 
-export default function AccountVerification(props) {
+function AccountVerification(props) {
   const [UserOTP, setUserOTP] = useState(null);
   const [errorOTPinput, setErrorOTPinput] = useState(false);
   const checkOTP = () => {
@@ -50,3 +50,5 @@ export default function AccountVerification(props) {
     </Dialog>
   );
 }
+
+export default memo(AccountVerification);

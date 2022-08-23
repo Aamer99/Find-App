@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Input, Button } from "react-native-elements";
 import { View } from "react-native";
 import axios from "axios";
-export default function EditAccount(props) {
+function EditAccount(props) {
   const [name, setName] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassowrd, setConfirmPassword] = useState("");
@@ -103,3 +103,5 @@ export default function EditAccount(props) {
     </View>
   );
 }
+
+export default memo(EditAccount);

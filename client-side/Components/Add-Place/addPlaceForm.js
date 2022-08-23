@@ -8,6 +8,7 @@ import RNPickerSelect from "react-native-picker-select";
 import Feather from "react-native-vector-icons/Feather";
 import axios from "axios";
 import AddCategorise from "./AddCategorise";
+import AddMnue from "./AddMnue";
 function AddPlaceForm({ navigation }) {
   const [placeName, setPlaceName] = useState("");
   const [checked, setChecked] = useState(false);
@@ -19,6 +20,7 @@ function AddPlaceForm({ navigation }) {
   const selectPlaceholder = { label: "City", value: null, color: "#9EA0A4" };
   const [showCategories, setShowCategories] = useState(false);
   const [showAddCategorise, setShowAddCategorise] = useState(false);
+  const [showAddMnue, setShowAddMnue] = useState(false);
   const selectedCategories = [];
   const checkType = (i) => {
     const type = i + 1;
@@ -113,6 +115,7 @@ function AddPlaceForm({ navigation }) {
         selectedCategories={selectedCategories}
         setShowAddCategorise={setShowAddCategorise}
       />
+      <AddMnue showAddMnue={showAddMnue} />
       <RNPickerSelect
         onValueChange={setCity}
         items={cities}
@@ -145,7 +148,9 @@ function AddPlaceForm({ navigation }) {
           marginHorizontal: 60,
           marginVertical: 10,
         }}
-        onPress={handelChoiseImage}
+        onPress={() => {
+          setShowAddMnue(true);
+        }}
       />
 
       {/* <Text>Add Logo</Text>
