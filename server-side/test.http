@@ -1,7 +1,7 @@
 
 GET http://localhost:4000/user 
 ###
-GET http://localhost:4000/user/112122
+GET http://localhost:4000/user/11184153
 ###
 POST http://192.168.1.22:4000/user/login
 Content-Type: application/json 
@@ -55,7 +55,7 @@ GET http://172.20.10.6:4000/coffe
 ### 
 
 
-GET http://192.168.1.21:4000/user/getOneByEmail/aamer.es20@gmail.com
+GET http://localhost:4000/user/getOneByEmail/aamer.co
 
 ###
 

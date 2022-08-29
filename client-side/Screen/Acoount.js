@@ -7,6 +7,7 @@ import AccountVerification from "../Components/Account/AccountVerification";
 import FunctionalityBar from "../Components/Account/AccountFunctionalityBar";
 import AccountInfo from "../Components/Account/AccountInfo";
 import base64 from "react-native-base64";
+//import * as fs from "fs";
 export default function Acoount({ route, navigation }) {
   const userEmail = route.params.userEmail;
   const [ImageProfile, setImageProfile] = useState("");
@@ -16,7 +17,8 @@ export default function Acoount({ route, navigation }) {
   const [showEditAccount, SetshowEditAccount] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const convertFromBase64 = (file) => {
-    setImageProfile(base64.decode(file));
+    // return "data:image/gif;base64," + fs.readFileSync(req.file, "base64");
+    return base64.encode(file);
   };
   const sendOTPmessage = async () => {
     try {
@@ -39,9 +41,10 @@ export default function Acoount({ route, navigation }) {
         );
         if (respons.status === 200) {
           setData(respons.data[0]);
-          if (data.imageProfile != null) {
-            convertFromBase64(data.imageProfile);
-          }
+
+          // if (data.imageProfile != null) {
+          //   setImageProfile(convertFromBase64(data.imageProfile));
+          // }
         } else {
           throw new Error("valid to get data");
         }
@@ -65,7 +68,7 @@ export default function Acoount({ route, navigation }) {
         <AccountInfo
           email={data.email}
           name={data.name}
-          ImageProfile={ImageProfile} //data.imageprofile
+          ImageProfile={data.imageProfile} //data.imageprofile
           enableEditAvatar={showEditAccount}
         />
         <FunctionalityBar

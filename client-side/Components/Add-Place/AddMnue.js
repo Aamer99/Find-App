@@ -1,11 +1,12 @@
 import React, { memo, useState } from "react";
 import { TouchableOpacity, Text, Image, View } from "react-native";
-import { Dialog, Icon } from "react-native-elements";
+import { Button, Dialog, Icon } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
+import { Pressable } from "react-native";
 function AddMnue(props) {
-  const mnue = [];
+  const [mnue, setMnue] = useState([]);
   const [image, setImage] = useState("");
-  alert("hi");
+
   const handelChoiseImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -15,12 +16,16 @@ function AddMnue(props) {
     });
 
     if (!result.cancelled) {
-      alert(JSON.stringify(result.uri));
-      mnue.push({ mnue: result, uri: result.uri });
-      alert(JSON.stringify(mnue));
+      mnue.push({ mnue: result, uri: result.uri, index: mnue.length + 1 });
+
       setImage(result.uri);
     }
     this.forceUpdate();
+  };
+  const removeFromMnue = (item) => {
+    alert(item);
+    mnue.splice(item, item + 1);
+    alert(mnue.length);
   };
   return (
     <Dialog visible={props.showAddMnue}>
@@ -62,13 +67,45 @@ function AddMnue(props) {
         </TouchableOpacity>
         {mnue.map((item) => {
           return (
-            <Image
-              source={{ uri: item.uri }}
-              style={{ width: 100, height: 100, margin: 5 }}
-            />
+            <View>
+              <Image
+                source={{ uri: item.uri }}
+                style={{ width: 100, height: 100, margin: 5 }}
+              />
+              <TouchableOpacity
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  margin: 5,
+                  backgroundColor: "black",
+                  opacity: 0.7,
+                  zIndex: 1,
+                  width: "90%",
+                }}
+                onPress={() => {
+                  removeFromMnue(item.index);
+                }}
+              >
+                <Icon name="delete" type="AntDesign" size={20} color="white" />
+              </TouchableOpacity>
+            </View>
           );
         })}
       </View>
+      <Button
+        buttonStyle={{
+          width: "90%",
+          borderRadius: 35,
+          borderWidth: 0.2,
+          alignSelf: "center",
+          margin: 5,
+          backgroundColor: "red",
+        }}
+        title="Cansel"
+        onPress={() => {
+          props.setShowAddMnue(false);
+        }}
+      />
     </Dialog>
   );
 }

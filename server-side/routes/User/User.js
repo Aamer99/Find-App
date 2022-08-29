@@ -4,8 +4,8 @@ const bcrypt = require("bcrypt");
 const db = require("./DB");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-const DB = require("../Restaurant/db");
 
+const fs = require("fs");
 require("dotenv").config();
 const multer = require("multer");
 const path = require("path");
@@ -23,7 +23,7 @@ const upload = multer({ storage: storage });
 
 router.post("/uploadProfileImage", upload.single("Image"), async (req, res) => {
   try {
-    res.status(200).json(res.req.file.filename);
+    res.status(200).json(JSON.stringify(req.file));
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -44,6 +44,7 @@ router.get("/:id", async (req, res) => {
   try {
     const userID = req.params.id;
     let resualt = await db.getOneByID(userID);
+
     res.status(200).json(resualt);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -133,6 +134,15 @@ router.get("/getOneByEmail/:id", async (req, res) => {
   try {
     const useremail = req.params.id;
     const resualt = await db.getOneByEmail(useremail);
+    if (resualt[0].imageProfile != null) {
+      const imageProfile = JSON.parse(resualt[0].imageProfile);
+
+      const decodeImage =
+        `data:${imageProfile.mimetype};base64,` +
+        fs.readFileSync(imageProfile.path, "base64");
+      const newResualt = (resualt[0].imageProfile = decodeImage);
+    }
+
     res.status(200).json(resualt);
   } catch (err) {
     res.status(400).json({ message: err.message });

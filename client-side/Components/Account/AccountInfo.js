@@ -55,8 +55,8 @@ function AccountInfo(props) {
       <Avatar
         size={80}
         rounded
-        source={{ uri: props.ImageProfile }}
         icon={{ name: "user", type: "font-awesome" }}
+        source={{ uri: props.ImageProfile }}
         containerStyle={{ backgroundColor: "#6733b9" }}
       >
         {props.enableEditAvatar && (

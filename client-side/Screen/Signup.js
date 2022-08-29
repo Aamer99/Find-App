@@ -8,6 +8,7 @@ import axios from "axios";
 import { Avatar } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import base64 from "react-native-base64";
+
 function Signup({ navigation }) {
   const [name, setName] = useState("");
 
@@ -32,7 +33,7 @@ function Signup({ navigation }) {
           email: email.toLowerCase(),
           city: city,
           password: password,
-          imageProfile: imageProfile,
+          imageProfile: imageProfile === "" ? null : imageProfile,
         };
 
         const Register = await axios.post(
@@ -59,14 +60,32 @@ function Signup({ navigation }) {
     });
 
     if (!result.cancelled) {
-      const Base64Image = convertBase64(result.uri);
-      setImageProfile(Base64Image);
-      SetSlectedImage(result.uri);
+      const data = new FormData();
+
+      data.append("Image", {
+        uri: result.uri,
+        type: result.type,
+        name:
+          result.fileName || result.uri.substr(result.uri.lastIndexOf("/") + 1),
+      });
+
+      const upload = await axios.post(
+        "http://192.168.1.22:4000/user/uploadProfileImage",
+        data
+      );
+      if (upload.status === 200) {
+        SetSlectedImage(result.uri);
+
+        setImageProfile(upload.data);
+      } else
+        (err) => {
+          alert(err);
+        };
     }
   };
 
   const convertBase64 = (file) => {
-    return base64.encode(file);
+    return "data:image/gif;base64," + base64.encode(imageProfile);
   };
 
   return (

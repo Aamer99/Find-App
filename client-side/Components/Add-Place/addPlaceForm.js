@@ -115,7 +115,7 @@ function AddPlaceForm({ navigation }) {
         selectedCategories={selectedCategories}
         setShowAddCategorise={setShowAddCategorise}
       />
-      <AddMnue showAddMnue={showAddMnue} />
+      <AddMnue showAddMnue={showAddMnue} setShowAddMnue={setShowAddMnue} />
       <RNPickerSelect
         onValueChange={setCity}
         items={cities}
