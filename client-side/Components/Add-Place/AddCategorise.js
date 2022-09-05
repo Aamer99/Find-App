@@ -10,6 +10,7 @@ import { Button, Dialog } from "react-native-elements";
 //const selectedCategories = [];
 
 function AddCategorise(props) {
+  const [Categorise, setCategories] = useState([]);
   const [checked, setChecked] = useState("");
   const Icons = [
     { Image: require("../../assets/pizza.png"), name: "Pizza" },
@@ -23,9 +24,27 @@ function AddCategorise(props) {
     { Image: require("../../assets/sandwich.png"), name: "Sandwich" },
   ];
   const addCategorise = (categories) => {
-    props.selectedCategories.push(categories);
-    setChecked(categories);
+    let i = 0;
+    do {
+      if (
+        Categorise.find((item) => {
+          return item == categories;
+        })
+      ) {
+        Categorise.splice(i, 1);
+
+        const newCategorise = [...Categorise];
+        setCategories(newCategorise);
+      } else {
+        Categorise.push(categories);
+        const newCategorise = [...Categorise];
+        setCategories(newCategorise);
+      }
+    } while (i >= Categorise.length);
+
+    alert(JSON.stringify(Categorise));
   };
+
   return (
     <Dialog isVisible={props.Visible}>
       <Dialog.Title
@@ -50,7 +69,12 @@ function AddCategorise(props) {
                 maxWidth: "30%",
                 margin: 10,
                 flexDirection: "row",
-                backgroundColor: checked == item.name ? "#ddd" : "",
+                //backgroundColor: checked == item.name ? "#ddd" : "",
+                backgroundColor: Categorise.find((Item) => {
+                  return Item == item.name;
+                })
+                  ? "#ddd"
+                  : "",
               }}
               onPress={() => {
                 addCategorise(item.name);
@@ -82,8 +106,9 @@ function AddCategorise(props) {
         }}
         title="Add Categorise"
         onPress={() => {
-          alert(props.selectedCategories);
           props.setShowAddCategorise(false);
+          const categories = [...Categorise];
+          props.setCategories(categories);
         }}
       />
       <Button

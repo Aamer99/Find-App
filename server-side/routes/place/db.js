@@ -25,10 +25,11 @@ db.addPlace = (placeInfo) => {
   return new Promise((resolve, reject) => {
     console.log(placeInfo);
     connect.query(
-      "INSERT INTO place VALUES(?,?,?,?,?,?,?)",
+      "INSERT INTO place VALUES(?,?,?,?,?,?,?,?)",
       placeInfo,
       (err, res) => {
         if (err) {
+          console.log(err);
           return reject(err);
         }
         return resolve("place added sussfuly !!!!");

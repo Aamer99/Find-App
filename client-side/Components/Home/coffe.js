@@ -11,7 +11,7 @@ export default function Coffe({ navigation, ...props }) {
     // get data from database
     const getData = async () => {
       try {
-        const response = await axios.post("http://192.168.1.21:4000/place", {
+        const response = await axios.post("http://192.168.1.22:4000/place", {
           city: props.userCity,
           type: "Coffe",
         });

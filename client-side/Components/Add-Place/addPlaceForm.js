@@ -9,10 +9,10 @@ import Feather from "react-native-vector-icons/Feather";
 import axios from "axios";
 import AddCategorise from "./AddCategorise";
 import AddMnue from "./AddMnue";
-function AddPlaceForm({ navigation }) {
+function AddPlaceForm({ navigation, ...props }) {
   const [placeName, setPlaceName] = useState("");
   const [checked, setChecked] = useState(false);
-  const [checkedCategories, setCheckedCategories] = useState(true);
+
   const [image, setImage] = useState("");
   const [cities, setCities] = useState([{ label: "Madina", value: "Madina" }]);
   const [city, setCity] = useState("");
@@ -21,7 +21,11 @@ function AddPlaceForm({ navigation }) {
   const [showCategories, setShowCategories] = useState(false);
   const [showAddCategorise, setShowAddCategorise] = useState(false);
   const [showAddMnue, setShowAddMnue] = useState(false);
-  const selectedCategories = [];
+  const [mnue, setMnue] = useState([]);
+  const [placeMnue, setPlaceMnue] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [placeLogo, setPlaceLogo] = useState([]);
+
   const checkType = (i) => {
     const type = i + 1;
     if (type == 1) {
@@ -43,33 +47,77 @@ function AddPlaceForm({ navigation }) {
     });
 
     if (!result.cancelled) {
-      setImage(result.uri);
-      alert(JSON.stringify(result.uri));
+      const data = new FormData();
+
+      data.append("placeLogo", {
+        uri: result.uri,
+        type: result.type,
+        name:
+          result.fileName || result.uri.substr(result.uri.lastIndexOf("/") + 1),
+      });
+
+      const upload = await axios.post(
+        "http://192.168.1.22:4000/place/uploadeLogo",
+        data
+      );
+      if (upload.status === 200) {
+        setPlaceLogo(upload.data);
+        alert(upload.data);
+      } else
+        (err) => {
+          alert(err);
+        };
     }
   };
 
   async function addPlace() {
     try {
+      // const data = new FormData();
+      // mnue.map((item) => {
+      //   data.append("mnue", {
+      //     uri: item.uri,
+      //     type: item.type,
+      //     name: item.fileName || item.uri.substr(item.uri.lastIndexOf("/") + 1),
+      //   });
+      // });
+      // // alert(JSON.stringify(data));
+      // const upload = await axios.post(
+      //   "http://192.168.1.22:4000/place/uploadeMnue",
+      //   data
+      // );
+
+      // if (upload.status === 200) {
+      //   alert(upload.data);
+      //   const Mnue = [...upload.data];
+      //   setPlaceMnue(Mnue);
+      //   alert(JSON.stringify(placeMnue));
+      // }
+      // alert(JSON.stringify(mnue));
+      alert(mnue);
       const placeInfo = {
         name: placeName,
-        logo: "https://cache.dominos.com/olo/6_91_5/assets/build/images/promo/dominos_social_logo.jpg",
-        mnue: "https://pbs.twimg.com/media/Cp4yRhDWIAEnEEw.jpg",
+        logo: placeLogo,
+        mnue: JSON.stringify(mnue),
         city: city,
         type: placeType,
-        PlaceLocation: placeCoordinate,
+        PlaceLocation: props.placeCoordinate,
+        categorise: JSON.stringify(categories),
       };
 
       const respons = await axios.post(
-        "http://192.168.1.21:4000/place/addPlace",
+        "http://192.168.1.22:4000/place/addPlace",
         placeInfo
       );
       if (respons.status == 200) {
         navigation.navigate("Home");
         setCity(null);
         setPlaceName("");
-        setCoordinateMarkier({ latitude: 0, longitude: 0 });
-        setPlaceCoordinate(null);
+        props.setCoordinateMarkier({ latitude: 0, longitude: 0 });
+        props.setPlaceCoordinate(null);
         setChecked(0);
+        const empty = [];
+        setCategories(...empty);
+        setMnue(...empty);
       } else {
         alert("not work");
       }
@@ -77,6 +125,7 @@ function AddPlaceForm({ navigation }) {
       alert("error in all function add place " + err);
     }
   }
+
   return (
     <View
       style={{
@@ -112,10 +161,15 @@ function AddPlaceForm({ navigation }) {
       )}
       <AddCategorise
         Visible={showAddCategorise}
-        selectedCategories={selectedCategories}
+        categories={categories}
+        setCategories={setCategories}
         setShowAddCategorise={setShowAddCategorise}
       />
-      <AddMnue showAddMnue={showAddMnue} setShowAddMnue={setShowAddMnue} />
+      <AddMnue
+        showAddMnue={showAddMnue}
+        setShowAddMnue={setShowAddMnue}
+        setMnue={setMnue}
+      />
       <RNPickerSelect
         onValueChange={setCity}
         items={cities}
@@ -176,6 +230,7 @@ function AddPlaceForm({ navigation }) {
           marginHorizontal: 60,
           marginVertical: 10,
         }}
+        onPress={handelChoiseImage}
       />
       <Button
         title="add"

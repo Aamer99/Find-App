@@ -12,7 +12,8 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Divider } from "react-native-elements";
 
 export default function About(props) {
-  const Coordinat = props.route.params.PlaceLocation.split(",");
+  const aa = "24.426170, 39.580522";
+  const Coordinat = aa.split(",");
   const initialRegion = {
     latitude: Coordinat[0],
     longitude: Coordinat[1],
@@ -38,7 +39,10 @@ export default function About(props) {
         <Title title={props.route.params.PlaceName} />
         <Divider width={2} style={{ marginVertical: 20 }} />
         <Description description={props.description} />
-        <Menu ImageURL={props.route.params.PlaceMnue} />
+        <Menu
+          mnue={props.route.params.PlaceMnue}
+          uri={props.route.params.PlaceLogo}
+        />
         <Location
           initialRegion={initialRegion}
           Location={props.route.params.PlaceLocation}
@@ -88,18 +92,21 @@ const Description = (props) => {
 };
 
 const Menu = (props) => {
+  alert(props.mnue);
   return (
     <View>
-      <Image
-        source={{ uri: props.ImageURL }}
-        style={{
-          width: 400,
-          height: 400,
-          resizeMode: "contain",
-          marginBottom: 10,
-          marginTop: 10,
-        }}
-      />
+      {props.mnue.map((item) => {
+        <Image
+          source={{ uri: props.uri }}
+          style={{
+            width: 400,
+            height: 400,
+            resizeMode: "contain",
+            marginBottom: 10,
+            marginTop: 10,
+          }}
+        />;
+      })}
     </View>
   );
 };

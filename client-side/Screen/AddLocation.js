@@ -49,7 +49,12 @@ export default function AddLoaction({ navigation }) {
             </>
           )}
         </MapView>
-        <AddPlaceForm navigation={navigation} />
+        <AddPlaceForm
+          navigation={navigation}
+          placeCoordinate={placeCoordinate}
+          setCoordinateMarkier={setCoordinateMarkier}
+          setPlaceCoordinate={setPlaceCoordinate}
+        />
       </View>
     </ScrollView>
   );
