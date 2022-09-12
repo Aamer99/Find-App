@@ -1,8 +1,21 @@
 const router = require("express").Router();
-const db = require("./DB");
+const db = require("./db");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const { PythonShell } = require("python-shell");
+
+// dummy = spawn("python", ["test.py"]);
+
+// dummy.stdout.on("data", function (data) {
+//   console.log(data.toString());
+// });
+
+// const py = spawn("python", ["test.py"]);
+// py.stdout.on("data", function (stdData) {
+//   console.log(stdData.toString());
+// });
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "../client-side/assets/places/");
@@ -31,14 +44,15 @@ router.post("/", async (req, res) => {
       item.logo = placeLogoDecoded;
 
       const placeMnue = JSON.parse(item.mnue);
-      const mnueDecoded = placeMnue.map((Item) => {
-        return (
-          `data:${Item.mimetype};base64,` + fs.readFileSync(Item.path, "base64")
-        );
-      });
-      item.mnue = mnueDecoded;
+      // const mnueDecoded = placeMnue.map((Item) => {
+      //   return (
+      //     `data:${Item.mimetype};base64,` + fs.readFileSync(Item.path, "base64")
+      //   );
+      // });
+      item.mnue = placeMnue;
+      // console.log("hi");
     });
-    fs.writeFileSync("assa", JSON.stringify(places));
+
     return res.status(200).json(places);
   } catch (error) {
     return res.status(400).json({ message: error.message });
@@ -148,4 +162,18 @@ router.post(
     }
   }
 );
+router.get("/testPythone", async (req, res) => {
+  const pyshell = new PythonShell(`${process.cwd()}/routes/place/test.py`);
+
+  pyshell.send("./routes/place/New-Hardees-Menu.jpeg");
+
+  pyshell.on("message", function (message) {
+    console.log(message);
+  });
+
+  pyshell.end(function (err) {
+    if (err) throw err;
+    console.log("finished");
+  });
+});
 module.exports = router;
