@@ -7,13 +7,17 @@ import {
   Linking,
   Dimensions,
 } from "react-native";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Divider } from "react-native-elements";
-
-export default function About(props) {
-  const aa = "24.426170, 39.580522";
-  const Coordinat = aa.split(",");
+import Base64 from "react-native-base64";
+import base64 from "react-native-base64";
+function About(props) {
+  const Coordinat = props.route.params.PlaceLocation.split(",");
+  const image = JSON.stringify(props.route.params.PlaceMnue);
+  // const encodeImage = `data:image/jpeg;base64,` + base64.encode(image);
+  const encodeImage = "data:image/png;base64," + base64.encode(image);
+  alert(image);
   const initialRegion = {
     latitude: Coordinat[0],
     longitude: Coordinat[1],
@@ -24,6 +28,7 @@ export default function About(props) {
     latitude: Coordinat[0],
     longitude: Coordinat[1],
   };
+
   return (
     <ScrollView>
       <Img uri={props.route.params.PlaceLogo} />
@@ -39,10 +44,7 @@ export default function About(props) {
         <Title title={props.route.params.PlaceName} />
         <Divider width={2} style={{ marginVertical: 20 }} />
         <Description description={props.description} />
-        <Menu
-          mnue={props.route.params.PlaceMnue}
-          uri={props.route.params.PlaceLogo}
-        />
+        {/* <Menu mnue={props.route.params.PlaceMnue} uri={encodeImage} /> */}
         <Location
           initialRegion={initialRegion}
           Location={props.route.params.PlaceLocation}
@@ -92,21 +94,20 @@ const Description = (props) => {
 };
 
 const Menu = (props) => {
-  alert(props.mnue);
   return (
     <View>
-      {props.mnue.map((item) => {
-        <Image
-          source={{ uri: props.uri }}
-          style={{
-            width: 400,
-            height: 400,
-            resizeMode: "contain",
-            marginBottom: 10,
-            marginTop: 10,
-          }}
-        />;
-      })}
+      <Text>{props.uri}</Text>
+
+      {/* <Image
+        source={{ uri: props.uri }}
+        style={{
+          width: 400,
+          height: 400,
+          resizeMode: "contain",
+          marginBottom: 10,
+          marginTop: 10,
+        }}
+      /> */}
     </View>
   );
 };
@@ -131,12 +132,14 @@ const Location = (props) => {
         initialRegion={props.initialRegion}
         zoomEnabled={false}
         scrollEnabled={false}
-        onPress={() =>
-          Linking.openURL(`googlemaps://app?&daddr=${props.Location}`)
-        }
+        onPress={() => {
+          alert("h");
+          Linking.openURL(`googlemaps://app?&daddr=${props.Location}`);
+        }}
       >
         <Marker coordinate={props.CoordinateMarker} />
       </MapView>
     </View>
   );
 };
+export default memo(About);

@@ -1,32 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
 import axios from "axios";
 import Entypo from "react-native-vector-icons/Entypo";
 import PlaceContainer from "./PlaceContiner";
-export default function Coffe({ navigation, ...props }) {
+function Coffe({ navigation, ...props }) {
   const [data, setData] = useState([]);
   const [activeLodaing, setActiveLodaing] = useState(true);
 
-  useEffect(() => {
-    // get data from database
-    const getData = async () => {
-      try {
-        const response = await axios.post("http://192.168.1.22:4000/place", {
-          city: props.userCity,
-          type: "Coffe",
-        });
-        if (response.status === 200) {
-          setData(response.data);
-          setActiveLodaing(false);
-        } else {
-          throw new Error("valid to get data");
-        }
-      } catch (error) {
-        alert("erorr");
+  const getData = async () => {
+    try {
+      const response = await axios.post("http://192.168.1.22:4000/place", {
+        city: props.userCity,
+        type: "Coffe",
+      });
+      if (response.status === 200) {
+        setData(response.data);
+        setActiveLodaing(false);
+      } else {
+        throw new Error("valid to get data");
       }
-    };
-    ///
-
+    } catch (error) {
+      alert("erorr");
+    }
+  };
+  useEffect(() => {
     getData();
   });
 
@@ -72,3 +69,5 @@ export default function Coffe({ navigation, ...props }) {
     </View>
   );
 }
+
+export default memo(Coffe);

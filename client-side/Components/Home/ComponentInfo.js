@@ -1,9 +1,9 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 
 import AntDesign from "react-native-vector-icons/AntDesign";
 import axios from "axios";
-export default function ComponentInfo({ navigation, ...props }) {
+function ComponentInfo({ navigation, ...props }) {
   const [isFavoritPlace, setFavoritPlace] = useState(props.FavoritPlace);
   const addToFavorit = async () => {
     try {
@@ -27,16 +27,10 @@ export default function ComponentInfo({ navigation, ...props }) {
   return (
     <View
       style={{
-        // width: 300,
-        // borderRadius: 15,
         backgroundColor: "gray",
-        // justifyContent: "center",
-        // alignSelf: "center",
+
         margin: 10,
-        // shadowColor: "black",
-        // shadowOpacity: 10,
-        // shadowRadius: 10,
-        // padding: 30,
+
         borderRadius: 35,
         height: 200,
       }}
@@ -57,7 +51,7 @@ export default function ComponentInfo({ navigation, ...props }) {
           IconColor={isFavoritPlace ? "red" : "black"}
           addToFavorit={addToFavorit}
         />
-        <ComponentShortInfo name={props.name} />
+        <ComponentShortInfo name={props.PlaceLocation} />
       </TouchableOpacity>
     </View>
   );
@@ -99,3 +93,5 @@ const ComponentShortInfo = (props) => {
     </View>
   );
 };
+
+export default memo(ComponentInfo);

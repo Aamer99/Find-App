@@ -14,7 +14,7 @@ export default function PlaceContainer(props) {
             navigation={props.navigation}
             id={item.id}
             mnue={item.mnue}
-            location={item.location}
+            location={item.PlaceLocation}
             FavoritPlace={false}
           />
         );
