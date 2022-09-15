@@ -3,18 +3,6 @@ const db = require("./db");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const { PythonShell } = require("python-shell");
-
-// dummy = spawn("python", ["test.py"]);
-
-// dummy.stdout.on("data", function (data) {
-//   console.log(data.toString());
-// });
-
-// const py = spawn("python", ["test.py"]);
-// py.stdout.on("data", function (stdData) {
-//   console.log(stdData.toString());
-// });
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -162,18 +150,5 @@ router.post(
     }
   }
 );
-router.get("/testPythone", async (req, res) => {
-  const pyshell = new PythonShell(`${process.cwd()}/routes/place/test.py`);
 
-  pyshell.send("./routes/place/New-Hardees-Menu.jpeg");
-
-  pyshell.on("message", function (message) {
-    console.log(message);
-  });
-
-  pyshell.end(function (err) {
-    if (err) throw err;
-    console.log("finished");
-  });
-});
 module.exports = router;
