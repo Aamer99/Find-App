@@ -1,8 +1,9 @@
 import { View, Text } from "react-native";
 import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-
+import { Icon } from "react-native-elements";
 import Home from "../Screen/Home";
 import Acoount from "../Screen/Acoount";
 import Favorite from "../Screen/Favorite";
@@ -103,6 +104,34 @@ export default function TapBar({ route, navigation }) {
           ),
         }}
       />
+
+      <Tap.Screen
+        name="Rewards"
+        component={Setting}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                top: 10,
+                width: 60,
+              }}
+            >
+              {/* <Ionicons
+                name={focused ? "fa-treasure-chest" : "ios-settings-outline"}
+                size={25}
+              /> */}
+              <MaterialCommunityIcons
+                name={focused ? "gift" : "gift-outline"}
+                size={25}
+              />
+              <Text style={{ top: 10 }}>Rewards</Text>
+            </View>
+          ),
+        }}
+      />
+
       <Tap.Screen
         name="Account"
         component={Acoount}
@@ -122,29 +151,6 @@ export default function TapBar({ route, navigation }) {
                 size={25}
               />
               <Text style={{ top: 10 }}>Account</Text>
-            </View>
-          ),
-        }}
-      />
-
-      <Tap.Screen
-        name="Setting"
-        component={Setting}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                top: 10,
-                width: 60,
-              }}
-            >
-              <Ionicons
-                name={focused ? "ios-settings-sharp" : "ios-settings-outline"}
-                size={25}
-              />
-              <Text style={{ top: 10 }}>Setting</Text>
             </View>
           ),
         }}

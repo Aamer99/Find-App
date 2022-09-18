@@ -23,7 +23,7 @@ export default function AddLoaction({ navigation }) {
   }
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{ marginBottom: 70 }}>
         <MapView
           provider={PROVIDER_GOOGLE}

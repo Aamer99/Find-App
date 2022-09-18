@@ -95,21 +95,47 @@ const Menu = (props) => {
         return (
           <View
             style={{
-              width: "100%",
-              height: 100,
-
-              justifyContent: "center",
-              alignSelf: "center",
+              flexDirection: "row",
+              margin: 10,
+              justifyContent: "space-between",
             }}
           >
-            <View style={{ margin: 10, padding: 5 }}>
-              <Text style={{ fontSize: 19, fontWeight: "500" }}>Item.Name</Text>
-              <Text style={{ margin: 5, fontSize: 15, fontWeight: "300" }}>
-                item.description
+            <View
+              style={{
+                justifyContent: "space-evenly",
+                width: 200,
+                paddingRight: 10,
+              }}
+            >
+              <Text style={{ fontSize: 19, fontWeight: "500" }}>
+                {item.itemName}
               </Text>
-              <Text style={{ margin: 5, fontSize: 14, fontWeight: "200" }}>
-                item.price
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "250",
+                  paddingTop: 15,
+                }}
+              >
+                {item.itemDescription}
               </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: "200",
+                  paddingTop: 15,
+                }}
+              >
+                {item.itemPrice} SR
+              </Text>
+            </View>
+            <View>
+              <Image
+                source={{
+                  uri: props.itemImage,
+                }}
+                style={{ width: 100, height: 100, borderRadius: 8 }}
+              />
             </View>
             <Divider width={0.5} orientation="vertical" />
           </View>

@@ -1,6 +1,11 @@
 import React, { memo, useState } from "react";
-import { View, StyleSheet, ImagePickerIOS } from "react-native";
-import { Input, Button } from "react-native-elements";
+import {
+  View,
+  StyleSheet,
+  ImagePickerIOS,
+  TouchableOpacity,
+} from "react-native";
+import { Input, Button, Divider } from "react-native-elements";
 import { CheckBox } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 
@@ -8,12 +13,12 @@ import RNPickerSelect from "react-native-picker-select";
 import Feather from "react-native-vector-icons/Feather";
 import axios from "axios";
 import AddCategorise from "./AddCategorise";
-import AddMnue from "./AddMnue";
+import AddItem from "./Add-Item";
+import MnueList from "./MnueList";
 function AddPlaceForm({ navigation, ...props }) {
   const [placeName, setPlaceName] = useState("");
   const [checked, setChecked] = useState(false);
 
-  const [image, setImage] = useState("");
   const [cities, setCities] = useState([{ label: "Madina", value: "Madina" }]);
   const [city, setCity] = useState("");
   const [placeType, setPlaceType] = useState("");
@@ -93,7 +98,7 @@ function AddPlaceForm({ navigation, ...props }) {
       //   alert(JSON.stringify(placeMnue));
       // }
       // alert(JSON.stringify(mnue));
-      alert(mnue);
+
       const placeInfo = {
         name: placeName,
         logo: placeLogo,
@@ -103,7 +108,7 @@ function AddPlaceForm({ navigation, ...props }) {
         PlaceLocation: props.placeCoordinate,
         categorise: JSON.stringify(categories),
       };
-
+      alert(JSON.stringify(placeInfo));
       const respons = await axios.post(
         "http://192.168.1.22:4000/place/addPlace",
         placeInfo
@@ -129,11 +134,15 @@ function AddPlaceForm({ navigation, ...props }) {
   return (
     <View
       style={{
-        borderRadius: 35,
-        borderWidth: 0.5,
+        borderTopStartRadius: 35,
+        borderTopEndRadius: 35,
+
+        borderTopWidth: 0.5,
+        borderLeftWidth: 0.5,
+        borderRightWidth: 0.5,
         width: "100%",
         marginTop: -90,
-        backgroundColor: "white",
+
         padding: 30,
         backgroundColor: "#eee",
       }}
@@ -165,10 +174,11 @@ function AddPlaceForm({ navigation, ...props }) {
         setCategories={setCategories}
         setShowAddCategorise={setShowAddCategorise}
       />
-      <AddMnue
+      <AddItem
         showAddMnue={showAddMnue}
         setShowAddMnue={setShowAddMnue}
         setMnue={setMnue}
+        mnue={mnue}
       />
       <RNPickerSelect
         onValueChange={setCity}
@@ -178,32 +188,6 @@ function AddPlaceForm({ navigation, ...props }) {
         placeholder={selectPlaceholder}
         Icon={() => {
           return <Feather name="map-pin" size={22} />;
-        }}
-      />
-
-      <Button
-        title="Add Mnue"
-        icon={{
-          name: "add-a-photo",
-          type: "MaterialIcons",
-          size: 15,
-          color: "white",
-        }}
-        iconContainerStyle={{ marginRight: 10 }}
-        titleStyle={{ fontWeight: "700" }}
-        buttonStyle={{
-          backgroundColor: "gray",
-          borderColor: "transparent",
-          borderWidth: 0,
-          borderRadius: 30,
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 60,
-          marginVertical: 10,
-        }}
-        onPress={() => {
-          setShowAddMnue(true);
         }}
       />
 
@@ -233,6 +217,53 @@ function AddPlaceForm({ navigation, ...props }) {
         onPress={handelChoiseImage}
       />
       <Button
+        title="Add Item"
+        icon={{
+          name: "add-a-photo",
+          type: "MaterialIcons",
+          size: 15,
+          color: "white",
+        }}
+        iconContainerStyle={{ marginRight: 10 }}
+        titleStyle={{ fontWeight: "700" }}
+        buttonStyle={{
+          backgroundColor: "gray",
+          borderColor: "transparent",
+          borderWidth: 0,
+          borderRadius: 30,
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 60,
+          marginVertical: 10,
+        }}
+        onPress={() => {
+          setShowAddMnue(true);
+        }}
+      />
+      <Divider width={2} style={{ marginVertical: 20 }} />
+      {mnue.map((item) => {
+        return (
+          <TouchableOpacity
+            onPress={() => {
+              setShowAddMnue(true);
+            }}
+          >
+            <MnueList
+              itemName={item.itemName}
+              itemDescription={item.itemDescription}
+              itemPrice={item.itemPrice}
+              //itemImage={item.itemImage}
+              itemImage={
+                "https://cdn.alweb.com/thumbs/hotcoldcups/article/fit727x484/%D8%A3%D9%84%D8%B0-%D9%88%D8%B5%D9%81%D8%A7%D8%AA-%D8%B3%D8%A8%D8%A7%D9%86%D8%B4-%D9%84%D8%A7%D8%AA%D9%8A%D9%87.jpg"
+              }
+            />
+          </TouchableOpacity>
+        );
+      })}
+
+      <Divider width={2} style={{ marginVertical: 20 }} />
+      <Button
         title="add"
         // buttonStyle={{
         //   width: "90%",
@@ -246,6 +277,7 @@ function AddPlaceForm({ navigation, ...props }) {
           borderColor: "white",
           borderRadius: 30,
           marginTop: 20,
+          marginBottom: 40,
         }}
         onPress={addPlace}
       />

@@ -51,7 +51,7 @@ function ComponentInfo({ navigation, ...props }) {
           IconColor={isFavoritPlace ? "red" : "black"}
           addToFavorit={addToFavorit}
         />
-        <ComponentShortInfo name={props.PlaceLocation} />
+        <ComponentShortInfo name={props.name} />
       </TouchableOpacity>
     </View>
   );
@@ -89,7 +89,7 @@ const ComponentShortInfo = (props) => {
     <View
       style={{ marginTop: 5, position: "absolute", bottom: "15%", left: "5%" }}
     >
-      <Text style={{ fontSize: 15, fontWeight: "bold" }}>{props.name}</Text>
+      <Text style={{ fontSize: 20, fontWeight: "400" }}>{props.name}</Text>
     </View>
   );
 };
