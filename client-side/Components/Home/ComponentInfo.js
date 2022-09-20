@@ -25,34 +25,34 @@ function ComponentInfo({ navigation, ...props }) {
   };
 
   return (
-    <View
-      style={{
-        backgroundColor: "gray",
-
-        margin: 10,
-
-        borderRadius: 35,
-        height: 200,
-      }}
-    >
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("RestaurantDetails", {
-            PlaceName: props.name,
-            PlaceLogo: props.logo,
-            PlaceMnue: props.mnue,
-            PlaceLocation: props.location,
-          });
+    <View>
+      <View
+        style={{
+          backgroundColor: "gray",
+          margin: 10,
+          borderRadius: 35,
+          height: 200,
         }}
       >
-        <ComponentImage
-          logo={props.logo}
-          IconName={isFavoritPlace ? "heart" : "hearto"}
-          IconColor={isFavoritPlace ? "red" : "black"}
-          addToFavorit={addToFavorit}
-        />
-        <ComponentShortInfo name={props.name} />
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("RestaurantDetails", {
+              PlaceName: props.name,
+              PlaceLogo: props.logo,
+              PlaceMnue: props.mnue,
+              PlaceLocation: props.location,
+            });
+          }}
+        >
+          <ComponentImage
+            logo={props.logo}
+            IconName={isFavoritPlace ? "heart" : "hearto"}
+            IconColor={isFavoritPlace ? "red" : "black"}
+            addToFavorit={addToFavorit}
+          />
+          <ComponentShortInfo name={props.name} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

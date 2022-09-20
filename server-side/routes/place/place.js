@@ -38,7 +38,6 @@ router.post("/", async (req, res) => {
       //   );
       // });
       item.mnue = placeMnue;
-      // console.log("hi");
     });
 
     return res.status(200).json(places);
@@ -87,6 +86,18 @@ router.post("/search/:id", async (req, res) => {
         return item;
       }
     });
+
+    searchResult.map((item) => {
+      const placeLogo = JSON.parse(item.logo);
+      const placeLogoDecoded =
+        `data:${placeLogo.mimetype};base64,` +
+        fs.readFileSync(placeLogo.path, "base64");
+      item.logo = placeLogoDecoded;
+
+      const placeMnue = JSON.parse(item.mnue);
+
+      item.mnue = placeMnue;
+    });
     res.status(200).json(searchResult);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -127,6 +138,7 @@ router.get("/Categorise/:id", async (req, res) => {
     const categorise = req.params.id;
     const Categorise = await db.Categorise(categorise);
     res.status(200).json(Categorise);
+    console.log(categorise);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

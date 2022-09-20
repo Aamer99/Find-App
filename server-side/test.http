@@ -115,13 +115,13 @@ Content-Type: application/json
 ###
 GET http://192.168.1.22:4000/place/testPythone
 ###
-GET http://localhost:4000/user/getCity/aamer.es12@gmail.com
+GET  http://192.168.1.22:4000/place/Categorise/Pizza
 
 ####
-POST http://192.168.1.21:4000/place/search/g
+POST http://192.168.1.22:4000/place/search/Yy
 Content-Type: application/json 
 
 {
          "userCity": "Madina",
-          "placeType": "Restaurant"
+          "placeType": "coffe"
 }

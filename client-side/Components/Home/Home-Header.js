@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 
-export default function HomeHeader(props) {
+function HomeHeader(props) {
   const [ActiveTap, SetActiveTap] = useState("Coffe");
 
   return (
@@ -61,3 +61,5 @@ const Section = (props) => {
     </TouchableOpacity>
   );
 };
+
+export default memo(HomeHeader);

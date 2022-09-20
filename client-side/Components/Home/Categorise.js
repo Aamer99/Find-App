@@ -13,7 +13,7 @@ export default function Categorise(props) {
   async function categorise(categoriseName) {
     try {
       const response = await axios.get(
-        `http://192.168.1.21:4000/place/Categorise/${categoriseName}`
+        `http://192.168.1.22:4000/place/Categorise/${categoriseName}`
       );
       if (response.status == 200) {
         props.setCaegorise(response.data);

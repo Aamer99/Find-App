@@ -5,7 +5,7 @@ import {
   ScrollView,
   AsyncStorage,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import HomeHeader from "../Components/Home/Home-Header";
 import SearchBar from "../Components/Home/SearchBar";
 import ComponentInfo from "../Components/Home/ComponentInfo";
@@ -13,9 +13,9 @@ import { Divider } from "react-native-elements";
 import BottpmTap from "../Components/TapBar";
 import axios from "axios";
 import Coffe from "../Components/Home/coffe";
-import Restaurant from "../Components/Home/Restaurant";
+import Place from "../Components/Home/Place";
 import Categorise from "../Components/Home/Categorise";
-export default function Home({ route, navigation }) {
+function Home({ route, navigation }) {
   const [Search, setSearch] = useState([]);
   const [categorise, setCaegorise] = useState([]);
   const [showByCategorise, setShowByCategorise] = useState(false);
@@ -106,10 +106,13 @@ export default function Home({ route, navigation }) {
             showSearch={showSearchResualt}
             navigation={navigation}
             userCity={userCity}
+            placeType={section}
+            setData={setData}
+            data={data}
           />
         )}
         {section == "Restaurant" && (
-          <Restaurant
+          <Place
             Search={Search}
             showSearch={showSearchResualt}
             navigation={navigation}
@@ -118,9 +121,12 @@ export default function Home({ route, navigation }) {
             setData={setData}
             categorise={categorise}
             showByCategorise={showByCategorise}
+            placeType={section}
           />
         )}
       </ScrollView>
     </SafeAreaView>
   );
 }
+
+export default memo(Home);

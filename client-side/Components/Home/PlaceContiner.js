@@ -6,7 +6,7 @@ import ComponentInfo from "./ComponentInfo";
 export default function PlaceContainer(props) {
   return (
     <View>
-      {props.places.map((item) => {
+      {props.places.map((item, count) => {
         return (
           <ComponentInfo
             logo={item.logo}
@@ -16,6 +16,7 @@ export default function PlaceContainer(props) {
             mnue={item.mnue}
             location={item.PlaceLocation}
             FavoritPlace={false}
+            key={count}
           />
         );
       })}

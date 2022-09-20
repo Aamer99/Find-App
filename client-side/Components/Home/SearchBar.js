@@ -1,8 +1,8 @@
 import { View, Text, TextInput, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import axios from "axios";
 
-export default function SearchBar(props) {
+function SearchBar(props) {
   // const [Search, SetSearch] = useState("");
 
   async function onSubmit() {
@@ -10,8 +10,8 @@ export default function SearchBar(props) {
       const searchTerm = props.Search.toUpperCase();
       props.setenableBtnSearch(false);
       if (props.section == "Coffe") {
-        const search = await axios.get(
-          `http://192.168.1.21:4000/place/search/${searchTerm}`,
+        const search = await axios.post(
+          `http://192.168.1.22:4000/place/search/${searchTerm}`,
           { userCity: props.userCity, placeType: "Coffe" }
         );
         if (search.status === 200) {
@@ -22,7 +22,7 @@ export default function SearchBar(props) {
         }
       } else if (props.section == "Restaurant") {
         const search = await axios.post(
-          `http://192.168.1.21:4000/place/search/${searchTerm}`,
+          `http://192.168.1.22:4000/place/search/${searchTerm}`,
           { userCity: props.userCity, placeType: "Restaurant" }
         );
         if (search.status === 200) {
@@ -102,3 +102,5 @@ export default function SearchBar(props) {
     </View>
   );
 }
+
+export default memo(SearchBar);

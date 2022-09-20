@@ -20,7 +20,7 @@ function Signup({ navigation }) {
   const selectPlaceholder = { label: "City", value: null, color: "#9EA0A4" };
   const [city, setCity] = useState("");
   const [imageProfile, setImageProfile] = useState("");
-  const [selectedImage, SetSlectedImage] = useState("");
+  const [selectedImage, SetSlectedImage] = useState(null);
   async function onSubmit() {
     try {
       if (password != confirmPassowrd) {

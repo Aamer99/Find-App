@@ -61,8 +61,14 @@ function Coffe({ navigation, ...props }) {
         <>
           <ActivityIndicator
             size="large"
-            style={{ marginTop: "50%" }}
-            color="black"
+            color="gray"
+            style={{
+              marginTop: "50%",
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              height: 80,
+            }}
           />
         </>
       )}
