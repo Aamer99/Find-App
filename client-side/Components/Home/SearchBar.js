@@ -56,12 +56,12 @@ function SearchBar(props) {
     >
       <TextInput
         placeholder="Search"
-        style={{
-          marginLeft: 10,
-          mainWidth: "70%",
-          borderRadius: 20,
-          width: "70%",
-        }}
+        // style={{
+        //   marginLeft: 10,
+        //   mainWidth: "70%",
+        //   borderRadius: 20,
+        //   width: "70%",
+        // }}
         onChangeText={props.SetSearch}
         value={props.Search}
       />

@@ -1,17 +1,10 @@
 import React, { memo, useState } from "react";
-import {
-  View,
-  Image,
-  Pressable,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 import { Button, Dialog } from "react-native-elements";
-//const selectedCategories = [];
 
 function AddCategorise(props) {
   const [Categorise, setCategories] = useState([]);
-  const [checked, setChecked] = useState("");
+
   const Icons = [
     { Image: require("../../assets/pizza.png"), name: "Pizza" },
     { Image: require("../../assets/burger.png"), name: "Fast Food" },
@@ -25,18 +18,26 @@ function AddCategorise(props) {
   ];
   const addCategorise = (categories) => {
     let i = 0;
+
     do {
       if (
-        Categorise.find((item) => {
-          return item == categories;
+        Categorise.find((item, index) => {
+          if (item.Category == categories) {
+            i = index;
+            alert(i);
+            return true;
+          }
+          return false;
         })
       ) {
+        alert(i);
         Categorise.splice(i, 1);
 
         const newCategorise = [...Categorise];
         setCategories(newCategorise);
       } else {
-        Categorise.push(categories);
+        const newCategory = { "Category": categories };
+        Categorise.push(newCategory);
         const newCategorise = [...Categorise];
         setCategories(newCategorise);
       }
@@ -58,7 +59,7 @@ function AddCategorise(props) {
           justifyContent: "center",
         }}
       >
-        {Icons.map((item) => {
+        {Icons.map((item, index) => {
           return (
             <TouchableOpacity
               id="ss"
@@ -69,13 +70,18 @@ function AddCategorise(props) {
                 maxWidth: "30%",
                 margin: 10,
                 flexDirection: "row",
-                //backgroundColor: checked == item.name ? "#ddd" : "",
+
                 backgroundColor: Categorise.find((Item) => {
-                  return Item == item.name;
+                  if (Item.Category == item.name) {
+                    return true;
+                  }
+
+                  return false;
                 })
                   ? "#ddd"
-                  : "",
+                  : "white",
               }}
+              key={index}
               onPress={() => {
                 addCategorise(item.name);
               }}

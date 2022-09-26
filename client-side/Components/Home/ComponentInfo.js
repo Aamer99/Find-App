@@ -74,12 +74,12 @@ const ComponentImage = (props) => {
         }}
       />
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{ top: 20, right: 20, position: "absolute" }}
         onPress={props.addToFavorit}
       >
         <AntDesign name={props.IconName} size={25} color={props.IconColor} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </>
   );
 };

@@ -1,19 +1,19 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { Icon } from "react-native-elements";
 import Home from "../Screen/Home";
 import Acoount from "../Screen/Acoount";
-import Favorite from "../Screen/Favorite";
 import Setting from "../Screen/Setting";
+import Reward from "../Screen/Rewords";
 import AddLoaction from "../Screen/AddLocation";
 const Tap = createMaterialBottomTabNavigator();
 
 // const Drawer = createDrawerNavigator();
 
-export default function TapBar({ route, navigation }) {
+function TapBar({ route, navigation }) {
   const email = route.params.userEmail;
   const userCity = route.params.userCity;
 
@@ -60,7 +60,7 @@ export default function TapBar({ route, navigation }) {
           ),
         }}
       />
-      <Tap.Screen
+      {/* <Tap.Screen
         name="Favorite"
         component={Favorite}
         initialParams={{ userEmail: email }}
@@ -82,32 +82,11 @@ export default function TapBar({ route, navigation }) {
             </View>
           ),
         }}
-      />
-      <Tap.Screen
-        name="AddLoaction"
-        component={AddLoaction}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                width: 60,
-                height: 60,
-              }}
-            >
-              <Ionicons
-                name={focused ? "add-circle-outline" : "add-circle-sharp"}
-                size={60}
-              />
-            </View>
-          ),
-        }}
-      />
+      /> */}
 
       <Tap.Screen
         name="Rewards"
-        component={Setting}
+        component={Reward}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
@@ -127,6 +106,28 @@ export default function TapBar({ route, navigation }) {
                 size={25}
               />
               <Text style={{ top: 10 }}>Rewards</Text>
+            </View>
+          ),
+        }}
+      />
+
+      <Tap.Screen
+        name="AddLoaction"
+        component={AddLoaction}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                width: 60,
+                height: 60,
+              }}
+            >
+              <Ionicons
+                name={focused ? "add-circle-outline" : "add-circle-sharp"}
+                size={60}
+              />
             </View>
           ),
         }}
@@ -155,6 +156,35 @@ export default function TapBar({ route, navigation }) {
           ),
         }}
       />
+
+      <Tap.Screen
+        name="Setting"
+        component={Setting}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                top: 10,
+                width: 60,
+              }}
+            >
+              <Ionicons
+                name={focused ? "ios-settings-sharp" : "ios-settings-outline"}
+                size={25}
+              />
+              {/* <MaterialCommunityIcons
+                name={focused ? "gift" : "gift-outline"}
+                size={25}
+              /> */}
+              <Text style={{ top: 10 }}>Setting</Text>
+            </View>
+          ),
+        }}
+      />
     </Tap.Navigator>
   );
 }
+
+export default memo(TapBar);

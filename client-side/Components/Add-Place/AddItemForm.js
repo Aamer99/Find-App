@@ -7,34 +7,36 @@ function AddItemForm(props) {
   const [mnueList, setMnueList] = useState([]);
   const [disabledUploadBtn, setDisabledUploadBtn] = useState(false);
 
-  const handelChoiseImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  // const handelChoiseImage = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     quality: 1,
+  //   });
 
-    if (!result.cancelled) {
-      // mnue.push({ uri: result.uri, index: mnue.length + 1 });
-      // alert(JSON.stringify(mnue));
-      mnueList.push(result);
-      setImage(result.uri);
-      setDisabledUploadBtn(true);
-    }
-  };
+  //   if (!result.cancelled) {
+  //     // mnue.push({ uri: result.uri, index: mnue.length + 1 });
+  //     // alert(JSON.stringify(mnue));
+  //     mnueList.push(result);
+  //     setImage(result.uri);
+  //     props.setItemImage(result);
 
-  const removeFromMnue = (uri) => {
-    mnueList.filter((item, index) => {
-      if (item.uri == uri) {
-        return mnueList.splice(index, 1);
-      }
-    });
+  //     setDisabledUploadBtn(true);
+  //   }
+  // };
 
-    const newMnue = [...mnueList];
-    setMnueList(newMnue);
-    setDisabledUploadBtn(false);
-  };
+  // const removeFromMnue = (uri) => {
+  //   mnueList.filter((item, index) => {
+  //     if (item.uri == uri) {
+  //       return mnueList.splice(index, 1);
+  //     }
+  //   });
+
+  //   const newMnue = [...mnueList];
+  //   setMnueList(newMnue);
+  //   setDisabledUploadBtn(false);
+  // };
   return (
     <View
       style={{
@@ -113,7 +115,7 @@ function AddItemForm(props) {
         onChangeText={props.setItemPrice}
       />
 
-      <Text
+      {/* <Text
         style={{
           fontSize: 15,
           fontWeight: "300",
@@ -124,9 +126,6 @@ function AddItemForm(props) {
       </Text>
       <View style={{ flexDirection: "row", margin: 10 }}>
         <TouchableOpacity
-          onPress={() => {
-            alert("cliked me ");
-          }}
           disabled={disabledUploadBtn}
           style={{
             borderRadius: 20,
@@ -149,7 +148,7 @@ function AddItemForm(props) {
             }}
           />
         </TouchableOpacity>
-        {mnueList.map((item) => {
+        {mnueList.map((item, index) => {
           return (
             <View>
               <Image
@@ -161,7 +160,7 @@ function AddItemForm(props) {
                   borderRadius: 20,
                   borderWidth: 0.2,
                 }}
-                key={item}
+                key={index}
               />
               <TouchableOpacity
                 style={{
@@ -185,7 +184,7 @@ function AddItemForm(props) {
             </View>
           );
         })}
-      </View>
+      </View> */}
     </View>
   );
 }

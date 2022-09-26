@@ -72,7 +72,7 @@ db.Categorise = (data) => {
   console.log(data);
   return new Promise((resolve, reject) => {
     connect.query(
-      "SELECT  JSON_EXTRACT(Categorise, '$.Categorise') FROM place",
+      "SELECT * FROM place WHERE JSON_EXTRACT(Categorise,'$.Category') = ?",
       data,
       (err, res) => {
         if (err) {
