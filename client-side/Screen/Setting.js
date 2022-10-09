@@ -25,24 +25,79 @@ export default function Setting({ navigation }) {
   }, []);
   return (
     <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
-      <View>
-        {data.map((item) => {
-          alert(item.name);
-          alert(item.logo);
-          return (
-            <ComponentInfo
-              logo={item.logo}
-              name={item.name}
-              navigation={navigation}
-              heartIconName={"cards-heart-outline"}
-              heartIconColor={"black"}
-              id={item.id}
-              mnue={item.mnue}
-              location={item.location}
-              FavoritPlace={true}
-            />
-          );
-        })}
+      <View
+        style={{
+          backgroundColor: "#eee",
+          flex: 1,
+          top: 30,
+
+          margin: 30,
+        }}
+      >
+        <View
+          style={{
+            borderBottomWidth: 2,
+            borderBottomColor: "red",
+            width: "100%",
+            height: 50,
+          }}
+        >
+          <Pressable
+            onPress={() => {
+              alert("clicked on language");
+            }}
+          >
+            <Text style={{ marginVertical: 15 }}>Language</Text>
+          </Pressable>
+        </View>
+        <View
+          style={{
+            borderBottomWidth: 2,
+            borderBottomColor: "red",
+            width: "100%",
+            height: 50,
+          }}
+        >
+          <Pressable
+            onPress={() => {
+              alert("clicked on language");
+            }}
+          >
+            <Text style={{ marginVertical: 15 }}>Feedback</Text>
+          </Pressable>
+        </View>
+        <View
+          style={{
+            borderBottomWidth: 2,
+            borderBottomColor: "red",
+            width: "100%",
+            height: 50,
+          }}
+        >
+          <Pressable
+            onPress={() => {
+              alert("clicked on language");
+            }}
+          >
+            <Text style={{ marginVertical: 15 }}>Contactus</Text>
+          </Pressable>
+        </View>
+        <View
+          style={{
+            borderBottomWidth: 2,
+            borderBottomColor: "red",
+            width: "100%",
+            height: 50,
+          }}
+        >
+          <Pressable
+            onPress={() => {
+              alert("clicked on language");
+            }}
+          >
+            <Text style={{ marginVertical: 15 }}>City</Text>
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   );

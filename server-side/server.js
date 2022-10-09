@@ -24,11 +24,6 @@ db.connect((err) => {
 const userRouter = require("./routes/User/User");
 app.use("/user", userRouter);
 
-const coffeRouter = require("./routes/coffe/coffe");
-app.use("/coffe", coffeRouter);
-
-const restaurantRouter = require("./routes/Restaurant/Restaurant");
-app.use("/restaurant", restaurantRouter);
 const placeRouter = require("./routes/place/place");
 app.use("/place", placeRouter);
 

@@ -184,7 +184,7 @@ router.post("/updateProfile/:id", async (req, res) => {
     const newPassword = req.body.password;
     const oldPassword = await db.getPassword(userID);
     const passwordNotChanged = await bcrypt.compare(newPassword, oldPassword);
-
+    console.log(passwordNotChanged);
     if (passwordNotChanged) {
       const userInfo = {
         name: req.body.name,
@@ -228,36 +228,6 @@ router.post("/updateProfile/:id", async (req, res) => {
       res.status(200).json(update);
     }
   } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-router.post("/addFavoritResturent/:id", async (req, res) => {
-  try {
-    const userID = req.params.id;
-    const PlplaceIDaceID = req.body.placeID;
-    const FavoritePlace = await db.addFavoritPlace([userID, PlplaceIDaceID]);
-
-    res.status(200).json(FavoritePlace);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-router.get("/favoritPlaces/:id", async (req, res) => {
-  try {
-    const userID = req.params.id;
-    console.log(userID);
-    const favoritPlaces = await db.getFavoritPlaces(userID);
-    // const PlacesList = [];
-    // const favoritPlacesList = favoritPlaces.map((item) => {
-    //   console.log(item.placeID);
-    //   const getPlace = DB.getOne(item.placeID);
-    //   console.log(getPlace);
-    //   return PlacesList.push(getPlace);
-    // });
-    res.status(200).json(favoritPlaces);
-  } catch (error) {
     res.status(400).json({ message: err.message });
   }
 });

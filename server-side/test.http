@@ -7,7 +7,7 @@ POST http://192.168.1.22:4000/user/login
 Content-Type: application/json 
 
 {
-   "email":"aamer.es20@gmail.com",
+   "email":"kh",
    "password":"123"
 }
 
@@ -34,13 +34,13 @@ Content-Type: application/json
  }
 
 ####
-POST http://192.168.1.22:4000/user/updateProfile/677649
+POST http://192.168.1.22:4000/user/updateProfile/11322776
 Content-Type: application/json
 
 {
- "name":"aamer alhelaly ",
-    "email":"aamer.es20@gmail.com",
-    "password":"123",
+ "name":"aamer Essa ",
+    "email":"aamer.es12@gmail.com",
+    "password":"aa",
     "city":"Madina",
     "imageProfile":"https://img.alayam.com/upload/imagebrowser/files/INAF_20220712195039485.jpg?maxheight=1200",
     "profileLanguage":"English"  
@@ -115,7 +115,7 @@ Content-Type: application/json
 ###
 GET http://192.168.1.22:4000/place/testPythone
 ###
-GET  http://192.168.1.22:4000/place/Categorise/Pasta
+GET  http://192.168.1.22:4000/place/Categorise/Pizza
 
 ####
 POST http://192.168.1.22:4000/place/search/Yy

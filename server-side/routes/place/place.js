@@ -136,9 +136,9 @@ router.get("/favoritPlacesID/:id", async (req, res) => {
 router.get("/Categorise/:id", async (req, res) => {
   try {
     const categorise = req.params.id;
+    console.log(categorise);
     const Categorise = await db.Categorise(categorise);
     res.status(200).json(Categorise);
-    console.log(categorise);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

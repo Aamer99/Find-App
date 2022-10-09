@@ -35,8 +35,8 @@ function AddCategorise(props) {
 
         const newCategorise = [...Categorise];
         setCategories(newCategorise);
-      } else {
-        const newCategory = { "Category": categories };
+      } else if (Categorise.length == 0) {
+        const newCategory = { Categorise: categories };
         Categorise.push(newCategory);
         const newCategorise = [...Categorise];
         setCategories(newCategorise);
