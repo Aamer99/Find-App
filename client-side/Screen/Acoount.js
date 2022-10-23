@@ -1,93 +1,85 @@
-import { View, SafeAreaView, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
-
+import { View, SafeAreaView, Text, ActivityIndicator } from "react-native";
+import React, { memo, useState } from "react";
+import { useQuery } from "react-query";
 import axios from "axios";
 import EditAccount from "../Components/Account/EditAccount";
-import AccountVerification from "../Components/Account/AccountVerification";
 import FunctionalityBar from "../Components/Account/AccountFunctionalityBar";
 import AccountInfo from "../Components/Account/AccountInfo";
-import base64 from "react-native-base64";
-//import * as fs from "fs";
-export default function Acoount({ route, navigation }) {
+
+function Account({ route, navigation }) {
   const userEmail = route.params.userEmail;
-  const [ImageProfile, setImageProfile] = useState("");
-  const [data, setData] = useState([]);
-  const [OTP, setOTP] = useState(null);
+  const [ImageProfile, setImageProfile] = useState(null);
+  const [enableEditAvatar, setEnableEditAvatar] = useState(false);
+  const [showEditAccount, SetShowEditAccount] = useState(false);
 
-  const [showEditAccount, SetshowEditAccount] = useState(false);
-  const [showAuth, setShowAuth] = useState(false);
-  const convertFromBase64 = (file) => {
-    // return "data:image/gif;base64," + fs.readFileSync(req.file, "base64");
-    return base64.encode(file);
-  };
-  const sendOTPmessage = async () => {
-    try {
-      const respons = await axios.post(
-        `http://192.168.1.22:4000/user/authUser/${userEmail}`
-      );
-      if (respons.status === 200) {
-        setOTP(respons.data);
-      }
-    } catch (error) {
-      alert("errorrr");
-    }
+  const getUserData = async () => {
+    const result = await axios.get(
+      `http://172.20.10.14:4000/user/getOneByEmail/${userEmail}`
+    );
+    return result;
   };
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const respons = await axios.get(
-          `http://192.168.1.22:4000/user/getOneByEmail/${userEmail}`
-        );
-        if (respons.status === 200) {
-          setData(respons.data[0]);
+  const user = useQuery("users", getUserData);
 
-          // if (data.imageProfile != null) {
-          //   setImageProfile(convertFromBase64(data.imageProfile));
-          // }
-        } else {
-          throw new Error("valid to get data");
-        }
-      } catch (err) {
-        alert("error in all function Account screen ");
-      }
-    };
-    getData();
-  });
+  if (user.status === "success") {
+    return (
+      <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
+        {/*  top of account screen  */}
+        <View
+          style={{
+            backgroundColor: "gray",
+            borderBottomEndRadius: 30,
+            borderBottomStartRadius: 30,
+          }}
+        >
+          <AccountInfo
+            email={user.data.data[0].email}
+            name={user.data.data[0].name}
+            ImageProfile={user.data.data[0].imageProfile}
+            enableEditAvatar={enableEditAvatar}
+            setImageProfile={setImageProfile}
+          />
 
-  return (
-    <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
-      {/*  top of account screen  */}
-      <View
+          <FunctionalityBar
+            disabledEditAccountBtn={showEditAccount}
+            navigation={navigation}
+            SetShowEditAccount={SetShowEditAccount}
+            userEmail={userEmail}
+            setEnableEditAvatar={setEnableEditAvatar}
+          />
+        </View>
+        {/*  end top of account screen  */}
+
+        {/* Edit account component  */}
+        {showEditAccount && (
+          <EditAccount data={user.data.data[0]} ImageProfile={ImageProfile} />
+        )}
+      </SafeAreaView>
+    );
+  }
+
+  if (user.status === "error") {
+    return (
+      <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
+        <Text>Error</Text>
+      </SafeAreaView>
+    );
+  }
+
+  if (user.status === "loading") {
+    return (
+      <SafeAreaView
         style={{
-          backgroundColor: "gray",
-          borderBottomEndRadius: 30,
-          borderBottomStartRadius: 30,
+          flex: 1,
+          justifyContent: "center",
+          alignSelf: "center",
         }}
       >
-        <AccountInfo
-          email={data.email}
-          name={data.name}
-          ImageProfile={data.imageProfile} //data.imageprofile
-          enableEditAvatar={showEditAccount}
-        />
-        <FunctionalityBar
-          setShowAuth={setShowAuth}
-          sendOTPmessage={sendOTPmessage}
-          disabledEditAccountBtn={showEditAccount}
-          navigation={navigation}
-        />
-      </View>
-      {/*  end top of account screen  */}
-
-      <AccountVerification
-        showAuth={showAuth}
-        setShowAuth={setShowAuth}
-        OTPmessage={OTP}
-        SetshowEditAccount={SetshowEditAccount}
-      />
-
-      {showEditAccount && <EditAccount data={data} />}
-    </SafeAreaView>
-  );
+        <ActivityIndicator size="large" />
+        <Text style={{ margin: 10 }}>Loading...</Text>
+      </SafeAreaView>
+    );
+  }
 }
+
+export default memo(Account);

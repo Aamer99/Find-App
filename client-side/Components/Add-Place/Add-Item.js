@@ -1,63 +1,38 @@
 import React, { memo, useState } from "react";
 import { View } from "react-native";
 import { Button, Dialog, Divider } from "react-native-elements";
-
-import axios from "axios";
 import AddItemForm from "./AddItemForm";
 
 function AddItem(props) {
-  // const [mnue, setMnue] = useState([]);
-  // const [image, setImage] = useState("");
-  const [mnueList, setMnueList] = useState([]);
-  //const [disabledUploadBtn, setDisabledUploadBtn] = useState(false);
   const [itemName, setItemName] = useState("");
-  const [itemDescription, setItemDiscreption] = useState("");
+  const [itemDescription, setItemDescription] = useState("");
   const [itemPrice, setItemPrice] = useState("");
-  const [itemImage, setItemImage] = useState("");
+  const [disabledSaveBtn, setDisabledSaveBtn] = useState(true);
 
-  const set = async () => {
-    try {
-      // const data = new FormData();
-      // mnueList.map((item) => {
-      //   data.append("mnue", {
-      //     uri: item.uri,
-      //     type: item.type,
-      //     name: item.fileName || item.uri.substr(item.uri.lastIndexOf("/") + 1),
-      //   });
-      // });
-      // // alert(JSON.stringify(data));
-      // const upload = await axios.post(
-      //   "http://192.168.1.22:4000/place/uploadeMnue",
-      //   data
-      // );
-
-      // if (upload.status === 200) {
-      //   props.setShowAddMnue(false);
-      //   const mnue = [...upload.data];
-      //   props.setMnue(mnue);
-      // }
-      const data = {
-        itemName: itemName,
-        itemDescription: itemDescription,
-        itemPrice: itemPrice,
-        itemImage: itemImage,
-      };
-      props.setMnue([...props.mnue, data]);
-      props.setShowAddMnue(false);
-    } catch (error) {
-      alert(error);
-    }
+  const AddItem = () => {
+    const data = {
+      itemName: itemName,
+      itemDescription: itemDescription,
+      itemPrice: itemPrice,
+    };
+    props.setMnue([...props.mnue, data]);
+    props.setShowAddMnue(false);
   };
 
   return (
     <Dialog visible={props.showAddMnue}>
       <Dialog.Title title="Add Item" titleStyle={{ textAlign: "center" }} />
+
       <AddItemForm
-        setItemImage={setItemImage}
+        itemName={itemName}
         setItemName={setItemName}
-        setItemDiscreption={setItemDiscreption}
+        itemDescription={itemDescription}
+        setItemDescription={setItemDescription}
+        itemPrice={itemPrice}
         setItemPrice={setItemPrice}
+        setDisabledSaveBtn={setDisabledSaveBtn}
       />
+
       <Divider width={2} style={{ marginVertical: 20 }} />
 
       <View style={{ alignSelf: "center", flexDirection: "row" }}>
@@ -72,11 +47,9 @@ function AddItem(props) {
           }}
           title="Save"
           onPress={() => {
-            set();
-            // props.setShowAddMnue(false);
-            // const mnue = [...mnueList];
-            // props.setMnue(mnue);
+            AddItem();
           }}
+          disabled={disabledSaveBtn}
         />
         <Button
           buttonStyle={{
@@ -87,7 +60,7 @@ function AddItem(props) {
             margin: 5,
             backgroundColor: "red",
           }}
-          title="Cansel"
+          title="Cancel"
           onPress={() => {
             props.setShowAddMnue(false);
           }}

@@ -1,9 +1,9 @@
-import { View, Animated, Image, Easing } from "react-native";
+import { View, Animated, Image } from "react-native";
 import React, { useEffect, useRef } from "react";
 import Logo from "../assets/Find-logos/logos_black.png";
 export default function LandingPage({ navigation }) {
   setTimeout(() => {
-    navigation.navigate("Login");
+    navigation.replace("Login");
   }, 2600);
   return (
     <View

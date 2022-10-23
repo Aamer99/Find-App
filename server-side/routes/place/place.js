@@ -32,11 +32,7 @@ router.post("/", async (req, res) => {
       item.logo = placeLogoDecoded;
 
       const placeMnue = JSON.parse(item.mnue);
-      // const mnueDecoded = placeMnue.map((Item) => {
-      //   return (
-      //     `data:${Item.mimetype};base64,` + fs.readFileSync(Item.path, "base64")
-      //   );
-      // });
+
       item.mnue = placeMnue;
     });
 
@@ -56,7 +52,7 @@ router.post("/addPlace", async (req, res) => {
       city: req.body.city,
       type: req.body.type,
       PlaceLocation: req.body.PlaceLocation,
-      categorise: req.body.categorise,
+      categories: req.body.categories,
     };
     const newPlace = await db.addPlace([
       id,
@@ -66,7 +62,7 @@ router.post("/addPlace", async (req, res) => {
       placeInfo.city,
       placeInfo.type,
       placeInfo.PlaceLocation,
-      placeInfo.categorise,
+      placeInfo.categories,
     ]);
     res.status(200).json(newPlace);
   } catch (error) {
@@ -104,53 +100,16 @@ router.post("/search/:id", async (req, res) => {
   }
 });
 
-router.get("/favoritPlaces/:id", async (req, res) => {
+router.get("/Categories/:id", async (req, res) => {
   try {
-    const userID = req.params.id;
-    console.log(userID);
-    const favoritPlacesID = await db.getFavoritPlaces(userID);
-    const places = await db.getAll();
-    console.log(places[0]);
-    const favoritPlaces = favoritPlacesID.map((item, index) => {
-      if (item.placeID == places[index].id) {
-        console.log("hi");
-        return places[index];
-      }
-    });
-    res.status(200).json(favoritPlaces);
-  } catch (error) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-router.get("/favoritPlacesID/:id", async (req, res) => {
-  try {
-    const userID = req.params.id;
-    const favoritPlacesID = await db.getFavoritPlaces(userID);
-    res.status(200).json(favoritPlacesID);
+    const categories = req.params.id;
+    const Categories = await db.Categories(categories);
+    res.status(200).json(Categories);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-router.get("/Categorise/:id", async (req, res) => {
-  try {
-    const categorise = req.params.id;
-    console.log(categorise);
-    const Categorise = await db.Categorise(categorise);
-    res.status(200).json(Categorise);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-router.post("/uploadeMnue", upload.array("mnue"), async (req, res) => {
-  try {
-    res.status(200).json(req.files);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
 router.post(
   "/uploadeLogo",
   uploadLogo.single("placeLogo"),

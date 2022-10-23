@@ -2,19 +2,19 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React, { memo, useState } from "react";
 
 function HomeHeader(props) {
-  const [ActiveTap, SetActiveTap] = useState("Coffe");
+  const [ActiveTap, SetActiveTap] = useState("Coffee");
 
   return (
     <View style={{ flexDirection: "row", alignSelf: "center" }}>
       <Section
-        text="Coffe"
+        text="Coffee"
         BtnColor="black"
         TextColor="white"
         ActiveTap={ActiveTap}
         SetActiveTap={SetActiveTap}
         sectionHandler={props.SectionHandler}
-        setenableBtnSearch={props.setenableBtnSearch}
-        setShowSearchResualt={props.setShowSearchResualt}
+        setEnableBtnSearch={props.setEnableBtnSearch}
+        setShowSearchResult={props.setShowSearchResult}
         SetSearch={props.SetSearch}
       />
       <Section
@@ -24,8 +24,8 @@ function HomeHeader(props) {
         ActiveTap={ActiveTap}
         SetActiveTap={SetActiveTap}
         sectionHandler={props.SectionHandler}
-        setenableBtnSearch={props.setenableBtnSearch}
-        setShowSearchResualt={props.setShowSearchResualt}
+        setEnableBtnSearch={props.setEnableBtnSearch}
+        setShowSearchResult={props.setShowSearchResult}
         SetSearch={props.SetSearch}
       />
     </View>
@@ -44,8 +44,8 @@ const Section = (props) => {
       onPress={() => {
         props.SetActiveTap(props.text);
         props.sectionHandler(props.text);
-        props.setenableBtnSearch(true);
-        props.setShowSearchResualt(false);
+        props.setEnableBtnSearch(true);
+        props.setShowSearchResult(false);
         props.SetSearch("");
       }}
     >

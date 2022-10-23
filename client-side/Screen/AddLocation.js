@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import React, { memo, useState } from "react";
+import { ScrollView, View } from "react-native";
 import AddPlaceForm from "../Components/Add-Place/addPlaceForm";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
-export default function AddLoaction({ navigation }) {
+function AddPlace({ navigation }) {
   const [placeCoordinate, setPlaceCoordinate] = useState(null);
   const [showMarker, setShowMaker] = useState(false);
-  const [CoordinateMarker, setCoordinateMarkier] = useState({
+  const [CoordinateMarker, setCoordinateMarker] = useState({
     latitude: 0,
     longitude: 0,
   });
@@ -18,7 +18,7 @@ export default function AddLoaction({ navigation }) {
     };
     const location = coordinate.latitude + "," + coordinate.longitude;
     setPlaceCoordinate(location);
-    setCoordinateMarkier(CoordinateMarker);
+    setCoordinateMarker(CoordinateMarker);
     setShowMaker(true);
   }
 
@@ -28,11 +28,7 @@ export default function AddLoaction({ navigation }) {
         <MapView
           provider={PROVIDER_GOOGLE}
           style={{
-            //width: Dimensions.get("window").width,
             height: 500,
-            // borderRadius: 35,
-            // borderWidth: 1,
-            // borderColor: "black",
           }}
           initialRegion={{
             latitude: 24.470901,
@@ -52,10 +48,12 @@ export default function AddLoaction({ navigation }) {
         <AddPlaceForm
           navigation={navigation}
           placeCoordinate={placeCoordinate}
-          setCoordinateMarkier={setCoordinateMarkier}
+          setCoordinateMarker={setCoordinateMarker}
           setPlaceCoordinate={setPlaceCoordinate}
         />
       </View>
     </ScrollView>
   );
 }
+
+export default memo(AddPlace);

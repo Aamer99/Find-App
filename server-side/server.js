@@ -6,9 +6,9 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "@Amer1420",
+  host: "database-1.cuvpdikkxfeh.ap-northeast-1.rds.amazonaws.com",
+  user: "admin",
+  password: "Aamer1420",
   database: "Find",
   port: "3306",
 });

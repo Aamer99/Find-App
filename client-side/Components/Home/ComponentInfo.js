@@ -1,29 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 
-import AntDesign from "react-native-vector-icons/AntDesign";
-import axios from "axios";
 function ComponentInfo({ navigation, ...props }) {
-  const [isFavoritPlace, setFavoritPlace] = useState(props.FavoritPlace);
-  const addToFavorit = async () => {
-    try {
-      const place = {
-        placeID: props.id,
-      };
-      const addFavoritPlace = await axios.post(
-        `http://192.168.1.21:4000/user/addFavoritResturent/7986680`,
-        place
-      );
-      if (addFavoritPlace.status === 200) {
-        setFavoritPlace(true);
-      } else {
-        alert("propblem in axios add place function");
-      }
-    } catch (err) {
-      alert("error in add favorit place function");
-    }
-  };
-
   return (
     <View>
       <View
@@ -37,20 +15,15 @@ function ComponentInfo({ navigation, ...props }) {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("RestaurantDetails", {
-              PlaceName: props.name,
-              PlaceLogo: props.logo,
-              PlaceMnue: props.mnue,
-              PlaceLocation: props.location,
+              PlaceName: props.Place.name,
+              PlaceLogo: props.Place.logo,
+              PlaceMnue: props.Place.mnue,
+              PlaceLocation: props.Place.location,
             });
           }}
         >
-          <ComponentImage
-            logo={props.logo}
-            IconName={isFavoritPlace ? "heart" : "hearto"}
-            IconColor={isFavoritPlace ? "red" : "black"}
-            addToFavorit={addToFavorit}
-          />
-          <ComponentShortInfo name={props.name} />
+          <ComponentImage logo={props.Place.logo} />
+          <ComponentShortInfo name={props.Place.name} />
         </TouchableOpacity>
       </View>
     </View>
@@ -73,13 +46,6 @@ const ComponentImage = (props) => {
           backgroundColor: "white",
         }}
       />
-
-      {/* <TouchableOpacity
-        style={{ top: 20, right: 20, position: "absolute" }}
-        onPress={props.addToFavorit}
-      >
-        <AntDesign name={props.IconName} size={25} color={props.IconColor} />
-      </TouchableOpacity> */}
     </>
   );
 };

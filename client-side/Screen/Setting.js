@@ -4,25 +4,10 @@ import { Button, Divider } from "react-native-elements";
 
 import ComponentInfo from "../Components/Home/ComponentInfo";
 import axios from "axios";
+import Language from "../Components/Setting/Language";
 export default function Setting({ navigation }) {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get(
-          "http://192.168.1.21:4000/place/favoritplaces/7986680"
-        );
-        if (response.status === 200) {
-          setData(response.data);
-        } else {
-          alert("err in respons get favorit place");
-        }
-      } catch (error) {
-        throw error;
-      }
-    };
-    getData();
-  }, []);
+  const [showLanguage, setShowLanguage] = useState(false);
+
   return (
     <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
       <View
@@ -44,7 +29,7 @@ export default function Setting({ navigation }) {
         >
           <Pressable
             onPress={() => {
-              alert("clicked on language");
+              setShowLanguage(true);
             }}
           >
             <Text style={{ marginVertical: 15 }}>Language</Text>
@@ -60,7 +45,7 @@ export default function Setting({ navigation }) {
         >
           <Pressable
             onPress={() => {
-              alert("clicked on language");
+              alert("clicked on Feedback");
             }}
           >
             <Text style={{ marginVertical: 15 }}>Feedback</Text>
@@ -76,10 +61,10 @@ export default function Setting({ navigation }) {
         >
           <Pressable
             onPress={() => {
-              alert("clicked on language");
+              alert("clicked on Contact us");
             }}
           >
-            <Text style={{ marginVertical: 15 }}>Contactus</Text>
+            <Text style={{ marginVertical: 15 }}>Contact us</Text>
           </Pressable>
         </View>
         <View
@@ -92,13 +77,21 @@ export default function Setting({ navigation }) {
         >
           <Pressable
             onPress={() => {
-              alert("clicked on language");
+              setShowLanguage(true);
             }}
           >
             <Text style={{ marginVertical: 15 }}>City</Text>
           </Pressable>
         </View>
       </View>
+
+      {showLanguage && (
+        <Language
+          Visible={true}
+          AccountLanguage={1}
+          setShowLanguage={setShowLanguage}
+        />
+      )}
     </SafeAreaView>
   );
 }

@@ -5,14 +5,15 @@ import {
   SafeAreaView,
   AsyncStorage,
 } from "react-native";
-import React, { useState } from "react";
-import { Input, Button, Dialog, Icon, Image } from "react-native-elements";
+import React, { memo, useState } from "react";
+import { Input, Button } from "react-native-elements";
 import axios from "axios";
-import Logo from "../assets/Find-logos/logos_black.png";
-export default function Login({ navigation }) {
+
+function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [validEmailorPassword, setValidEmailorPassword] = useState(false);
+  const [validLogin, setValidLogin] = useState(false);
+  const [disabledLoginBtn, setDisabledLoginBtn] = useState(true);
   async function onSubmit() {
     try {
       const loginInfo = {
@@ -21,30 +22,25 @@ export default function Login({ navigation }) {
       };
 
       const login = await axios.post(
-        "http://192.168.1.22:4000/user/login",
+        "http://172.20.10.14:4000/user/login",
         loginInfo
       );
       if (login) {
         await AsyncStorage.setItem("token", JSON.stringify(login.data));
         const userCity = await axios.get(
-          `http://192.168.1.22:4000/user/getCity/${email}`
+          `http://172.20.10.14:4000/user/getCity/${email}`
         );
 
         navigation.navigate("Tap", {
           userEmail: email,
           userCity: userCity.data,
         });
-        console.log(login.data);
       } else {
-        setValidEmailorPassword(true);
+        setValidLogin(true);
       }
     } catch (error) {
-      setValidEmailorPassword(true);
+      setValidLogin(true);
     }
-
-    // setTimeout(() => {
-    //   navigation.navigate("Tap");
-    // });
   }
   return (
     <SafeAreaView>
@@ -68,20 +64,37 @@ export default function Login({ navigation }) {
         >
           Login
         </Text>
+
+        {/* Login Form  */}
+
         <View style={{ marginHorizontal: 50, marginTop: 20 }}>
           <Input
             placeholder="Email"
             leftIcon={{ type: "feather", name: "mail", size: 20 }}
             value={email}
-            onChangeText={setEmail}
+            onChangeText={(text) => {
+              setEmail(text);
+              if (email != "" && password != "") {
+                setDisabledLoginBtn(false);
+              } else {
+                setDisabledLoginBtn(true);
+              }
+            }}
           />
           <Input
             placeholder="Password"
             secureTextEntry={true}
             leftIcon={{ type: "feather", name: "lock", size: 20 }}
             value={password}
-            onChangeText={setPassword}
-            errorMessage={validEmailorPassword ? "Valid email or password" : ""}
+            onChangeText={(text) => {
+              setPassword(text);
+              if (email != "" && password != "") {
+                setDisabledLoginBtn(false);
+              } else {
+                setDisabledLoginBtn(true);
+              }
+            }}
+            errorMessage={validLogin ? "Valid email or password" : ""}
             errorStyle={{
               color: "red",
               margin: 10,
@@ -89,6 +102,7 @@ export default function Login({ navigation }) {
               fontWeight: "600",
             }}
           />
+          {/* Login Button  */}
           <View style={{ justifyContent: "center", flexDirection: "row" }}>
             <Button
               title="Log in"
@@ -102,6 +116,7 @@ export default function Login({ navigation }) {
               }}
               titleStyle={{ fontWeight: "bold", fontSize: 20 }}
               onPress={onSubmit}
+              disabled={disabledLoginBtn}
             />
           </View>
         </View>
@@ -115,7 +130,7 @@ export default function Login({ navigation }) {
           <Text>Don't have an Account ? </Text>
           <Pressable
             onPress={() => {
-              navigation.navigate("Singup");
+              navigation.navigate("Signup");
             }}
           >
             <Text style={{ color: "black", fontWeight: "600" }}>Sign up</Text>
@@ -125,3 +140,5 @@ export default function Login({ navigation }) {
     </SafeAreaView>
   );
 }
+
+export default memo(Login);

@@ -14,16 +14,17 @@ function Signup({ navigation }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassowrd, setConfirmPasswowrd] = useState("");
-  const [cities, setCities] = useState([{ label: "Madina", value: "Madina" }]);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [cities, setCities] = useState([{ label: "Medina", value: "Medina" }]);
   const [invalidPassword, setInvalidPassword] = useState(false);
   const selectPlaceholder = { label: "City", value: null, color: "#9EA0A4" };
   const [city, setCity] = useState("");
   const [imageProfile, setImageProfile] = useState("");
-  const [selectedImage, SetSlectedImage] = useState(null);
+  const [selectedImage, SetSelectedImage] = useState(null);
+  const [disabledSignupBtn, setDisabledSignupBtn] = useState(true);
   async function onSubmit() {
     try {
-      if (password != confirmPassowrd) {
+      if (password != confirmPassword) {
         setInvalidPassword(true);
       } else {
         setInvalidPassword(false);
@@ -37,7 +38,7 @@ function Signup({ navigation }) {
         };
 
         const Register = await axios.post(
-          "http://192.168.1.22:4000/user/signup",
+          "http://172.20.10.14:4000/user/signup",
           userInfo
         );
         if (Register.status == 200) {
@@ -51,7 +52,7 @@ function Signup({ navigation }) {
       alert(err);
     }
   }
-  const handelChoiseImage = async () => {
+  const handelChoiceImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -74,7 +75,7 @@ function Signup({ navigation }) {
         data
       );
       if (upload.status === 200) {
-        SetSlectedImage(result.uri);
+        SetSelectedImage(result.uri);
 
         setImageProfile(upload.data);
       } else
@@ -82,10 +83,6 @@ function Signup({ navigation }) {
           alert(err);
         };
     }
-  };
-
-  const convertBase64 = (file) => {
-    return "data:image/gif;base64," + base64.encode(imageProfile);
   };
 
   return (
@@ -116,7 +113,7 @@ function Signup({ navigation }) {
             size={80}
             rounded
             icon={{ name: "user", type: "font-awesome" }}
-            onPress={handelChoiseImage}
+            onPress={handelChoiceImage}
             containerStyle={{ backgroundColor: "#6733b9" }}
             source={{ uri: selectedImage }}
           />
@@ -127,14 +124,40 @@ function Signup({ navigation }) {
             placeholder="Full Name "
             leftIcon={{ type: "feather", name: "user", size: 20 }}
             value={name}
-            onChangeText={setName}
+            onChangeText={(text) => {
+              setName(text);
+              if (
+                name != "" &&
+                email != "" &&
+                password != "" &&
+                confirmPassword != "" &&
+                city != ""
+              ) {
+                setDisabledSignupBtn(false);
+              } else {
+                setDisabledSignupBtn(true);
+              }
+            }}
           />
 
           <Input
             placeholder="Email"
             leftIcon={{ type: "feather", name: "mail", size: 20 }}
             value={email}
-            onChangeText={setEmail}
+            onChangeText={(text) => {
+              setEmail(text);
+              if (
+                name != "" &&
+                email != "" &&
+                password != "" &&
+                confirmPassword != "" &&
+                city != ""
+              ) {
+                setDisabledSignupBtn(false);
+              } else {
+                setDisabledSignupBtn(true);
+              }
+            }}
           />
 
           <RNPickerSelect
@@ -153,21 +176,48 @@ function Signup({ navigation }) {
             secureTextEntry={true}
             leftIcon={{ type: "feather", name: "lock", size: 20 }}
             value={password}
-            onChangeText={setPassword}
+            onChangeText={(text) => {
+              setPassword(text);
+              if (
+                name != "" &&
+                email != "" &&
+                password != "" &&
+                confirmPassword != "" &&
+                city != ""
+              ) {
+                setDisabledSignupBtn(false);
+              } else {
+                setDisabledSignupBtn(true);
+              }
+            }}
           />
           <Input
             placeholder="Confirm Password"
             leftIcon={{ type: "feather", name: "lock", size: 20 }}
             secureTextEntry={true}
-            value={confirmPassowrd}
-            onChangeText={setConfirmPasswowrd}
+            value={confirmPassword}
+            onChangeText={(text) => {
+              setConfirmPassword(text);
+              if (
+                name != "" &&
+                email != "" &&
+                password != "" &&
+                confirmPassword != "" &&
+                city != ""
+              ) {
+                setDisabledSignupBtn(false);
+              } else {
+                setDisabledSignupBtn(true);
+              }
+            }}
             errorMessage={invalidPassword ? "password not match" : ""}
           />
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <Button
               buttonStyle={{ borderRadius: 20, width: 150 }}
-              title="Register"
+              title="Signup"
               onPress={onSubmit}
+              disabled={disabledSignupBtn}
             />
           </View>
         </View>

@@ -34,15 +34,15 @@ Content-Type: application/json
  }
 
 ####
-POST http://192.168.1.22:4000/user/updateProfile/11322776
+POST http://localhost:4000/user/updateProfile/876987
 Content-Type: application/json
 
 {
  "name":"aamer Essa ",
     "email":"aamer.es12@gmail.com",
-    "password":"aa",
+    "password":"123",
     "city":"Madina",
-    "imageProfile":"https://img.alayam.com/upload/imagebrowser/files/INAF_20220712195039485.jpg?maxheight=1200",
+    "imageProfile":null,
     "profileLanguage":"English"  
 }
 
@@ -55,7 +55,7 @@ GET http://172.20.10.6:4000/coffe
 ### 
 
 
-GET http://localhost:4000/user/getOneByEmail/aamer.co
+GET http://192.168.0.146:4000/user/getOneByEmail/AAmer.es12@gmail.com
 
 ###
 
@@ -105,17 +105,17 @@ Content-Type: application/json
 
 ####
 
-POST  http://192.168.1.22:4000/place
+POST  http://localhost:4000/place
 Content-Type: application/json
 
 {
-         "city": "Madina",
+         "city": "Medina",
           "type": "Restaurant"
 }
 ###
 GET http://192.168.1.22:4000/place/testPythone
 ###
-GET  http://192.168.1.22:4000/place/Categorise/Pizza
+GET  http://192.168.0.145:4000/place/Categories/Rice
 
 ####
 POST http://192.168.1.22:4000/place/search/Yy

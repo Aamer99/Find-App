@@ -6,9 +6,10 @@ function AccountVerification(props) {
   const [UserOTP, setUserOTP] = useState(null);
   const [errorOTPinput, setErrorOTPinput] = useState(false);
   const checkOTP = () => {
-    if (props.OTPmessage == UserOTP) {
-      props.SetshowEditAccount(true);
+    if (props.otpMessage == UserOTP) {
+      props.SetShowEditAccount(true);
       props.setShowAuth(false);
+      props.setEnableEditAvatar(true);
     } else {
       setErrorOTPinput(true);
     }
@@ -17,7 +18,7 @@ function AccountVerification(props) {
     <Dialog visible={props.showAuth}>
       <Dialog.Title title="Athenticate" />
       <Text>
-        We send you mail to your registred email containe OTB message{" "}
+        We send you mail to your registered email contains the OTB message
       </Text>
       <Input
         placeholder="OTB "
@@ -40,7 +41,7 @@ function AccountVerification(props) {
           onPress={checkOTP}
         />
         <Button
-          title="Cansel"
+          title="Cancel"
           onPress={() => {
             props.setShowAuth(false);
           }}

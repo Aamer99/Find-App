@@ -1,9 +1,9 @@
 const mysql = require("mysql");
 
 const connect = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "@Amer1420",
+  host: "database-1.cuvpdikkxfeh.ap-northeast-1.rds.amazonaws.com",
+  user: "admin",
+  password: "Aamer1420",
   database: "Find",
   port: "3306",
 });
@@ -53,25 +53,10 @@ db.getPlaces = (data) => {
   });
 };
 
-db.getFavoritPlaces = (userID) => {
+db.Categories = (data) => {
   return new Promise((resolve, reject) => {
     connect.query(
-      "SELECT placeID FROM favorit WHERE userID=?",
-      userID,
-      (err, res) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(res);
-      }
-    );
-  });
-};
-
-db.Categorise = (data) => {
-  return new Promise((resolve, reject) => {
-    connect.query(
-      "SELECT * FROM place WHERE JSON_EXTRACT(Categorise, '$.Category') =?",
+      "SELECT * FROM place WHERE JSON_EXTRACT(categories, '$.Categories') =?",
       data,
       (err, res) => {
         if (err) {

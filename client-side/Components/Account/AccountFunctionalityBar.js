@@ -1,7 +1,8 @@
 import React, { memo, useState } from "react";
-import { View, Pressable, Text, AsyncStorage, StyleSheet } from "react-native";
+import { View, Pressable, Text, AsyncStorage } from "react-native";
 import { Icon } from "react-native-elements";
-import Language from "./Language";
+import AccountVerification from "./AccountVerification";
+import axios from "axios";
 
 function FunctionalityBar({ navigation, ...props }) {
   const logout = () => {
@@ -13,8 +14,18 @@ function FunctionalityBar({ navigation, ...props }) {
       }
     });
   };
-  const [showLanguage, setShowLanguage] = useState(false);
 
+  const [showAuth, setShowAuth] = useState(false);
+  const [otpMessage, setOTP] = useState(null);
+  const sendOtpMessage = async () => {
+    const res = await axios.post(
+      `http://172.20.10.14:4000/user/authUser/${props.userEmail}`
+    );
+
+    if (res.status == 200) {
+      setOTP(res.data);
+    }
+  };
   return (
     <View
       style={{
@@ -28,8 +39,8 @@ function FunctionalityBar({ navigation, ...props }) {
       <Pressable
         style={{ margin: 20 }}
         onPress={() => {
-          props.setShowAuth(true);
-          props.sendOTPmessage();
+          setShowAuth(true);
+          sendOtpMessage();
         }}
         disabled={props.disabledEditAccountBtn}
       >
@@ -39,31 +50,6 @@ function FunctionalityBar({ navigation, ...props }) {
         </Text>
       </Pressable>
 
-      <Pressable
-        onPress={() => {
-          setShowLanguage(true);
-        }}
-        style={{ margin: 20 }}
-      >
-        <Icon type="feather" name="globe" size={25} color="white" />
-        <Text style={{ marginTop: 5, fontSize: 15, color: "white" }}>
-          Language
-        </Text>
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          setShowLanguage(true);
-        }}
-        style={{ margin: 20 }}
-      >
-        <Icon
-          name="ios-location-sharp"
-          type="ionicon"
-          size={25}
-          color="white"
-        />
-        <Text style={{ marginTop: 5, fontSize: 15, color: "white" }}>City</Text>
-      </Pressable>
       <Pressable style={{ margin: 20 }} onPress={logout}>
         <Icon type="feather" name="log-out" size={25} color="white" />
         <Text style={{ marginTop: 5, fontSize: 15, color: "white" }}>
@@ -71,11 +57,12 @@ function FunctionalityBar({ navigation, ...props }) {
         </Text>
       </Pressable>
 
-      {showLanguage && (
-        <Language
-          Visible={true}
-          AccountLanguage={1}
-          setShowLanguage={setShowLanguage}
+      {showAuth && (
+        <AccountVerification
+          SetShowEditAccount={props.SetShowEditAccount}
+          setShowAuth={setShowAuth}
+          otpMessage={otpMessage}
+          setEnableEditAvatar={props.setEnableEditAvatar}
         />
       )}
     </View>
